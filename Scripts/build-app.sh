@@ -31,6 +31,24 @@ if ! [[ "${BUILD_NUMBER}" =~ ^[1-9][0-9]*$ ]]; then
   exit 1
 fi
 
+# Sparkle decides whether an update is newer purely by CFBundleVersion. Since
+# the build number is the commit count, anything that rewrites history restarts
+# the count, and a build that looks older than what is already published would
+# never be offered to anyone who installed the higher number. Refuse to build
+# it rather than publish a dead end.
+if [ -f appcast.xml ]; then
+  PUBLISHED_BUILD="$(
+    sed -n 's/.*<sparkle:version>\([0-9][0-9]*\)<\/sparkle:version>.*/\1/p' appcast.xml \
+      | sort -n | tail -1
+  )"
+  if [ -n "${PUBLISHED_BUILD}" ] && [ "${BUILD_NUMBER}" -lt "${PUBLISHED_BUILD}" ]; then
+    echo "error: BUILD_NUMBER ${BUILD_NUMBER} is below the published build ${PUBLISHED_BUILD}" >&2
+    echo "hint: the commit count restarted, most likely after a history rewrite." >&2
+    echo "      Pass BUILD_NUMBER=$((PUBLISHED_BUILD + 1)) or higher." >&2
+    exit 1
+  fi
+fi
+
 BUILD_DIR=".build/release"
 APP_DIR=".build/${NAME}.app"
 RESOURCE_BUNDLE="${NAME}_${NAME}.bundle"
