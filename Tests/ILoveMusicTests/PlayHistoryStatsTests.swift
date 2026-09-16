@@ -526,8 +526,26 @@ func appModelKeepsDiscordSessionAcrossPauseChannelChangeAndResetsAfterGracePerio
       streamKind: nil
     )
   )
-  try? await Task.sleep(for: .milliseconds(1100))
-  #expect(appModel.channelStartedAt == nil)
+  // The reset fires one grace period after the pause and then hops to the main
+  // actor. Sleeping a fixed 1100 ms left 100 ms for both of those, which a
+  // loaded CI runner does not reliably deliver. Poll instead: still quick when
+  // the machine is idle, and no longer a coin flip when it is not.
+  #expect(await waitUntil { appModel.channelStartedAt == nil })
+}
+
+/// Polls `condition` until it holds or `timeout` elapses, and reports the final
+/// result. Preferred over a fixed sleep for anything a scheduler decides.
+@MainActor
+private func waitUntil(
+  timeout: Duration = .seconds(10),
+  _ condition: () -> Bool,
+) async -> Bool {
+  let deadline = ContinuousClock.now + timeout
+  while ContinuousClock.now < deadline {
+    if condition() { return true }
+    try? await Task.sleep(for: .milliseconds(20))
+  }
+  return condition()
 }
 
 private let fixedCalendar: Calendar = {
