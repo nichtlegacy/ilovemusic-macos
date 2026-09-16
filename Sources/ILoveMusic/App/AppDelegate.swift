@@ -13,6 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
   private var popover: NSPopover?
   private var controlServer: ControlServer?
   private weak var historyWindow: NSWindow?
+  private lazy var settingsWindowController = SettingsWindowController(appModel: appModel)
   private let logger = Logger(subsystem: AppIdentity.logSubsystem, category: "AppDelegate")
 
   override init() {
@@ -49,6 +50,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     Task { await appModel.bootstrapIfNeeded() }
     appModel.requestOpenHistoryWindow = { [weak self] in
       self?.openHistoryWindow()
+    }
+    appModel.requestOpenSettingsWindow = { [weak self] in
+      self?.openSettings()
     }
 
     let server = ControlServer(delegate: appModel, diagnosticsStore: appModel.controlDiagnosticsStore)
@@ -267,11 +271,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
   }
   @objc private func menuOpenSettings() {
-    if #available(macOS 14.0, *) {
-      NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-    } else {
-      NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-    }
+    openSettings()
   }
   @objc private func menuCheckForUpdates() { updaterManager.checkForUpdates() }
   @objc private func menuQuit() { NSApp.terminate(nil) }
@@ -295,6 +295,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     button.attributedTitle = NSAttributedString(string: "")
     button.imagePosition = .imageOnly
     button.toolTip = appModel.activeStation?.displayName ?? AppIdentity.displayName
+  }
+
+  func openSettings(tab: SettingsTab? = nil) {
+    popover?.performClose(nil)
+    settingsWindowController.show(tab: tab)
   }
 
   private func openHistoryWindow() {

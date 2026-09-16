@@ -27,10 +27,7 @@ enum LogSeverityFilter: String, CaseIterable, Identifiable, Hashable {
   }
 }
 
-/// Drop-in log list for the Integrations pane.
-///
-/// No inner ScrollView: the surrounding Form already scrolls. Shows the tail
-/// of the rolling diagnostic log (newest first) with severity filter + Clear.
+/// Compact rolling log used by the Advanced pane.
 @MainActor
 struct LogPanel: View {
   let entries: [ControlLogEntry]
@@ -60,6 +57,10 @@ struct LogPanel: View {
     return Array(matching.suffix(displayLimit).reversed())
   }
 
+  private var matchingEntryCount: Int {
+    entries.count(where: { severity.matches($0) })
+  }
+
   var body: some View {
     HStack {
       Picker("Severity", selection: $severity) {
@@ -79,12 +80,15 @@ struct LogPanel: View {
         .font(.footnote)
         .foregroundStyle(.tertiary)
     } else {
-      VStack(alignment: .leading, spacing: 8) {
-        ForEach(filteredEntries) { entry in
+      VStack(alignment: .leading, spacing: 0) {
+        ForEach(Array(filteredEntries.enumerated()), id: \.element.id) { index, entry in
           LogPanelRow(entry: entry)
+          if index < filteredEntries.count - 1 {
+            Divider()
+          }
         }
       }
-      Text("Showing last \(min(displayLimit, max(entries.count, 0))) entries · auto-pruned after \(persistedCap)")
+      Text("Showing \(filteredEntries.count) of \(matchingEntryCount) matching entries · stores up to \(persistedCap)")
         .font(.caption2)
         .foregroundStyle(.tertiary)
     }
@@ -97,28 +101,24 @@ struct LogPanelRow: View {
   let entry: ControlLogEntry
 
   var body: some View {
-    VStack(alignment: .leading, spacing: 4) {
-      HStack(alignment: .firstTextBaseline, spacing: 8) {
-        Text(entry.timestamp.shortTimeOrDateTime)
-          .font(.caption.monospacedDigit())
-          .foregroundStyle(.secondary)
-        Text(entry.area)
-          .font(.caption.weight(.semibold))
-          .padding(.horizontal, 6)
-          .padding(.vertical, 2)
-          .background(.quaternary, in: Capsule())
-        Spacer()
-        Circle()
-          .fill(severityColor)
-          .frame(width: 7, height: 7)
-          .accessibilityLabel(severityLabel)
-      }
+    HStack(alignment: .firstTextBaseline, spacing: 8) {
+      Text(entry.timestamp.shortTimeOrDateTime)
+        .font(.caption.monospacedDigit())
+        .foregroundStyle(.secondary)
+        .frame(width: 104, alignment: .leading)
+      Text(entry.area)
+        .font(.caption.weight(.semibold))
+        .frame(width: 82, alignment: .leading)
+        .lineLimit(1)
+      Circle()
+        .fill(severityColor)
+        .frame(width: 7, height: 7)
+        .accessibilityLabel(severityLabel)
       Text(entry.message)
-        .font(.callout)
+        .font(.caption)
         .fixedSize(horizontal: false, vertical: true)
     }
-    .padding(10)
-    .background(.quinary, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+    .padding(.vertical, 6)
   }
 
   private var severityColor: Color {

@@ -10,7 +10,7 @@ Lokal-first, ohne Account, ohne Cloud, ohne eigenes Backend – gebaut nur auf d
 [![Swift 6.2](https://img.shields.io/badge/Swift-6.2-F05138?logo=swift&logoColor=white)](https://swift.org)
 [![SwiftUI + AppKit](https://img.shields.io/badge/UI-SwiftUI%20%2B%20AppKit-2563EB)](https://developer.apple.com/xcode/swiftui/)
 [![Abhängigkeiten: Sparkle](https://img.shields.io/badge/Dependencies-Sparkle-22C55E)](#architektur)
-[![Tests](https://img.shields.io/badge/Tests-91%20grün-16A34A)](#tests)
+[![Tests](https://img.shields.io/badge/Tests-94%20grün-16A34A)](#tests)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 [Überblick](#überblick) • [Installation](#installation) • [Schnellstart](#schnellstart) • [Einstellungen](#einstellungen) • [Stream Deck](#stream-deck) • [Architektur](#architektur) • [Live-Daten](#live-daten) • [Tests](#tests)
@@ -113,7 +113,7 @@ Nach dem Start erscheint **kein Fenster** – ILoveMusic setzt ein Symbol in die
 <img src="docs/screenshots/settings.png" alt="Einstellungen – Allgemein" width="640">
 </div>
 
-Die Einstellungen (SwiftUI-`Settings`-Szene) sind in sechs Tabs gegliedert.
+Die Einstellungen öffnen in einem eigenen nativen macOS-Fenster mit sieben Bereichen in der Sidebar. Fensterposition, Größe und der zuletzt gewählte Bereich bleiben erhalten.
 
 <details>
 <summary><b>Tabs und globale Tastenkürzel im Detail</b></summary>
@@ -124,10 +124,11 @@ Die Einstellungen (SwiftUI-`Settings`-Szene) sind in sechs Tabs gegliedert.
 | --- | --- |
 | **General** | Start bei Anmeldung · letzten Sender fortsetzen · Sender-Reihenfolge (Beliebtheit/Alphabet) |
 | **Playback** | Standard-Lautstärke (perzeptuelle Kurve, Stummschalten, „Maximallautstärke entsperren") · globale Tastenkürzel ein/aus · pro-Aktion belegbare Hotkeys mit Konflikterkennung |
-| **Discord** | Rich Presence ein/aus · Cover senden · „Listen"-Button · Hörerzahl anzeigen · eigene Discord-Application-ID · Verbindungslog |
-| **Stream Deck** | Status der lokalen HTTP-Brücke · letzter Request/Handshake · Verbindungslog |
-| **Data** | Quelle, letzte Aktualisierung, sichtbare/gefilterte Sender · Verlauf aufzeichnen + zurücksetzen · jetzt aktualisieren / Katalog- und Cover-Cache leeren |
-| **About** | Version, Build, Links, Diagnose |
+| **Discord** | Rich Presence ein/aus · Cover senden · „Listen"-Button · Hörerzahl anzeigen · Senderlogo · eigene Discord-Application-ID |
+| **Stream Deck** | Status der lokalen HTTP-Brücke · letzter Request/Handshake · letzter Fehler |
+| **Data** | Quelle, letzte Aktualisierung, sichtbare/gefilterte Sender · Verlauf aufzeichnen und zurücksetzen |
+| **Advanced** | Manuelle Aktualisierung · Katalog- und Cover-Cache · Katalogdiagnose · Discord- und Stream-Deck-Logs |
+| **About** | App-Version und Build · Sparkle-Updates · Projektlinks |
 
 **Globale Tastenkürzel** — jede Aktion ist frei belegbar (in **Playback** aufnehmen); die Standardbelegung:
 
@@ -183,7 +184,7 @@ Die App hält **keine** dauerhafte Stream-Deck-Verbindung offen. Stattdessen sta
 { "port": 51234, "token": "…", "version": 2 }
 ```
 
-Das Plugin liest diese Datei und ruft damit die lokalen Endpunkte auf. Nach einem Disconnect oder App-Neustart sendet es frische Requests – Port und Token werden bei jedem Start neu vergeben. Status, letzter Request und Verbindungslog stehen im Tab **Stream Deck**.
+Das Plugin liest diese Datei und ruft damit die lokalen Endpunkte auf. Nach einem Disconnect oder App-Neustart sendet es frische Requests – Port und Token werden bei jedem Start neu vergeben. Status und letzter Request stehen unter **Einstellungen → Stream Deck**, das Verbindungslog unter **Einstellungen → Advanced**.
 
 Absicherung des Servers:
 
@@ -383,7 +384,7 @@ ilovemusic_mac/
 
 ## Tests
 
-91 Tests über 20 Dateien unter [`Tests/ILoveMusicTests`](Tests/ILoveMusicTests), basierend auf dem `swift-testing`-Framework. Abdeckung u. a.: Live-DTO-Decoding, Katalog-Normalisierung & Sichtbarkeitsfilter, Recent-Tracks-XML-Parsing, Lautstärke-/Control-Server-Flows, Verlaufs-Recording und Stats-Aggregation, Discord-IPC/-Presence, App-Support-Pfade, Persistenz-Verträge sowie Menüleisten- und Einstellungs-Audits.
+94 Tests über 21 Dateien unter [`Tests/ILoveMusicTests`](Tests/ILoveMusicTests), basierend auf dem `swift-testing`-Framework. Abdeckung u. a.: Live-DTO-Decoding, Katalog-Normalisierung & Sichtbarkeitsfilter, Recent-Tracks-XML-Parsing, Lautstärke-/Control-Server-Flows, Verlaufs-Recording und Stats-Aggregation, Discord-IPC/-Presence, App-Support-Pfade, Persistenz-Verträge sowie Menüleisten- und Einstellungs-Audits.
 
 ```bash
 swift test
@@ -402,7 +403,7 @@ swift test
 
 **Start bei Anmeldung tut nichts im Dev-Modus.** Greift erst in einer regulär gebündelten/signierten App-Installation – nicht beim direkten `swift run`.
 
-**Stream Deck reagiert nicht.** ILoveMusic muss laufen; `~/Library/Application Support/ILoveMusic/control.json` existiert nur, solange die App aktiv ist. Port und Token wechseln bei jedem Start – das Plugin muss die Datei neu lesen. Log dazu im Tab **Einstellungen → Stream Deck**.
+**Stream Deck reagiert nicht.** ILoveMusic muss laufen; `~/Library/Application Support/ILoveMusic/control.json` existiert nur, solange die App aktiv ist. Port und Token wechseln bei jedem Start – das Plugin muss die Datei neu lesen. Das Log steht unter **Einstellungen → Advanced**.
 
 **SwiftPM-Cache-Warnungen in Sandbox-Umgebungen.** Reproduzierbarer Build mit explizit gesetzten Cache-Pfaden:
 

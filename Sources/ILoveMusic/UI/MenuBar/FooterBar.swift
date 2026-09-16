@@ -22,7 +22,7 @@ struct FooterBar: View {
         NSApplication.shared.terminate(nil)
       }
 
-      SettingsButton()
+      SettingsButton(appModel: appModel)
     }
     .padding(.horizontal, 12)
     .padding(.vertical, 8)
@@ -34,10 +34,14 @@ struct FooterBar: View {
 }
 
 struct SettingsButton: View {
+  let appModel: AppModel
+
   @State private var isHovering = false
 
   var body: some View {
-    SettingsLink {
+    Button {
+      appModel.requestOpenSettingsWindow?()
+    } label: {
       Image(systemName: "gearshape")
         .font(.system(size: 11, weight: .medium))
         .foregroundStyle(.secondary)

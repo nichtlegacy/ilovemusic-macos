@@ -1,132 +1,127 @@
-import AppKit
+import Observation
 import SwiftUI
 
-/// Tab identity for the SwiftUI Settings scene (sidebar style).
+/// Stable identities for the Settings sidebar and persisted selection.
 enum SettingsTab: String, CaseIterable, Identifiable, Hashable {
   case general
   case playback
-  case integrations
+  case discord
+  case streamDeck
   case data
+  case advanced
+  case about
 
   var id: Self { self }
 
+  static func persistedValue(_ rawValue: String?) -> Self {
+    rawValue.flatMap(Self.init(rawValue:)) ?? .general
+  }
+
   var title: String {
     switch self {
-    case .general: return "General"
-    case .playback: return "Playback"
-    case .integrations: return "Integrations"
-    case .data: return "Data"
+    case .general: "General"
+    case .playback: "Playback"
+    case .discord: "Discord"
+    case .streamDeck: "Stream Deck"
+    case .data: "Data"
+    case .advanced: "Advanced"
+    case .about: "About"
     }
   }
 
   var icon: String {
     switch self {
-    case .general: return "gearshape"
-    case .playback: return "play.circle"
-    case .integrations: return "puzzlepiece.extension"
-    case .data: return "internaldrive"
+    case .general: "gearshape"
+    case .playback: "play.circle.fill"
+    case .discord: "bubble.left.and.bubble.right.fill"
+    case .streamDeck: "rectangle.3.group.fill"
+    case .data: "externaldrive.fill"
+    case .advanced: "wrench.and.screwdriver.fill"
+    case .about: "info.circle.fill"
+    }
+  }
+
+  var iconColor: Color {
+    switch self {
+    case .general: .gray
+    case .playback: .pink
+    case .discord: .indigo
+    case .streamDeck: .blue
+    case .data: .orange
+    case .advanced: .purple
+    case .about: .teal
     }
   }
 }
 
-/// Root view for the SwiftUI `Settings` scene.
-///
-/// Sidebar + detail (`NavigationSplitView`) with native grouped Forms per tab.
-/// No fixed canvas: the window sizes itself, minimum 640×480.
+@MainActor
+@Observable
+final class SettingsSelection {
+  static let storageKey = "settings.selectedTab"
+
+  private let defaults: UserDefaults
+  var tab: SettingsTab {
+    didSet { defaults.set(tab.rawValue, forKey: Self.storageKey) }
+  }
+
+  init(defaults: UserDefaults = .standard) {
+    self.defaults = defaults
+    self.tab = SettingsTab.persistedValue(defaults.string(forKey: Self.storageKey))
+  }
+}
+
+/// Root content for the dedicated AppKit-owned Settings window.
 @MainActor
 struct SettingsView: View {
   let appModel: AppModel
-  @State private var selection: SettingsTab? = .general
-  @State private var columnVisibility: NavigationSplitViewVisibility = .all
+  @Bindable private var selection: SettingsSelection
+  let onSelectionChange: (SettingsTab) -> Void
 
-  private var activeTab: SettingsTab { selection ?? .general }
-
-  private var versionString: String {
-    let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0.1.0"
-    let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
-    return build.map { "Version \(version) (\($0))" } ?? "Version \(version)"
+  init(
+    appModel: AppModel,
+    selection: SettingsSelection,
+    onSelectionChange: @escaping (SettingsTab) -> Void = { _ in }
+  ) {
+    self.appModel = appModel
+    self._selection = Bindable(selection)
+    self.onSelectionChange = onSelectionChange
   }
 
   var body: some View {
-    NavigationSplitView(columnVisibility: $columnVisibility) {
-      List(selection: $selection) {
-        ForEach(SettingsTab.allCases) { tab in
-          Label(tab.title, systemImage: tab.icon)
-            .tag(tab)
-        }
-        HStack(spacing: 8) {
-          sidebarLogo
-          VStack(alignment: .leading, spacing: 1) {
-            Text("ILoveMusic")
-              .font(.callout.weight(.semibold))
-            Text(versionString)
-              .font(.caption)
-              .foregroundStyle(.tertiary)
-              .monospacedDigit()
-          }
-        }
-        .padding(.horizontal, 6)
-        .padding(.vertical, 8)
-        .listRowSeparator(.hidden)
+    HStack(spacing: 0) {
+      SettingsSidebar(selection: $selection.tab)
+        .frame(width: 220)
+      Divider()
+      ZStack(alignment: .topLeading) {
+        SettingsVisualEffectView(material: .windowBackground)
+        detailView
+          .frame(maxWidth: 780, maxHeight: .infinity, alignment: .topLeading)
+          .frame(maxWidth: .infinity, alignment: .leading)
       }
-      .listStyle(.sidebar)
-      .scrollEdgeEffectSoftIfAvailable()
-      .navigationTitle("Settings")
-      .frame(minWidth: 180)
-      .toolbar(removing: .sidebarToggle)
-    } detail: {
-      Group {
-        switch activeTab {
-        case .general:
-          GeneralPane(appModel: appModel)
-        case .playback:
-          PlaybackPane(appModel: appModel)
-        case .integrations:
-          IntegrationsPane(appModel: appModel)
-        case .data:
-          DataPane(appModel: appModel)
-        }
-      }
-      .navigationTitle(activeTab.title)
-      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
-    .navigationSplitViewStyle(.balanced)
-    .frame(minWidth: 640, minHeight: 480)
-    .toolbar {
-      ToolbarItem(placement: .navigation) {
-        Button {
-          withAnimation {
-            columnVisibility = columnVisibility == .all ? .detailOnly : .all
-          }
-        } label: {
-          Image(systemName: "sidebar.left")
-        }
-        .help(columnVisibility == .all ? "Hide sidebar" : "Show sidebar")
-      }
+    .frame(minWidth: 800, minHeight: 540)
+    .onChange(of: selection.tab) { _, tab in
+      onSelectionChange(tab)
     }
   }
 
   @ViewBuilder
-  private var sidebarLogo: some View {
-    if let image = Bundle.module.image(forResource: "AppLogo") {
-      Image(nsImage: image)
-        .resizable()
-        .scaledToFill()
-        .frame(width: 36, height: 36)
-        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-        .overlay(
-          RoundedRectangle(cornerRadius: 8, style: .continuous)
-            .strokeBorder(Color.primary.opacity(0.1), lineWidth: 0.5)
-        )
-    } else {
-      ZStack {
-        RoundedRectangle(cornerRadius: 8, style: .continuous)
-          .fill(LinearGradient(colors: [.pink, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
-          .frame(width: 36, height: 36)
-        Text("I♥")
-          .font(.system(size: 16, weight: .black))
-          .foregroundStyle(.white)
-      }
+  private var detailView: some View {
+    switch selection.tab {
+    case .general:
+      GeneralPane(appModel: appModel)
+    case .playback:
+      PlaybackPane(appModel: appModel)
+    case .discord:
+      DiscordPane(appModel: appModel)
+    case .streamDeck:
+      StreamDeckPane(appModel: appModel)
+    case .data:
+      DataPane(appModel: appModel)
+    case .advanced:
+      AdvancedPane(appModel: appModel)
+    case .about:
+      AboutPane()
     }
   }
 }

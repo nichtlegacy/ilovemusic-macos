@@ -7,7 +7,15 @@ struct ILoveMusicApp: App {
 
   var body: some Scene {
     Settings {
-      SettingsView(appModel: appDelegate.appModel)
+      EmptyView()
+    }
+    .commands {
+      CommandGroup(replacing: .appSettings) {
+        Button("Settings…") {
+          appDelegate.openSettings()
+        }
+        .keyboardShortcut(",", modifiers: .command)
+      }
     }
   }
 }

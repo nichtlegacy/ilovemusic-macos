@@ -100,7 +100,9 @@ struct HistoryListView: View {
         subtitle: appModel.preferences.recordHistoryEnabled == false
           ? "History recording is disabled in Settings."
           : "Once you listen to a channel for at least 10 seconds, it shows up here.",
-        showsSettingsLink: appModel.preferences.recordHistoryEnabled == false
+        openSettings: appModel.preferences.recordHistoryEnabled == false
+          ? { appModel.requestOpenSettingsWindow?() }
+          : nil
       )
     } else if days.isEmpty {
       HistoryEmptyState(
@@ -324,7 +326,7 @@ private struct HistoryEmptyState: View {
   let icon: String
   let title: String
   let subtitle: String
-  var showsSettingsLink = false
+  var openSettings: (() -> Void)? = nil
   var buttonTitle: String?
   var action: (() -> Void)?
 
@@ -342,10 +344,8 @@ private struct HistoryEmptyState: View {
         .multilineTextAlignment(.center)
         .frame(maxWidth: 360)
 
-      if showsSettingsLink {
-        SettingsLink {
-          Text("Open Settings…")
-        }
+      if let openSettings {
+        Button("Open Settings…", action: openSettings)
       } else if let buttonTitle, let action {
         Button(buttonTitle, action: action)
       }

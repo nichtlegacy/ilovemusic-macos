@@ -53,6 +53,7 @@ final class AppModel {
   @ObservationIgnored private var bootstrapped = false
   @ObservationIgnored private let statsProvider = StatsSnapshotProvider()
   @ObservationIgnored var requestOpenHistoryWindow: (() -> Void)?
+  @ObservationIgnored var requestOpenSettingsWindow: (() -> Void)?
   @ObservationIgnored private let discordSessionGracePeriod: Duration
 
   init(
