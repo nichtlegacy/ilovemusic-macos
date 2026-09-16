@@ -118,6 +118,10 @@ final class PlayHistoryStore {
   func remove(eventID: UUID) {
     queue.sync {
       var snapshot = readSnapshotLocked()
+      guard snapshot.isFullyDecoded else {
+        logger.error("skipping event removal: play history was not fully decoded")
+        return
+      }
       guard snapshot.events.removeValue(forKey: eventID) != nil else { return }
       rewriteLocked(events: snapshot.events.values.sorted(by: sortEvents))
     }

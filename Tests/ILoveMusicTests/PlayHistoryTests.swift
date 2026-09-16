@@ -333,3 +333,23 @@ func playHistoryDoesNotDropUnknownLinesDuringCompaction() throws {
 
   #expect(try Data(contentsOf: fileURL) == original)
 }
+
+@Test
+func playHistoryDoesNotDropUnknownLinesWhenRemovingAnEvent() throws {
+  let tempDir = FileManager.default.temporaryDirectory
+    .appendingPathComponent(UUID().uuidString, isDirectory: true)
+  try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+  defer { try? FileManager.default.removeItem(at: tempDir) }
+
+  let eventID = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+  let fileURL = tempDir.appendingPathComponent("play_events.jsonl")
+  let validLine = ##"{"id":"00000000-0000-0000-0000-000000000001","stationID":"radio","stationName":"I love","stationCategory":"popHits","stationAccentHex":"#fff","artist":"A","title":"T","startedAt":"2023-11-14T22:13:20Z"}"##
+  let original = Data((validLine + "\n" + #"{"futureRequiredShape":true}"# + "\n").utf8)
+  try original.write(to: fileURL)
+
+  let store = PlayHistoryStore(fileURL: fileURL)
+  store.remove(eventID: eventID)
+
+  #expect(try Data(contentsOf: fileURL) == original)
+  #expect(store.loadAll().map(\.id) == [eventID])
+}
