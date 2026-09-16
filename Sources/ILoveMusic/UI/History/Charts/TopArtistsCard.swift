@@ -7,20 +7,20 @@ struct TopArtistsCard: View {
     if artists.isEmpty {
       StatsEmptyState(title: "No artists yet", subtitle: "Your most-played artists will land here.")
     } else {
-      VStack(spacing: 10) {
+      VStack(spacing: 0) {
         let topValue = artists.first?.listenedSeconds ?? 1
         ForEach(Array(artists.enumerated()), id: \.element.id) { index, artist in
-          VStack(alignment: .leading, spacing: 6) {
+          VStack(alignment: .leading, spacing: 5) {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
               Text("\(index + 1).")
-                .font(.system(size: 11, weight: .semibold).monospacedDigit())
+                .font(.caption2.bold().monospacedDigit())
                 .foregroundStyle(.tertiary)
               Text(artist.artist)
-                .font(.system(size: 12, weight: .semibold))
+                .font(.caption.bold())
                 .lineLimit(1)
               Spacer()
               Text("\(formatShortListeningDuration(artist.listenedSeconds)) · \(artist.playCount) plays")
-                .font(.system(size: 10, weight: .medium).monospacedDigit())
+                .font(.caption2.monospacedDigit())
                 .foregroundStyle(.secondary)
             }
 
@@ -33,7 +33,12 @@ struct TopArtistsCard: View {
                     .frame(width: max(10, proxy.size.width * CGFloat(artist.listenedSeconds / topValue)))
                 }
             }
-            .frame(height: 6)
+            .frame(height: 4)
+          }
+          .padding(.vertical, 7)
+
+          if index < artists.count - 1 {
+            Divider()
           }
         }
       }

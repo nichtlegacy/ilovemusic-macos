@@ -38,6 +38,38 @@ struct HistoryStatsUITests {
   }
 
   @Test
+  func chartSelectionClampsToVisibleSlots() {
+    #expect(ChartSelection.index(at: -1, plotWidth: 240, count: 24) == nil)
+    #expect(ChartSelection.index(at: 0, plotWidth: 240, count: 24) == 0)
+    #expect(ChartSelection.index(at: 239, plotWidth: 240, count: 24) == 23)
+    #expect(ChartSelection.index(at: 240, plotWidth: 240, count: 24) == nil)
+    #expect(ChartSelection.index(at: 20, plotWidth: 0, count: 24) == nil)
+  }
+
+  @Test
+  func chartEdgeLabelsUseReadableAlignment() {
+    #expect(ChartSelection.edge(for: 0, count: 7) == .leading)
+    #expect(ChartSelection.edge(for: 3, count: 7) == .center)
+    #expect(ChartSelection.edge(for: 6, count: 7) == .trailing)
+  }
+
+  @Test
+  func heatmapCoordinateNavigationStaysInBounds() {
+    #expect(
+      HeatmapSelection(row: 0, hour: 0).moving(rowDelta: -1, hourDelta: 0)
+        == HeatmapSelection(row: 0, hour: 0)
+    )
+    #expect(
+      HeatmapSelection(row: 6, hour: 23).moving(rowDelta: 1, hourDelta: 1)
+        == HeatmapSelection(row: 6, hour: 23)
+    )
+    #expect(
+      HeatmapSelection(row: 2, hour: 8).moving(rowDelta: 1, hourDelta: -1)
+        == HeatmapSelection(row: 3, hour: 7)
+    )
+  }
+
+  @Test
   func historyWindowUsesNativeResizableChrome() throws {
     let fixture = try makeModel()
     defer { try? FileManager.default.removeItem(at: fixture.directory) }

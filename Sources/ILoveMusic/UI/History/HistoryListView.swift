@@ -36,59 +36,28 @@ struct HistoryListView: View {
       Divider()
       content(days: days)
     }
+    .searchable(text: $query, placement: .toolbar, prompt: "Songs, artists, or channels")
   }
 
   private func filterBar(matchCount: Int) -> some View {
-    HStack(spacing: 12) {
-      HStack(spacing: 8) {
-        Image(systemName: "magnifyingglass")
-          .font(.system(size: 12, weight: .medium))
-          .foregroundStyle(.secondary)
-        TextField("Suche Song, Artist oder Channel…", text: $query)
-          .textFieldStyle(.plain)
-      }
-      .padding(.horizontal, 10)
-      .padding(.vertical, 8)
-      .background(
-        RoundedRectangle(cornerRadius: 8, style: .continuous)
-          .fill(.quaternary.opacity(0.6))
-      )
-      .frame(maxWidth: 320)
-
-      Menu {
-        Button("Alle Channels") {
-          stationFilter = .all
-        }
-
-        if !stationsForMenu.isEmpty {
-          Divider()
-        }
-
+    HStack(spacing: 10) {
+      Picker("Channel", selection: $stationFilter) {
+        Text("All Channels").tag(StationFilter.all)
         ForEach(stationsForMenu, id: \.stationID) { station in
-          Button {
-            stationFilter = .station(station.stationID)
-          } label: {
-            if stationFilter == .station(station.stationID) {
-              Label(station.stationName, systemImage: "checkmark")
-            } else {
-              Text(station.stationName)
-            }
-          }
+          Text(station.stationName).tag(StationFilter.station(station.stationID))
         }
-      } label: {
-        Text(filterLabel)
-          .font(.system(size: 12, weight: .semibold))
       }
-      .menuStyle(.borderlessButton)
+      .pickerStyle(.menu)
+      .frame(maxWidth: 220)
 
       Spacer()
 
-      Text("\(matchCount.formatted(.number)) Songs")
-        .font(.system(size: 12, weight: .medium).monospacedDigit())
+      Text("\(matchCount.formatted(.number)) songs")
+        .font(.caption.monospacedDigit())
         .foregroundStyle(.secondary)
     }
     .padding(.horizontal, 16)
-    .padding(.vertical, 12)
+    .padding(.vertical, 10)
   }
 
   @ViewBuilder
@@ -162,10 +131,10 @@ struct HistoryListView: View {
       }
       .filter { event in
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return true }
+        let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         let haystack = [event.artist, event.title, event.stationName]
           .joined(separator: " ")
-          .localizedLowercase
-        return haystack.contains(query.localizedLowercase)
+        return haystack.localizedStandardContains(needle)
       }
       .sorted {
         if $0.startedAt != $1.startedAt {
@@ -205,14 +174,6 @@ struct HistoryListView: View {
     recorder.events.filter { $0.endedAt != nil }
   }
 
-  private var filterLabel: String {
-    switch stationFilter {
-    case .all:
-      return "Alle Channels"
-    case .station(let stationID):
-      return stationsForMenu.first(where: { $0.stationID == stationID })?.stationName ?? "Channel"
-    }
-  }
 }
 
 private struct HistoryDayHeader: View {
@@ -236,10 +197,10 @@ private struct HistoryDayHeader: View {
   private var title: String {
     let calendar = Calendar.current
     if calendar.isDateInToday(date) {
-      return "Heute"
+      return "Today"
     }
     if calendar.isDateInYesterday(date) {
-      return "Gestern"
+      return "Yesterday"
     }
     return date.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated))
   }
@@ -252,15 +213,13 @@ private struct HistoryRow: View {
   let onCopy: () -> Void
   let onFilterStation: () -> Void
 
-  @State private var isHovering = false
-
   var body: some View {
     HStack(spacing: 12) {
       ArtworkView(
         station: station,
         currentSongArtworkURL: event.artworkURLString.flatMap(URL.init(string:)),
-        size: 44,
-        cornerRadius: 10
+        size: 38,
+        cornerRadius: 8
       )
 
       VStack(alignment: .leading, spacing: 4) {
@@ -286,31 +245,15 @@ private struct HistoryRow: View {
           .foregroundStyle(.tertiary)
       }
     }
-    .padding(.horizontal, 10)
-    .padding(.vertical, 8)
-    .background(
-      RoundedRectangle(cornerRadius: 10, style: .continuous)
-        .fill(
-          LinearGradient(
-            colors: [accent.opacity(isHovering ? 0.12 : 0.06), accent.opacity(0.02)],
-            startPoint: .leading,
-            endPoint: .trailing
-          )
-        )
-    )
-    .overlay(
-      RoundedRectangle(cornerRadius: 10, style: .continuous)
-        .strokeBorder(Color.primary.opacity(0.04), lineWidth: 0.5)
-    )
-    .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
-    .listRowBackground(Color.clear)
-    .onHover { isHovering = $0 }
+    .padding(.vertical, 6)
+    .listRowInsets(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
+    .listRowSeparator(.visible)
     .contextMenu {
-      Button("Kopieren") {
+      Button("Copy") {
         onCopy()
       }
 
-      Button("Nach diesem Channel filtern") {
+      Button("Filter by This Channel") {
         onFilterStation()
       }
     }
@@ -318,7 +261,7 @@ private struct HistoryRow: View {
 
   private var trackLine: String {
     let parts = [event.artist, event.title].filter { !$0.isEmpty }
-    return parts.isEmpty ? "Unbekannter Track" : parts.joined(separator: " – ")
+    return parts.isEmpty ? "Unknown Track" : parts.joined(separator: " – ")
   }
 }
 
@@ -361,7 +304,7 @@ private func formatDuration(_ seconds: Double) -> String {
   formatter.allowedUnits = seconds >= 3600 ? [.hour, .minute] : (seconds >= 60 ? [.minute] : [.second])
   formatter.unitsStyle = .short
   formatter.maximumUnitCount = 2
-  return formatter.string(from: seconds) ?? "0 Sek."
+  return formatter.string(from: seconds) ?? "0 sec"
 }
 
 private func formatClockDuration(_ seconds: Double) -> String {

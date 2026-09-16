@@ -7,22 +7,22 @@ struct TopSongsCard: View {
     if songs.isEmpty {
       StatsEmptyState(title: "No songs yet", subtitle: "Once you've built up some history, your most-played tracks will appear here.")
     } else {
-      VStack(spacing: 10) {
-        ForEach(songs) { song in
+      VStack(spacing: 0) {
+        ForEach(Array(songs.enumerated()), id: \.element.id) { index, song in
           HStack(spacing: 10) {
             ArtworkView(
               station: nil,
               currentSongArtworkURL: song.artworkURLString.flatMap(URL.init(string:)),
-              size: 32,
-              cornerRadius: 8
+              size: 28,
+              cornerRadius: 7
             )
 
             VStack(alignment: .leading, spacing: 3) {
               Text(song.title.isEmpty ? "Unknown song" : song.title)
-                .font(.system(size: 12, weight: .semibold))
+                .font(.caption.bold())
                 .lineLimit(1)
               Text(song.artist.isEmpty ? "Unknown artist" : song.artist)
-                .font(.system(size: 11, weight: .medium))
+                .font(.caption2)
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
             }
@@ -31,12 +31,17 @@ struct TopSongsCard: View {
 
             VStack(alignment: .trailing, spacing: 3) {
               Text(formatShortListeningDuration(song.listenedSeconds))
-                .font(.system(size: 10, weight: .medium).monospacedDigit())
+                .font(.caption2.monospacedDigit())
                 .foregroundStyle(.secondary)
               Text("\(song.playCount) plays")
-                .font(.system(size: 10, weight: .medium).monospacedDigit())
+                .font(.caption2.monospacedDigit())
                 .foregroundStyle(.tertiary)
             }
+          }
+          .padding(.vertical, 6)
+
+          if index < songs.count - 1 {
+            Divider()
           }
         }
       }

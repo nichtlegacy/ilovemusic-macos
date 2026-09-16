@@ -5,7 +5,7 @@ func formatShortListeningDuration(_ seconds: Double) -> String {
   formatter.allowedUnits = seconds >= 3600 ? [.hour, .minute] : (seconds >= 60 ? [.minute] : [.second])
   formatter.unitsStyle = .short
   formatter.maximumUnitCount = 2
-  return formatter.string(from: seconds) ?? "0 Sek."
+  return formatter.string(from: seconds) ?? "0 sec"
 }
 
 func formatClockListeningDuration(_ seconds: Double) -> String {

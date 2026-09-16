@@ -4,13 +4,19 @@ import SwiftUI
 struct HourOfDayChart: View {
   let secondsPerHour: [Double]
 
+  @State private var selectedHour: Int?
+
   var body: some View {
     Chart(Array(secondsPerHour.enumerated()), id: \.offset) { bucket in
       BarMark(
         x: .value("Stunde", bucket.offset),
         y: .value("Zeit", bucket.element)
       )
-      .foregroundStyle(Color.accentColor.opacity(bucket.element == 0 ? 0.18 : 0.85))
+      .foregroundStyle(.tint)
+      .opacity(opacity(hour: bucket.offset, seconds: bucket.element))
+      .cornerRadius(3)
+      .accessibilityLabel("\(bucket.offset):00 to \((bucket.offset + 1) % 24):00")
+      .accessibilityValue(formatShortListeningDuration(bucket.element))
     }
     .chartXAxis {
       AxisMarks(values: Array(stride(from: 0, through: 23, by: 3))) { value in
@@ -30,11 +36,57 @@ struct HourOfDayChart: View {
         }
       }
     }
-    .frame(minHeight: 170)
+    .chartYScale(domain: 0...max(60, (secondsPerHour.max() ?? 0) * 1.12))
+    .chartOverlay { proxy in
+      GeometryReader { geometry in
+        Rectangle()
+          .fill(.clear)
+          .contentShape(Rectangle())
+          .onContinuousHover { phase in
+            switch phase {
+            case .active(let location):
+              guard let plotFrame = proxy.plotFrame else { return }
+              let frame = geometry[plotFrame]
+              let next = ChartSelection.index(
+                at: location.x - frame.minX,
+                plotWidth: frame.width,
+                count: secondsPerHour.count
+              )
+              if next != selectedHour {
+                selectedHour = next
+              }
+            case .ended:
+              selectedHour = nil
+            }
+          }
+      }
+    }
+    .overlay(alignment: .topTrailing) {
+      if let selectedHour, secondsPerHour.indices.contains(selectedHour) {
+        VStack(alignment: .leading, spacing: 2) {
+          Text("\(selectedHour):00–\((selectedHour + 1) % 24):00")
+            .font(.caption.bold())
+          Text(formatShortListeningDuration(secondsPerHour[selectedHour]))
+            .font(.caption.monospacedDigit())
+            .foregroundStyle(.secondary)
+        }
+        .padding(8)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .allowsHitTesting(false)
+      }
+    }
+    .frame(height: 175)
+    .accessibilityLabel("Listening by hour")
     .overlay {
       if secondsPerHour.allSatisfy({ $0 == 0 }) {
         StatsEmptyState(title: "No data", subtitle: "Once you've built up some history, the hour-of-day distribution will appear here.")
       }
     }
+  }
+
+  private func opacity(hour: Int, seconds: Double) -> Double {
+    if seconds == 0 { return 0.12 }
+    if selectedHour == nil || selectedHour == hour { return 0.9 }
+    return 0.45
   }
 }

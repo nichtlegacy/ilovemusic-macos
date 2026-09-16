@@ -8,45 +8,65 @@ struct GenreDonutChart: View {
     if shares.isEmpty {
       StatsEmptyState(title: "No data", subtitle: "Genre distribution appears once there is some listening history.")
     } else {
-      HStack(spacing: 16) {
-        ZStack {
-          Chart(shares) { share in
-            SectorMark(
-              angle: .value("Time", share.listenedSeconds),
-              innerRadius: .ratio(0.60)
-            )
-            .foregroundStyle(share.category.chartColor)
-          }
-
-          VStack(spacing: 4) {
-            Text(percentString(shares[0].share))
-              .font(.system(size: 20, weight: .bold).monospacedDigit())
-            Text(shares[0].category.title)
-              .font(.footnote)
-              .foregroundStyle(.secondary)
-              .multilineTextAlignment(.center)
-          }
+      ViewThatFits(in: .horizontal) {
+        HStack(spacing: 16) {
+          donut(size: 132)
+          legend
         }
-        .frame(width: 150, height: 150)
 
-        VStack(alignment: .leading, spacing: 10) {
-          ForEach(shares) { share in
-            HStack(spacing: 8) {
-              Circle()
-                .fill(share.category.chartColor)
-                .frame(width: 8, height: 8)
-              Text(share.category.title)
-                .font(.system(size: 12, weight: .medium))
-              Spacer()
-              Text("\(percentString(share.share)) · \(formatShortListeningDuration(share.listenedSeconds))")
-                .font(.system(size: 11, weight: .medium).monospacedDigit())
-                .foregroundStyle(.secondary)
-            }
-          }
+        VStack(spacing: 14) {
+          donut(size: 118)
+          legend
         }
       }
       .frame(maxWidth: .infinity, alignment: .leading)
     }
+  }
+
+  private func donut(size: CGFloat) -> some View {
+    ZStack {
+      Chart(shares) { share in
+        SectorMark(
+          angle: .value("Time", share.listenedSeconds),
+          innerRadius: .ratio(0.62),
+          angularInset: 1
+        )
+        .foregroundStyle(share.category.chartColor)
+        .accessibilityLabel(share.category.title)
+        .accessibilityValue("\(percentString(share.share)), \(formatShortListeningDuration(share.listenedSeconds))")
+      }
+
+      VStack(spacing: 2) {
+        Text(percentString(shares[0].share))
+          .font(.title3.bold().monospacedDigit())
+        Text(shares[0].category.title)
+          .font(.caption)
+          .foregroundStyle(.secondary)
+          .lineLimit(1)
+      }
+    }
+    .frame(width: size, height: size)
+    .accessibilityLabel("Genre distribution")
+  }
+
+  private var legend: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      ForEach(shares) { share in
+        HStack(spacing: 8) {
+          Circle()
+            .fill(share.category.chartColor)
+            .frame(width: 8, height: 8)
+          Text(share.category.title)
+            .font(.caption)
+            .lineLimit(1)
+          Spacer(minLength: 8)
+          Text("\(percentString(share.share)) · \(formatShortListeningDuration(share.listenedSeconds))")
+            .font(.caption2.monospacedDigit())
+            .foregroundStyle(.secondary)
+        }
+      }
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
   }
 
   private func percentString(_ value: Double) -> String {
