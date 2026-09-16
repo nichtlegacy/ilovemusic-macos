@@ -48,7 +48,8 @@ final class PlayHistoryStore {
   func loadAll() -> [PlayEvent] {
     queue.sync {
       let snapshot = readSnapshotLocked()
-      if shouldCompactLocked(lineCount: snapshot.lineCount, uniqueCount: snapshot.events.count) {
+      if snapshot.isFullyDecoded,
+         shouldCompactLocked(lineCount: snapshot.lineCount, uniqueCount: snapshot.events.count) {
         rewriteLocked(events: snapshot.events.values.sorted(by: sortEvents))
       }
       return snapshot.events.values.sorted(by: sortEvents)
@@ -73,11 +74,11 @@ final class PlayHistoryStore {
   func compact() {
     queue.sync {
       let snapshot = readSnapshotLocked()
-      // Don't compact a file we couldn't parse: 0 events from a non-empty file
-      // is a decode failure, and rewriting it would wipe recoverable history.
-      // A genuinely empty history has lineCount == 0.
-      guard !(snapshot.events.isEmpty && snapshot.lineCount > 0) else {
-        logger.error("skipping compaction: \(snapshot.lineCount, privacy: .public) lines failed to decode")
+      // Rewriting a partially decoded file would silently discard the lines
+      // this version does not understand. Leave it untouched for recovery or
+      // a future migration instead.
+      guard snapshot.isFullyDecoded else {
+        logger.error("skipping compaction: play history was not fully decoded")
         return
       }
       rewriteLocked(events: snapshot.events.values.sorted(by: sortEvents))
@@ -87,6 +88,7 @@ final class PlayHistoryStore {
   func compactIfNeeded() {
     queue.sync {
       let snapshot = readSnapshotLocked()
+      guard snapshot.isFullyDecoded else { return }
       guard shouldCompactLocked(lineCount: snapshot.lineCount, uniqueCount: snapshot.events.count) else { return }
       rewriteLocked(events: snapshot.events.values.sorted(by: sortEvents))
     }
@@ -121,18 +123,31 @@ final class PlayHistoryStore {
     }
   }
 
-  private func readSnapshotLocked() -> (events: [UUID: PlayEvent], lineCount: Int) {
-    guard let data = try? Data(contentsOf: fileURL), !data.isEmpty else {
-      return ([:], 0)
+  private func readSnapshotLocked() -> (events: [UUID: PlayEvent], lineCount: Int, isFullyDecoded: Bool) {
+    guard fileManager.fileExists(atPath: fileURL.path) else {
+      return ([:], 0, true)
+    }
+
+    let data: Data
+    do {
+      data = try Data(contentsOf: fileURL)
+    } catch {
+      logger.error("failed to read history file: \(error.localizedDescription, privacy: .public)")
+      return ([:], 0, false)
+    }
+
+    guard !data.isEmpty else {
+      return ([:], 0, true)
     }
 
     guard let text = String(data: data, encoding: .utf8) else {
       logger.error("failed to decode history file as UTF-8")
-      return ([:], 0)
+      return ([:], 0, false)
     }
 
     var events: [UUID: PlayEvent] = [:]
     var lineCount = 0
+    var isFullyDecoded = true
 
     for rawLine in text.split(separator: "\n", omittingEmptySubsequences: true) {
       lineCount += 1
@@ -140,11 +155,12 @@ final class PlayHistoryStore {
         let event = try decoder.decode(PlayEvent.self, from: Data(rawLine.utf8))
         events[event.id] = event
       } catch {
+        isFullyDecoded = false
         logger.error("failed to decode play event line: \(error.localizedDescription, privacy: .public)")
       }
     }
 
-    return (events, lineCount)
+    return (events, lineCount, isFullyDecoded)
   }
 
   private func ensureFileExistsLocked() {
@@ -202,9 +218,6 @@ final class PlayHistoryStore {
   }
 
   private func shouldCompactLocked(lineCount: Int, uniqueCount: Int) -> Bool {
-    // uniqueCount == 0 with lineCount > 0 means every line failed to decode
-    // (e.g. transient read error or schema drift). Compacting then would
-    // rewrite the file to empty and destroy recoverable history — never do it.
     if lineCount > 200 && uniqueCount > 0 && lineCount > uniqueCount * 2 {
       return true
     }

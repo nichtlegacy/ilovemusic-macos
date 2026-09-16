@@ -291,3 +291,45 @@ func playHistoryDoesNotWipeFileWhenEveryLineFailsToDecode() throws {
   let after = try Data(contentsOf: fileURL)
   #expect(after.count == original.count)
 }
+
+@Test
+func playHistoryDoesNotRewriteFileWithInvalidUTF8() throws {
+  let tempDir = FileManager.default.temporaryDirectory
+    .appendingPathComponent(UUID().uuidString, isDirectory: true)
+  try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+  defer { try? FileManager.default.removeItem(at: tempDir) }
+
+  let fileURL = tempDir.appendingPathComponent("play_events.jsonl")
+  let original = Data([0xFF, 0xFE, 0x0A])
+  try original.write(to: fileURL)
+
+  let store = PlayHistoryStore(fileURL: fileURL)
+  store.compact()
+
+  #expect(try Data(contentsOf: fileURL) == original)
+}
+
+@Test
+func playHistoryDoesNotDropUnknownLinesDuringCompaction() throws {
+  let tempDir = FileManager.default.temporaryDirectory
+    .appendingPathComponent(UUID().uuidString, isDirectory: true)
+  try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+  defer { try? FileManager.default.removeItem(at: tempDir) }
+
+  let fileURL = tempDir.appendingPathComponent("play_events.jsonl")
+  let validLine = ##"{"id":"00000000-0000-0000-0000-000000000001","stationID":"radio","stationName":"I love","stationCategory":"popHits","stationAccentHex":"#fff","artist":"A","title":"T","startedAt":"2023-11-14T22:13:20Z"}"##
+  // Enough duplicate lines to trigger automatic compaction, plus one line
+  // this build cannot decode. Neither automatic nor explicit compaction may
+  // discard the unknown line.
+  let originalText = Array(repeating: validLine, count: 201).joined(separator: "\n")
+    + "\n" + #"{"futureRequiredShape":true}"# + "\n"
+  let original = Data(originalText.utf8)
+  try original.write(to: fileURL)
+
+  let store = PlayHistoryStore(fileURL: fileURL)
+  #expect(store.loadAll().count == 1)
+  #expect(try Data(contentsOf: fileURL) == original)
+  store.compact()
+
+  #expect(try Data(contentsOf: fileURL) == original)
+}
