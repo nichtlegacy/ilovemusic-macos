@@ -5,6 +5,15 @@
     <description>Most recent changes for ILoveMusic.</description>
     <language>en</language>
     <item>
+      <title>Version 0.1.1</title>
+      <pubDate>Wed, 16 Sep 2026 19:15:31 +0000</pubDate>
+      <sparkle:version>4</sparkle:version>
+      <sparkle:shortVersionString>0.1.1</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description>&lt;ul&gt;&lt;li&gt;Das Buildskript verweigert jetzt einen Build, dessen Buildnummer unter der bereits veröffentlichten liegt. Ein solcher Build würde von Sparkle nie als Update angeboten und wäre eine Sackgasse.&lt;/li&gt;&lt;li&gt;Keine funktionalen Änderungen an der App selbst.&lt;/li&gt;&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/nichtlegacy/ilovemusic_mac/releases/download/v0.1.1/ILoveMusic-0.1.1.dmg" type="application/octet-stream" sparkle:edSignature="dOUvdQ6SZpizscqjY5ChW3XiHqJT8oc1wyoInhPS48963ywVn5++MrLYUTmqe6URQkqxUjdcFRbWLbR/oOWAAA==" length="2926377" />
+    </item>
+    <item>
       <title>Version 0.1.0</title>
       <pubDate>Wed, 16 Sep 2026 19:13:18 +0000</pubDate>
       <sparkle:version>1</sparkle:version>
