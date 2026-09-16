@@ -28,11 +28,6 @@ extension AppModel {
     set { updateResumeLastStation(newValue) }
   }
 
-  var showDockIcon: Bool {
-    get { preferences.showDockIcon }
-    set { updateShowDockIcon(newValue) }
-  }
-
   // MARK: - Playback
 
   var globalHotkeysEnabled: Bool {

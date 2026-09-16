@@ -27,15 +27,12 @@ enum LogSeverityFilter: String, CaseIterable, Identifiable, Hashable {
   }
 }
 
-/// Drop-in log panel for the Discord and Stream Deck panes.
+/// Drop-in log list for the Integrations pane.
 ///
-/// Displays the tail of a rolling diagnostic log (newest first), with a
-/// severity filter and Clear button. Persistence caps stay where they are
-/// in `ControlDiagnosticsStore` / `DiscordDiagnosticsStore` — this view only
-/// limits the visible window.
+/// No inner ScrollView: the surrounding Form already scrolls. Shows the tail
+/// of the rolling diagnostic log (newest first) with severity filter + Clear.
 @MainActor
 struct LogPanel: View {
-  let title: String
   let entries: [ControlLogEntry]
   /// Persistence cap. Shown in the footer ("auto-pruned after N") so the user
   /// understands why old entries disappear.
@@ -47,13 +44,11 @@ struct LogPanel: View {
   @State private var severity: LogSeverityFilter = .all
 
   init(
-    title: String = "Connection Log",
     entries: [ControlLogEntry],
     persistedCap: Int,
-    displayLimit: Int = 20,
+    displayLimit: Int = 10,
     onClear: @escaping () -> Void
   ) {
-    self.title = title
     self.entries = entries
     self.persistedCap = persistedCap
     self.displayLimit = displayLimit
@@ -66,45 +61,29 @@ struct LogPanel: View {
   }
 
   var body: some View {
-    VStack(alignment: .leading, spacing: 8) {
-      HStack(alignment: .center) {
-        Text(title)
-          .font(.caption)
-          .foregroundStyle(.secondary)
-          .textCase(.uppercase)
-        Spacer()
-        Picker("Severity", selection: $severity) {
-          ForEach(LogSeverityFilter.allCases) { filter in
-            Text(filter.title).tag(filter)
-          }
-        }
-        .labelsHidden()
-        .pickerStyle(.menu)
-        .frame(maxWidth: 110)
-        Button("Clear") { onClear() }
-          .disabled(entries.isEmpty)
-      }
-
-      Group {
-        if filteredEntries.isEmpty {
-          Text(entries.isEmpty ? "No events yet." : "No entries match this filter.")
-            .font(.footnote)
-            .foregroundStyle(.tertiary)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, 24)
-        } else {
-          ScrollView(.vertical, showsIndicators: true) {
-            LazyVStack(alignment: .leading, spacing: 10) {
-              ForEach(filteredEntries) { entry in
-                LogPanelRow(entry: entry)
-              }
-            }
-            .padding(.bottom, 2)
-          }
-          .frame(height: 260)
+    HStack {
+      Picker("Severity", selection: $severity) {
+        ForEach(LogSeverityFilter.allCases) { filter in
+          Text(filter.title).tag(filter)
         }
       }
-
+      .labelsHidden()
+      .pickerStyle(.menu)
+      .frame(maxWidth: 110)
+      Spacer()
+      Button("Clear") { onClear() }
+        .disabled(entries.isEmpty)
+    }
+    if filteredEntries.isEmpty {
+      Text(entries.isEmpty ? "No events yet." : "No entries match this filter.")
+        .font(.footnote)
+        .foregroundStyle(.tertiary)
+    } else {
+      VStack(alignment: .leading, spacing: 8) {
+        ForEach(filteredEntries) { entry in
+          LogPanelRow(entry: entry)
+        }
+      }
       Text("Showing last \(min(displayLimit, max(entries.count, 0))) entries · auto-pruned after \(persistedCap)")
         .font(.caption2)
         .foregroundStyle(.tertiary)
@@ -112,7 +91,7 @@ struct LogPanel: View {
   }
 }
 
-/// Individual rolling-log row. Layout & tokens come from `design.md` §5.5.
+/// Individual rolling-log row.
 @MainActor
 struct LogPanelRow: View {
   let entry: ControlLogEntry
@@ -132,6 +111,7 @@ struct LogPanelRow: View {
         Circle()
           .fill(severityColor)
           .frame(width: 7, height: 7)
+          .accessibilityLabel(severityLabel)
       }
       Text(entry.message)
         .font(.callout)
@@ -144,8 +124,16 @@ struct LogPanelRow: View {
   private var severityColor: Color {
     switch entry.severity {
     case .info: return .green
-    case .warning: return .yellow
+    case .warning: return .orange
     case .error: return .red
+    }
+  }
+
+  private var severityLabel: String {
+    switch entry.severity {
+    case .info: return "Info"
+    case .warning: return "Warning"
+    case .error: return "Error"
     }
   }
 }

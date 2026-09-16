@@ -9,15 +9,10 @@ struct PlaybackPane: View {
   @State private var recordingSlots: Set<HotkeyID> = []
 
   var body: some View {
-    PrefsScrollPane {
-      SettingsBlock("Default Volume") {
-        VStack(alignment: .leading, spacing: 4) {
-          Text("Default volume").font(.body)
-          Text("The slider in the menu uses a perceptual curve — 50% sounds quieter than half power.")
-            .font(.footnote)
-            .foregroundStyle(.tertiary)
-            .fixedSize(horizontal: false, vertical: true)
-          HStack {
+    Form {
+      Section {
+        LabeledContent("Default volume") {
+          HStack(spacing: 8) {
             Button {
               appModel.toggleMute()
             } label: {
@@ -26,69 +21,66 @@ struct PlaybackPane: View {
             }
             .buttonStyle(.plain)
             .help(appModel.isVolumeMuted ? "Unmute" : "Mute")
+            .accessibilityLabel(appModel.isVolumeMuted ? "Unmute" : "Mute")
             Slider(value: Binding(
               get: { Double(appModel.activeVolumePercent) },
               set: { appModel.updateVolumePercent(Int($0.rounded())) }
             ), in: 0...100)
-            Image(systemName: "speaker.wave.3.fill").foregroundStyle(.secondary)
+            .frame(minWidth: 120)
             Text("\(appModel.activeVolumePercent)%")
               .font(.callout.monospacedDigit())
               .frame(width: 44, alignment: .trailing)
           }
-
-          PreferenceToggleRow(
-            title: "Unlock maximum volume",
-            subtitle: "Off: output is capped below full power so low slider positions are easier to fine-tune. On: the slider reaches full volume.",
-            isOn: $appModel.unlockMaxVolume
-          )
         }
+        SettingsToggle(
+          "Unlock maximum volume",
+          subtitle: "Off: output is capped below full power so low slider positions are easier to fine-tune. On: the slider reaches full volume.",
+          isOn: $appModel.unlockMaxVolume
+        )
+      } header: {
+        Text("Volume")
+      } footer: {
+        Text("The slider in the menu uses a perceptual curve — 50% sounds quieter than half power.")
       }
 
-      Divider()
-
-      SettingsBlock("Hotkeys") {
-        PreferenceToggleRow(
-          title: "Enable global hotkeys",
+      Section {
+        SettingsToggle(
+          "Enable global hotkeys",
           subtitle: "Hotkeys work from anywhere on the system, not just when the menu is open.",
           isOn: $appModel.globalHotkeysEnabled
         )
-
-        VStack(alignment: .leading, spacing: 8) {
-          ForEach(HotkeyID.allCases, id: \.self) { id in
-            HotkeyRecorderRow(
-              id: id,
-              binding: appModel.preferences.hotkeyBinding(for: id),
-              conflictForCandidate: { candidate in
-                conflictingActionTitle(for: candidate, excluding: id)
-              },
-              onSave: { newBinding in
-                appModel.updateHotkey(id, binding: newBinding)
-              },
-              onRecordingChanged: { recording in
-                handleRecordingChange(id: id, recording: recording)
-              }
-            )
-            .opacity(appModel.globalHotkeysEnabled ? 1 : 0.5)
-            .disabled(!appModel.globalHotkeysEnabled)
-          }
-
-          if !appModel.hotkeyConflicts.isEmpty {
-            Label(
-              "macOS or another app already uses \(conflictingHotkeyNames). Pick a different combination.",
-              systemImage: "exclamationmark.triangle"
-            )
-            .font(.footnote)
-            .foregroundStyle(.secondary)
-            .fixedSize(horizontal: false, vertical: true)
-          }
-
-          Text("Tap a shortcut to record. Press Esc to clear, or use the trash icon.")
-            .font(.footnote)
-            .foregroundStyle(.tertiary)
-            .fixedSize(horizontal: false, vertical: true)
+        ForEach(HotkeyID.allCases, id: \.self) { id in
+          HotkeyRecorderRow(
+            id: id,
+            binding: appModel.preferences.hotkeyBinding(for: id),
+            conflictForCandidate: { candidate in
+              conflictingActionTitle(for: candidate, excluding: id)
+            },
+            onSave: { newBinding in
+              appModel.updateHotkey(id, binding: newBinding)
+            },
+            onRecordingChanged: { recording in
+              handleRecordingChange(id: id, recording: recording)
+            }
+          )
+          .opacity(appModel.globalHotkeysEnabled ? 1 : 0.5)
+          .disabled(!appModel.globalHotkeysEnabled)
         }
+        if !appModel.hotkeyConflicts.isEmpty {
+          Label(
+            "macOS or another app already uses \(conflictingHotkeyNames). Pick a different combination.",
+            systemImage: "exclamationmark.triangle"
+          )
+          .font(.footnote)
+          .foregroundStyle(.secondary)
+        }
+      } header: {
+        Text("Hotkeys")
+      } footer: {
+        Text("Tap a shortcut to record. Press Esc to clear, or use the trash icon.")
       }
     }
+    .settingsFormStyle()
     .onDisappear {
       // If the pane is torn down mid-recording (tab switch / window close),
       // the recorder rows never report `recording = false`, so the Carbon

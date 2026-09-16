@@ -42,7 +42,7 @@ struct HotkeyRecorderRow: View {
 
   var body: some View {
     HStack(spacing: 12) {
-      Text(id.title).font(.body)
+      Text(id.title)
       Spacer()
       pill
       Button { resetToDefault() } label: {
@@ -50,6 +50,7 @@ struct HotkeyRecorderRow: View {
       }
       .buttonStyle(.borderless)
       .help("Reset to default (\(defaultBinding.display))")
+      .accessibilityLabel("Reset \(id.title) to default")
       .disabled(binding == defaultBinding && !isRecording)
 
       Button { clear() } label: {
@@ -57,9 +58,9 @@ struct HotkeyRecorderRow: View {
       }
       .buttonStyle(.borderless)
       .help("Clear shortcut")
+      .accessibilityLabel("Clear \(id.title) shortcut")
       .disabled(binding == nil && !isRecording)
     }
-    .font(.callout)
   }
 
   // MARK: - Pill

@@ -59,8 +59,9 @@ final class PreferencesCoordinator {
   }
 
   /// Flips between Dock-icon visible (`.regular`) and menu-bar-only
-  /// (`.accessory`). The history window opens its own override via
-  /// `AppModel.prepareForAuxiliaryWindowPresentation()`.
+  /// (`.accessory`). Kept for tests and potential callers; the app itself
+  /// always runs `.accessory` and only borrows `.regular` while an
+  /// auxiliary window (Settings, History) is visible.
   ///
   /// Uses `NSApplication.shared` (not the `NSApp` implicitly-unwrapped
   /// global) so tests that haven't fully bootstrapped AppKit don't

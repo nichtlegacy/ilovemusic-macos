@@ -122,7 +122,7 @@ Die Einstellungen (SwiftUI-`Settings`-Szene) sind in sechs Tabs gegliedert.
 
 | Tab | Inhalt |
 | --- | --- |
-| **General** | Start bei Anmeldung · letzten Sender fortsetzen · Dock-Symbol ein/aus · Sender-Reihenfolge (Beliebtheit/Alphabet) · App beenden |
+| **General** | Start bei Anmeldung · letzten Sender fortsetzen · Sender-Reihenfolge (Beliebtheit/Alphabet) |
 | **Playback** | Standard-Lautstärke (perzeptuelle Kurve, Stummschalten, „Maximallautstärke entsperren") · globale Tastenkürzel ein/aus · pro-Aktion belegbare Hotkeys mit Konflikterkennung |
 | **Discord** | Rich Presence ein/aus · Cover senden · „Listen"-Button · Hörerzahl anzeigen · eigene Discord-Application-ID · Verbindungslog |
 | **Stream Deck** | Status der lokalen HTTP-Brücke · letzter Request/Handshake · Verbindungslog |
@@ -396,7 +396,7 @@ swift test
 
 <br>
 
-**Kein Dock-Symbol nach Start.** Erwartetes Verhalten – ILoveMusic lebt in der Menüleiste. Dock-Symbol bei Bedarf unter **Einstellungen → General** aktivieren.
+**Kein Dock-Symbol nach Start.** Erwartetes Verhalten – ILoveMusic lebt in der Menüleiste.
 
 **Keine Live-Sender.** Netzwerkzugriff und Erreichbarkeit der öffentlichen ILoveMusic-Endpunkte prüfen. Bei fehlgeschlagener Aktualisierung greift der gebündelte/gecachte Fallback.
 

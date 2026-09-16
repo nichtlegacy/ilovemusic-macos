@@ -217,7 +217,6 @@ final class AppModel {
     bootstrapped = true
     logger.notice("bootstrap: begin")
 
-    preferencesCoordinator.applyDockIcon(preferences.showDockIcon)
     applyLaunchAtLoginPreference()
     applyGlobalHotkeys()
 
@@ -544,12 +543,6 @@ final class AppModel {
     persist()
   }
 
-  func updateShowDockIcon(_ value: Bool) {
-    preferences.showDockIcon = value
-    preferencesCoordinator.applyDockIcon(value)
-    persist()
-  }
-
   func updateLaunchAtLogin(_ value: Bool) {
     preferences.launchAtLogin = value
     applyLaunchAtLoginPreference()
@@ -601,15 +594,15 @@ final class AppModel {
     persist()
   }
 
+  /// Auxiliary windows (Settings, History) briefly need `.regular` policy
+  /// for focus and ordering. The app itself stays menu-bar-only (`.accessory`,
+  /// no Dock icon) and always flips back once no regular window is visible.
   func prepareForAuxiliaryWindowPresentation() {
-    if !preferences.showDockIcon {
-      NSApp.setActivationPolicy(.regular)
-    }
+    NSApp.setActivationPolicy(.regular)
     NSApp.activate(ignoringOtherApps: true)
   }
 
   func restoreAccessoryPolicyIfNeeded() {
-    guard !preferences.showDockIcon else { return }
     let hasVisibleRegularWindow = NSApp.windows.contains {
       $0.isVisible && ($0.canBecomeMain || $0.canBecomeKey)
     }

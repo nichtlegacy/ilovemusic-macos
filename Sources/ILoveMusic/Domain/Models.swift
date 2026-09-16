@@ -208,7 +208,6 @@ struct UserPreferences: Codable, Equatable {
   var muted: Bool?
   var preferredStreamFormat: StreamFormatPreference
   var stationSort: StationSortPreference
-  var showDockIcon: Bool
   var launchAtLogin: Bool
   var globalHotkeysEnabled: Bool
   var resumeLastStationOnLaunch: Bool
@@ -241,7 +240,6 @@ struct UserPreferences: Codable, Equatable {
     muted: false,
     preferredStreamFormat: .auto,
     stationSort: .popularity,
-    showDockIcon: false,
     launchAtLogin: false,
     globalHotkeysEnabled: true,
     resumeLastStationOnLaunch: true,

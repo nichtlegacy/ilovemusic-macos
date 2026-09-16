@@ -1,23 +1,21 @@
 import AppKit
 import SwiftUI
 
-/// Tab identity for the SwiftUI Settings scene.
-enum SettingsTab: String, CaseIterable, Hashable {
+/// Tab identity for the SwiftUI Settings scene (sidebar style).
+enum SettingsTab: String, CaseIterable, Identifiable, Hashable {
   case general
   case playback
-  case discord
-  case streamdeck
+  case integrations
   case data
-  case about
+
+  var id: Self { self }
 
   var title: String {
     switch self {
     case .general: return "General"
     case .playback: return "Playback"
-    case .discord: return "Discord"
-    case .streamdeck: return "Stream Deck"
+    case .integrations: return "Integrations"
     case .data: return "Data"
-    case .about: return "About"
     }
   }
 
@@ -25,57 +23,110 @@ enum SettingsTab: String, CaseIterable, Hashable {
     switch self {
     case .general: return "gearshape"
     case .playback: return "play.circle"
-    case .discord: return "gamecontroller.fill"
-    case .streamdeck: return "rectangle.3.group.bubble.left"
+    case .integrations: return "puzzlepiece.extension"
     case .data: return "internaldrive"
-    case .about: return "info.circle"
     }
   }
-
-  /// Shared canvas size for every settings tab. Sized to host the heaviest
-  /// pane (Discord — header + 3 toggles + Application ID + 260 pt log) without
-  /// resizing the window between tabs.
-  static let contentWidth: CGFloat = 600
-  static let contentHeight: CGFloat = 700
 }
 
 /// Root view for the SwiftUI `Settings` scene.
 ///
-/// Each tab lives in its own file under `UI/Settings/Panes/`. All tabs share
-/// a single canvas size (`SettingsTab.contentWidth × contentHeight`) so the
-/// host window never resizes between tabs.
+/// Sidebar + detail (`NavigationSplitView`) with native grouped Forms per tab.
+/// No fixed canvas: the window sizes itself, minimum 640×480.
 @MainActor
 struct SettingsView: View {
   let appModel: AppModel
-  @State private var selection: SettingsTab = .general
+  @State private var selection: SettingsTab? = .general
+  @State private var columnVisibility: NavigationSplitViewVisibility = .all
+
+  private var activeTab: SettingsTab { selection ?? .general }
+
+  private var versionString: String {
+    let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0.1.0"
+    let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
+    return build.map { "Version \(version) (\($0))" } ?? "Version \(version)"
+  }
 
   var body: some View {
-    TabView(selection: $selection) {
-      GeneralPane(appModel: appModel)
-        .tabItem { Label(SettingsTab.general.title, systemImage: SettingsTab.general.icon) }
-        .tag(SettingsTab.general)
-
-      PlaybackPane(appModel: appModel)
-        .tabItem { Label(SettingsTab.playback.title, systemImage: SettingsTab.playback.icon) }
-        .tag(SettingsTab.playback)
-
-      DiscordPane(appModel: appModel)
-        .tabItem { Label(SettingsTab.discord.title, systemImage: SettingsTab.discord.icon) }
-        .tag(SettingsTab.discord)
-
-      StreamdeckPane(appModel: appModel)
-        .tabItem { Label(SettingsTab.streamdeck.title, systemImage: SettingsTab.streamdeck.icon) }
-        .tag(SettingsTab.streamdeck)
-
-      DataPane(appModel: appModel)
-        .tabItem { Label(SettingsTab.data.title, systemImage: SettingsTab.data.icon) }
-        .tag(SettingsTab.data)
-
-      AboutPane(appModel: appModel)
-        .tabItem { Label(SettingsTab.about.title, systemImage: SettingsTab.about.icon) }
-        .tag(SettingsTab.about)
+    NavigationSplitView(columnVisibility: $columnVisibility) {
+      List(selection: $selection) {
+        ForEach(SettingsTab.allCases) { tab in
+          Label(tab.title, systemImage: tab.icon)
+            .tag(tab)
+        }
+        HStack(spacing: 8) {
+          sidebarLogo
+          VStack(alignment: .leading, spacing: 1) {
+            Text("ILoveMusic")
+              .font(.callout.weight(.semibold))
+            Text(versionString)
+              .font(.caption)
+              .foregroundStyle(.tertiary)
+              .monospacedDigit()
+          }
+        }
+        .padding(.horizontal, 6)
+        .padding(.vertical, 8)
+        .listRowSeparator(.hidden)
+      }
+      .listStyle(.sidebar)
+      .scrollEdgeEffectSoftIfAvailable()
+      .navigationTitle("Settings")
+      .frame(minWidth: 180)
+      .toolbar(removing: .sidebarToggle)
+    } detail: {
+      Group {
+        switch activeTab {
+        case .general:
+          GeneralPane(appModel: appModel)
+        case .playback:
+          PlaybackPane(appModel: appModel)
+        case .integrations:
+          IntegrationsPane(appModel: appModel)
+        case .data:
+          DataPane(appModel: appModel)
+        }
+      }
+      .navigationTitle(activeTab.title)
+      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
-    .navigationTitle("ILoveMusic")
-    .frame(width: SettingsTab.contentWidth, height: SettingsTab.contentHeight)
+    .navigationSplitViewStyle(.balanced)
+    .frame(minWidth: 640, minHeight: 480)
+    .toolbar {
+      ToolbarItem(placement: .navigation) {
+        Button {
+          withAnimation {
+            columnVisibility = columnVisibility == .all ? .detailOnly : .all
+          }
+        } label: {
+          Image(systemName: "sidebar.left")
+        }
+        .help(columnVisibility == .all ? "Hide sidebar" : "Show sidebar")
+      }
+    }
+  }
+
+  @ViewBuilder
+  private var sidebarLogo: some View {
+    if let image = Bundle.module.image(forResource: "AppLogo") {
+      Image(nsImage: image)
+        .resizable()
+        .scaledToFill()
+        .frame(width: 36, height: 36)
+        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .overlay(
+          RoundedRectangle(cornerRadius: 8, style: .continuous)
+            .strokeBorder(Color.primary.opacity(0.1), lineWidth: 0.5)
+        )
+    } else {
+      ZStack {
+        RoundedRectangle(cornerRadius: 8, style: .continuous)
+          .fill(LinearGradient(colors: [.pink, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
+          .frame(width: 36, height: 36)
+        Text("I♥")
+          .font(.system(size: 16, weight: .black))
+          .foregroundStyle(.white)
+      }
+    }
   }
 }

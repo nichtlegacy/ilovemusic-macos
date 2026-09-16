@@ -69,7 +69,6 @@ struct AppStateStoreTests {
     prefs.favoriteIDs = ["a", "b"]
     prefs.lastStationID = "a"
     prefs.volume = 0.42
-    prefs.showDockIcon = true
 
     let station = sampleStation(id: "a")
     let nowPlaying = NowPlaying(

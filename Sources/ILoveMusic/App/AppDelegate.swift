@@ -23,14 +23,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   func applicationWillFinishLaunching(_ notification: Notification) {
-    NSApp.setActivationPolicy(appModel.preferences.showDockIcon ? .regular : .accessory)
+    NSApp.setActivationPolicy(.accessory)
   }
 
   func applicationDidFinishLaunching(_ notification: Notification) {
     let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "dev"
     let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0"
-    let policy: String = appModel.preferences.showDockIcon ? "regular" : "accessory"
-    logger.notice("launch: version=\(version, privacy: .public) build=\(build, privacy: .public) policy=\(policy, privacy: .public)")
+    logger.notice("launch: version=\(version, privacy: .public) build=\(build, privacy: .public) policy=accessory")
 
     installStatusItem()
     installPopover()

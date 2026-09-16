@@ -54,21 +54,6 @@ struct SettingsBindingTests {
   }
 
   @Test
-  func showDockIconSetterMatchesUpdateMethod() throws {
-    let dir = try makeTempSupportDirectory()
-    defer { try? FileManager.default.removeItem(at: dir) }
-
-    let store = makeStateStore(supportDirectoryURL: dir)
-    let model = makeAppModel(stateStore: store)
-    #expect(model.showDockIcon == false)
-
-    model.showDockIcon = true
-    #expect(model.preferences.showDockIcon == true)
-    model.showDockIcon = false
-    #expect(model.preferences.showDockIcon == false)
-  }
-
-  @Test
   func stationSortBindingPropagates() throws {
     let dir = try makeTempSupportDirectory()
     defer { try? FileManager.default.removeItem(at: dir) }
