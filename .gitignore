@@ -1,0 +1,14 @@
+.DS_Store
+/.build
+/Packages
+xcuserdata/
+DerivedData/
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.netrc
+/dist
+
+# Internal planning and engineering notes stay local; only the README screenshots ship.
+/design.md
+/docs/*
+!/docs/screenshots/

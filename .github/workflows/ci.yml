@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Build and test
+    # macOS 26 runners are Apple Silicon, matching the only architecture we
+    # ship, and carry an Xcode 26 toolchain. The macos-15 image still defaults
+    # to Swift 6.1, which cannot read this package's swift-tools-version 6.2.
+    runs-on: macos-26
+
+    steps:
+      # Actions are pinned to a commit SHA; a moving tag would let a compromised
+      # action run with this repository's token.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # build number is derived from the commit count
+
+      - name: Show toolchain
+        run: swift --version
+
+      - name: Test
+        run: swift test --disable-sandbox
+
+      - name: Release build with warnings as errors
+        run: swift build -c release --disable-sandbox --arch arm64 -Xswiftc -warnings-as-errors
+
+      - name: Assemble app bundle
+        run: ./Scripts/build-app.sh
+
+      - name: Package DMG
+        run: ./Scripts/package-dmg.sh
+
+      - name: Upload unsigned DMG
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ILoveMusic-dmg
+          path: dist/*.dmg
+          if-no-files-found: error
