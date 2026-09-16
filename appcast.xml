@@ -1,8 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+<?xml version='1.0' encoding='utf-8'?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
   <channel>
     <title>ILoveMusic</title>
     <description>Most recent changes for ILoveMusic.</description>
     <language>en</language>
+    <item>
+      <title>Version 0.1.0</title>
+      <pubDate>Wed, 16 Sep 2026 19:13:18 +0000</pubDate>
+      <sparkle:version>1</sparkle:version>
+      <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description>&lt;ul&gt;&lt;li&gt;Erster öffentlicher Build des ILoveMusic-Menüleisten-Players.&lt;/li&gt;&lt;li&gt;Senderliste, Wiedergabe, Live-Metadaten und Cover aus den öffentlichen ILOVEMUSIC-Feeds.&lt;/li&gt;&lt;li&gt;Verlauf und Statistik mit Charts, Streak und Heatmaps — alles bleibt lokal auf diesem Mac.&lt;/li&gt;&lt;li&gt;Optionale Discord Rich Presence und ein lokaler Control-Server für Stream Deck.&lt;/li&gt;&lt;li&gt;Globale Tastenkürzel, Start bei Anmeldung und In-App-Updates über Sparkle.&lt;/li&gt;&lt;li&gt;Benötigt macOS 14 oder neuer, Apple Silicon. Der erste Start braucht eine Gatekeeper-Freigabe, siehe README.&lt;/li&gt;&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/nichtlegacy/ilovemusic_mac/releases/download/v0.1.0/ILoveMusic-0.1.0.dmg" type="application/octet-stream" sparkle:edSignature="7sBPbN55W2Xeo+6mBMIiLSNXZxcbT8CmHElhTBy6SDfYL88rD2d2O8UWGXP/9wD1Gnad9Z+4s5PWWRJxQL7UBQ==" length="2926368" />
+    </item>
   </channel>
 </rss>
