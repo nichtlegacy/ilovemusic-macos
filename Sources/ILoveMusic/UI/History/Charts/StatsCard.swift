@@ -1,41 +1,40 @@
 import SwiftUI
 
-struct StatsCard<Content: View>: View {
+struct StatsSection<Content: View>: View {
   let title: String
-  var fullWidth = false
+  var subtitle: String? = nil
   @ViewBuilder let content: () -> Content
 
   var body: some View {
     VStack(alignment: .leading, spacing: 14) {
-      Text(title)
-        .font(.system(size: 11, weight: .semibold))
-        .textCase(.uppercase)
-        .tracking(0.6)
-        .foregroundStyle(.secondary)
+      VStack(alignment: .leading, spacing: 3) {
+        Text(title)
+          .font(.headline)
+        if let subtitle {
+          Text(subtitle)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+        }
+      }
 
       content()
     }
-    .frame(maxWidth: .infinity, alignment: .leading)
-    .frame(minHeight: fullWidth ? 220 : 210, alignment: .top)
+    .frame(maxWidth: .infinity, alignment: .topLeading)
     .padding(16)
-    .background(
-      RoundedRectangle(cornerRadius: 12, style: .continuous)
-        .fill(.regularMaterial)
-    )
-    .overlay(
-      RoundedRectangle(cornerRadius: 12, style: .continuous)
-        .strokeBorder(Color.primary.opacity(0.08), lineWidth: 0.5)
-    )
+    .background(.quaternary.opacity(0.45), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+    .overlay {
+      RoundedRectangle(cornerRadius: 14, style: .continuous)
+        .strokeBorder(Color(nsColor: .separatorColor).opacity(0.55), lineWidth: 0.5)
+    }
   }
 }
 
-struct StatsEmptyState: View {
+struct StatsSectionEmptyState: View {
   let title: String
   let subtitle: String
 
   var body: some View {
     VStack(spacing: 8) {
-      Spacer()
       Text(title)
         .font(.system(size: 14, weight: .semibold))
         .foregroundStyle(.secondary)
@@ -43,8 +42,10 @@ struct StatsEmptyState: View {
         .font(.footnote)
         .foregroundStyle(.tertiary)
         .multilineTextAlignment(.center)
-      Spacer()
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .frame(maxWidth: .infinity, minHeight: 140)
   }
 }
+
+// Kept while individual charts migrate to the more explicit section-level name.
+typealias StatsEmptyState = StatsSectionEmptyState

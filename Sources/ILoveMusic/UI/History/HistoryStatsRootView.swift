@@ -1,52 +1,73 @@
 import AppKit
+import Observation
 import SwiftUI
 
-enum HistoryStatsTab: Hashable {
+enum HistoryStatsTab: String, CaseIterable, Hashable, Identifiable {
   case history
   case stats
+
+  var id: Self { self }
+  var title: String { self == .history ? "History" : "Stats" }
+  var symbol: String { self == .history ? "clock.arrow.circlepath" : "chart.bar.xaxis" }
+}
+
+@MainActor
+@Observable
+final class HistoryStatsSelection {
+  static let destinationKey = "historyStats.selectedDestination"
+
+  private let defaults: UserDefaults
+  var destination: HistoryStatsTab {
+    didSet { defaults.set(destination.rawValue, forKey: Self.destinationKey) }
+  }
+
+  init(defaults: UserDefaults = .standard) {
+    self.defaults = defaults
+    self.destination = defaults.string(forKey: Self.destinationKey)
+      .flatMap(HistoryStatsTab.init(rawValue:)) ?? .history
+  }
 }
 
 struct HistoryStatsRootView: View {
   let appModel: AppModel
+  let selection: HistoryStatsSelection
 
-  @State private var selectedTab: HistoryStatsTab = .history
   @AppStorage("historyStatsWindow") private var historyStatsWindowRaw = HistoryWindow.last7Days.rawValue
 
   var body: some View {
-    VStack(spacing: 0) {
-      tabBar
-      Divider()
-      content
-    }
-    .frame(minWidth: 900, minHeight: 640)
-    .background(.background)
-  }
+    @Bindable var selection = selection
 
-  private var tabBar: some View {
-    HStack(spacing: 8) {
-      tabButton(.history, label: "History", systemImage: "clock.arrow.circlepath")
-      tabButton(.stats, label: "Stats", systemImage: "chart.bar.xaxis")
-      Spacer()
-      if selectedTab == .stats {
-        Picker("Time range", selection: $historyStatsWindowRaw) {
-          Text("Today").tag(HistoryWindow.today.rawValue)
-          Text("Last 7 days").tag(HistoryWindow.last7Days.rawValue)
-          Text("Last 30 days").tag(HistoryWindow.last30Days.rawValue)
-          Text("Last 90 days").tag(HistoryWindow.last90Days.rawValue)
-          Text("All time").tag(HistoryWindow.lifetime.rawValue)
+    content
+      .toolbar {
+        ToolbarItem(placement: .principal) {
+          Picker("View", selection: $selection.destination) {
+            ForEach(HistoryStatsTab.allCases) { tab in
+              Label(tab.title, systemImage: tab.symbol).tag(tab)
+            }
+          }
+          .pickerStyle(.segmented)
+          .frame(width: 210)
         }
-        .pickerStyle(.menu)
-        .frame(width: 230)
+
+        if selection.destination == .stats {
+          ToolbarItem(placement: .primaryAction) {
+            Picker("Time Range", selection: $historyStatsWindowRaw) {
+              Text("Today").tag(HistoryWindow.today.rawValue)
+              Text("7 Days").tag(HistoryWindow.last7Days.rawValue)
+              Text("30 Days").tag(HistoryWindow.last30Days.rawValue)
+              Text("90 Days").tag(HistoryWindow.last90Days.rawValue)
+              Text("All Time").tag(HistoryWindow.lifetime.rawValue)
+            }
+            .pickerStyle(.menu)
+            .frame(width: 150)
+          }
+        }
       }
-    }
-    .padding(.horizontal, 16)
-    .padding(.top, 12)
-    .padding(.bottom, 8)
   }
 
   @ViewBuilder
   private var content: some View {
-    switch selectedTab {
+    switch selection.destination {
     case .history:
       HistoryListView(appModel: appModel)
     case .stats:
@@ -57,25 +78,4 @@ struct HistoryStatsRootView: View {
     }
   }
 
-  private func tabButton(_ tab: HistoryStatsTab, label: String, systemImage: String) -> some View {
-    Button {
-      selectedTab = tab
-    } label: {
-      HStack(spacing: 6) {
-        Image(systemName: systemImage)
-          .font(.system(size: 11, weight: .semibold))
-        Text(label)
-          .font(.system(size: 12, weight: .semibold))
-      }
-      .foregroundStyle(selectedTab == tab ? .primary : .secondary)
-      .padding(.horizontal, 12)
-      .padding(.vertical, 7)
-      .background(
-        Capsule(style: .continuous)
-          .fill(selectedTab == tab ? Color.primary.opacity(0.10) : .clear)
-      )
-    }
-    .buttonStyle(.plain)
-    .focusEffectDisabled()
-  }
 }

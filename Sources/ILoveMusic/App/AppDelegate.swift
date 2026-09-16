@@ -12,7 +12,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
   private var statusItem: NSStatusItem?
   private var popover: NSPopover?
   private var controlServer: ControlServer?
-  private weak var historyWindow: NSWindow?
+  private lazy var historyStatsWindowController = HistoryStatsWindowController(appModel: appModel)
   private lazy var settingsWindowController = SettingsWindowController(appModel: appModel)
   private let logger = Logger(subsystem: AppIdentity.logSubsystem, category: "AppDelegate")
 
@@ -90,10 +90,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   @objc private func handleWindowWillClose(_ notification: Notification) {
-    if let window = notification.object as? NSWindow, window === historyWindow {
-      historyWindow = nil
-    }
-
     DispatchQueue.main.async { [weak self] in
       self?.appModel.restoreAccessoryPolicyIfNeeded()
     }
@@ -303,31 +299,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   private func openHistoryWindow() {
-    appModel.prepareForAuxiliaryWindowPresentation()
-
-    if let historyWindow {
-      historyWindow.makeKeyAndOrderFront(nil)
-      return
-    }
-
-    let rootView = HistoryStatsRootView(appModel: appModel)
-    let hostingController = NSHostingController(rootView: rootView)
-
-    let window = NSWindow(
-      contentRect: NSRect(x: 0, y: 0, width: 1120, height: 820),
-      styleMask: [.titled, .closable, .miniaturizable, .resizable],
-      backing: .buffered,
-      defer: false
-    )
-    window.title = AppIdentity.historyWindowTitle
-    window.identifier = NSUserInterfaceItemIdentifier("history-stats")
-    window.setFrameAutosaveName("history-stats")
-    window.contentMinSize = NSSize(width: 900, height: 640)
-    window.contentViewController = hostingController
-    window.isReleasedWhenClosed = false
-    window.center()
-    window.makeKeyAndOrderFront(nil)
-
-    self.historyWindow = window
+    popover?.performClose(nil)
+    historyStatsWindowController.show()
   }
 }
