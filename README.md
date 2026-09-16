@@ -162,7 +162,7 @@ Du hinterlegst eine **eigene** Discord-Application-ID (developer.discord.com →
 
 Ein eigenes Stream-Deck-Plugin steuert den Player direkt vom Deck: Wiedergabe, Sender, Favoriten und Lautstärke – mit Live-Cover und Hörerzahl auf den Tasten.
 
-Plugin-Repository: **[nichtlegacy/ilovemusic_streamdeck](https://github.com/nichtlegacy/ilovemusic_streamdeck)** *(folgt)*
+Plugin-Repository: **[nichtlegacy/ilovemusic_streamdeck](https://github.com/nichtlegacy/ilovemusic_streamdeck)**
 
 <div align="center">
 <img src="docs/screenshots/streamdeck.png" alt="ILoveMusic auf einem Stream Deck" width="720">
@@ -195,7 +195,7 @@ Absicherung des Servers:
 ### Installation
 
 1. ILoveMusic starten – der Control-Server läuft automatisch, sobald die App aktiv ist.
-2. Das Plugin aus dem [Plugin-Repository](https://github.com/nichtlegacy/ilovemusic_streamdeck) installieren (`.streamDeckPlugin` doppelklicken).
+2. Das Plugin aus den [Releases des Plugin-Repositories](https://github.com/nichtlegacy/ilovemusic_streamdeck/releases) installieren (`.streamDeckPlugin` doppelklicken).
 3. Aktionen aus der Kategorie **ILoveMusic** auf Tasten ziehen; Sender-Tasten bekommen ihren Sender in der Inspector-Ansicht zugewiesen.
 4. Im Tab **Einstellungen → Stream Deck** prüfen, ob Handshake und letzter Request erscheinen.
 
