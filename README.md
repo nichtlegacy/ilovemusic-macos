@@ -148,7 +148,17 @@ Registriert über die Carbon-`RegisterEventHotKey`-API in [`GlobalShortcutManage
 Ein eigenes `NSWindow` (auf Anforderung erzeugt) zeigt Verlauf und aggregierte Hörstatistik. Der Verlauf basiert auf lokal protokollierten Play-Events; nichts verlässt den Mac.
 
 <div align="center">
-<img src="docs/screenshots/stats.png" alt="Verlauf & Statistik" width="760">
+<img src="docs/screenshots/stats.png" alt="Statistik mit Hörtrend, Top-Sendern und Genre-Verteilung" width="760">
+<br>
+<sub>Statistik mit frei wählbarem Zeitraum</sub>
+</div>
+
+<br>
+
+<div align="center">
+<img src="docs/screenshots/history.png" alt="Hörverlauf mit Suche und Senderfilter" width="760">
+<br>
+<sub>Hörverlauf mit Suche und Senderfilter</sub>
 </div>
 
 Enthalten: Heute/Woche/Monat/Streak-Karten, Top-Sender, Genre-Verteilung, Hör-Trend, 24-Stunden-Verteilung, Wochentag×Stunde-Heatmap, Top-Künstler und Top-Songs – mit Zeitraum-Auswahl und Umschalter zwischen Verlauf und Statistik.
