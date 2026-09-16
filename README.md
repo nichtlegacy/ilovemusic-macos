@@ -3,7 +3,7 @@
 # ILoveMusic für macOS
 
 **Nativer Menüleisten-Player für die öffentlichen ILoveMusic-Radiostreams.**
-
+<br>
 Lokal-first, ohne Account, ohne Cloud, ohne eigenes Backend – gebaut nur auf den öffentlichen ILoveMusic-Daten.
 
 [![macOS 14+](https://img.shields.io/badge/macOS-14%2B-000000?logo=apple&logoColor=white)](https://www.apple.com/macos/)
