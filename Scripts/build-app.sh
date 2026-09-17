@@ -69,11 +69,14 @@ swift build -c release --disable-sandbox --arch arm64
 echo "==> Assembling .app bundle"
 rm -rf "$APP_DIR"
 mkdir -p "$APP_DIR/Contents/MacOS"
+mkdir -p "$APP_DIR/Contents/Helpers"
 mkdir -p "$APP_DIR/Contents/Resources"
 mkdir -p "$APP_DIR/Contents/Frameworks"
 
 cp "${BUILD_DIR}/${NAME}" "$APP_DIR/Contents/MacOS/${NAME}"
 chmod +x "$APP_DIR/Contents/MacOS/${NAME}"
+cp "${BUILD_DIR}/${NAME}Relauncher" "$APP_DIR/Contents/Helpers/${NAME}Relauncher"
+chmod +x "$APP_DIR/Contents/Helpers/${NAME}Relauncher"
 
 if [ -d "${BUILD_DIR}/${RESOURCE_BUNDLE}" ]; then
   cp -R "${BUILD_DIR}/${RESOURCE_BUNDLE}" "$APP_DIR/Contents/Resources/"
@@ -148,6 +151,7 @@ codesign --force --sign - --timestamp=none "$SPARKLE_IN_APP/Versions/B/XPCServic
 codesign --force --sign - --timestamp=none "$SPARKLE_IN_APP/Versions/B/Updater.app"
 codesign --force --sign - --timestamp=none "$SPARKLE_IN_APP/Versions/B/Autoupdate"
 codesign --force --sign - --timestamp=none "$SPARKLE_IN_APP"
+codesign --force --sign - --timestamp=none "$APP_DIR/Contents/Helpers/${NAME}Relauncher"
 codesign --force --sign - --timestamp=none "$APP_DIR"
 codesign --verify --deep --strict "$APP_DIR"
 

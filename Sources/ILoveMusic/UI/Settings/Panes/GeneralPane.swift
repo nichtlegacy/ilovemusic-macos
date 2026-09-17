@@ -4,6 +4,7 @@ import SwiftUI
 struct GeneralPane: View {
   @Environment(\.locale) private var locale
   @Bindable var appModel: AppModel
+  @State private var relaunchFailed = false
 
   var body: some View {
     Form {
@@ -48,9 +49,13 @@ struct GeneralPane: View {
             HStack {
               Spacer()
               Button {
-                NSApplication.shared.terminate(nil)
+                do {
+                  try AppRelauncher.restart()
+                } catch {
+                  relaunchFailed = true
+                }
               } label: {
-                Text("Quit ILoveMusic", bundle: #bundle)
+                Text("Restart ILoveMusic", bundle: #bundle)
               }
             }
           }
@@ -73,5 +78,16 @@ struct GeneralPane: View {
       }
     }
     .settingsFormStyle()
+    .alert(
+      Text("ILoveMusic couldn’t restart.", bundle: #bundle),
+      isPresented: $relaunchFailed
+    ) {
+      Button(role: .cancel) {
+      } label: {
+        Text("Cancel", bundle: #bundle)
+      }
+    } message: {
+      Text("Quit and reopen ILoveMusic to apply the language.", bundle: #bundle)
+    }
   }
 }

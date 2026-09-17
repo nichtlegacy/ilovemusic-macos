@@ -1223,6 +1223,17 @@
         }
       }
     },
+    "ILoveMusic couldn’t restart.": {
+      "comment": "Alert title shown when the language-change relaunch helper cannot start.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ILoveMusic konnte nicht neu gestartet werden."
+          }
+        }
+      }
+    },
     "Idle": {
       "comment": "Stream Deck bridge status",
       "localizations": {
@@ -2073,6 +2084,17 @@
         }
       }
     },
+    "Quit and reopen ILoveMusic to apply the language.": {
+      "comment": "Recovery instruction when automatic relaunch after a language change fails.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beende und öffne ILoveMusic erneut, um die Sprache anzuwenden."
+          }
+        }
+      }
+    },
     "Random Station": {
       "comment": "Context-menu action that starts a random station.",
       "localizations": {
@@ -2327,6 +2349,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Neu starten"
+          }
+        }
+      }
+    },
+    "Restart ILoveMusic": {
+      "comment": "Button that restarts the app to apply a changed language.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ILoveMusic neu starten"
           }
         }
       }

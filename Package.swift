@@ -9,7 +9,8 @@ let package = Package(
     .macOS(.v14)
   ],
   products: [
-    .executable(name: "ILoveMusic", targets: ["ILoveMusic"])
+    .executable(name: "ILoveMusic", targets: ["ILoveMusic"]),
+    .executable(name: "ILoveMusicRelauncher", targets: ["ILoveMusicRelauncher"])
   ],
   dependencies: [
     .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.6.0")
@@ -26,6 +27,9 @@ let package = Package(
       linkerSettings: [
         .unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"])
       ]
+    ),
+    .executableTarget(
+      name: "ILoveMusicRelauncher"
     ),
     .testTarget(
       name: "ILoveMusicTests",
