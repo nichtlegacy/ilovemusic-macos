@@ -1,4 +1,5 @@
 import Foundation
+import Observation
 import Testing
 @testable import ILoveMusic
 
@@ -301,6 +302,32 @@ func snapshotBuildsStreakAndAverageSessions() {
 }
 
 @Test
+func streakDistributesListeningAcrossMidnight() {
+  let now = date("2023-11-18T12:00:00Z")
+  let event = synthEvent(
+    stationID: "night",
+    stationName: "I ♥ NIGHT",
+    category: .danceDJ,
+    artist: "DJ",
+    title: "Midnight Set",
+    start: date("2023-11-17T23:58:00Z"),
+    end: date("2023-11-18T00:02:00Z"),
+    listened: 240
+  )
+
+  let snapshot = PlayHistoryStats.snapshot(
+    events: [event],
+    window: .last7Days,
+    stationLookup: [:],
+    now: now,
+    calendar: fixedCalendar
+  )
+
+  #expect(snapshot.dailyTrend.suffix(2).map(\.listenedSeconds) == [120, 120])
+  #expect(snapshot.dailyStreak == 2)
+}
+
+@Test
 func snapshotCanonicalizesArtistsCapsTopNAndRebindsGenres() {
   let now = date("2023-11-18T23:59:00Z")
   var events: [PlayEvent] = [
@@ -445,9 +472,29 @@ func appModelCachesSnapshotsAndInvalidatesOnRecorderMutation() {
   _ = appModel.statsSnapshot(for: .lifetime)
   #expect(appModel.statsSnapshotComputeCount == 1)
 
-  appModel.historyRecorder.reset()
+  let revision = appModel.statsSnapshotRevision
+  appModel.historyRecorder.onEventsChanged?()
+  #expect(appModel.statsSnapshotRevision == revision + 1)
   _ = appModel.statsSnapshot(for: .lifetime)
   #expect(appModel.statsSnapshotComputeCount == 2)
+}
+
+@MainActor
+@Test
+func cachedSnapshotStillObservesRecorderInvalidation() async {
+  let appModel = AppModel(playbackController: PlaybackController())
+  let probe = StatsObservationProbe()
+
+  _ = appModel.statsSnapshot(for: .lifetime)
+  withObservationTracking {
+    _ = appModel.statsSnapshot(for: .lifetime)
+  } onChange: {
+    Task { @MainActor in probe.changed = true }
+  }
+
+  appModel.historyRecorder.onEventsChanged?()
+
+  #expect(await waitUntil { probe.changed })
 }
 
 @MainActor
@@ -553,6 +600,11 @@ private let fixedCalendar: Calendar = {
   calendar.timeZone = TimeZone(secondsFromGMT: 0) ?? .current
   return calendar
 }()
+
+@MainActor
+private final class StatsObservationProbe {
+  var changed = false
+}
 
 private func date(_ value: String) -> Date {
   let formatter = ISO8601DateFormatter()

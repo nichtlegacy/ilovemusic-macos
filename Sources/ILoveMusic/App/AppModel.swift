@@ -24,6 +24,7 @@ final class AppModel {
   private(set) var diagnostics = DiagnosticsSnapshot.empty
   private(set) var controlConnectionLog: [ControlLogEntry]
   private(set) var controlRuntimeStatus: ControlServerRuntimeStatus = .empty
+  private(set) var statsSnapshotRevision = 0
   private(set) var discordConnectionLog: [ControlLogEntry]
   private(set) var refreshState: RefreshState = .idle
   private(set) var refreshOutcome: RefreshOutcome = .idle
@@ -627,12 +628,23 @@ final class AppModel {
 
   var statsSnapshotComputeCount: Int { statsProvider.computeCount }
 
-  func statsSnapshot(for window: HistoryWindow) -> StatsSnapshot {
-    statsProvider.snapshot(for: window) { [historyRecorder, stations] in
+  func statsSnapshot(
+    for window: HistoryWindow,
+    now: Date = .now,
+    calendar: Calendar = .current
+  ) -> StatsSnapshot {
+    // Reading the revision here makes cache invalidation visible to SwiftUI
+    // even when the provider returns a cached snapshot without reading events.
+    _ = statsSnapshotRevision
+    let events = historyRecorder.events
+    let stationLookup = Dictionary(uniqueKeysWithValues: stations.map { ($0.id, $0) })
+    return statsProvider.snapshot(for: window, now: now, calendar: calendar) {
       PlayHistoryStats.snapshot(
-        events: historyRecorder.events,
+        events: events,
         window: window,
-        stationLookup: Dictionary(uniqueKeysWithValues: stations.map { ($0.id, $0) })
+        stationLookup: stationLookup,
+        now: now,
+        calendar: calendar
       )
     }
   }
@@ -912,6 +924,7 @@ final class AppModel {
 
   private func invalidateStatsSnapshot() {
     statsProvider.invalidate()
+    statsSnapshotRevision &+= 1
   }
 
   private func applyRecentSongs(_ tracks: [NowPlaying], for stationID: String, metadataSignature: String) {

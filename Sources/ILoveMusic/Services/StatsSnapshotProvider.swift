@@ -14,14 +14,20 @@ final class StatsSnapshotProvider {
   private var cached: (window: HistoryWindow, snapshot: StatsSnapshot)?
   private(set) var computeCount: Int = 0
 
-  /// Returns the cached snapshot when `window` matches the last call; otherwise
-  /// recomputes via `compute()`, stores the result, and increments
-  /// `computeCount` so tests can detect unwanted re-computation.
+  /// Returns the cached snapshot when `window` and the calendar day match the
+  /// last call; otherwise recomputes via `compute()`, stores the result, and
+  /// increments `computeCount` so tests can detect unwanted re-computation.
   func snapshot(
     for window: HistoryWindow,
+    now: Date = .now,
+    calendar: Calendar = .current,
     compute: () -> StatsSnapshot
   ) -> StatsSnapshot {
-    if let cached, cached.window == window {
+    if
+      let cached,
+      cached.window == window,
+      calendar.isDate(cached.snapshot.computedAt, inSameDayAs: now)
+    {
       return cached.snapshot
     }
     let snapshot = compute()

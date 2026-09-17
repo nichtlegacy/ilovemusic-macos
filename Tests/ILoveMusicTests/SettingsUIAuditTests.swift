@@ -27,6 +27,38 @@ struct SettingsUIAuditTests {
   }
 
   @Test
+  func streamDeckStatusRecoversAfterSuccessfulRequest() {
+    let errorAt = Date(timeIntervalSince1970: 1_700_000_000)
+    let requestAt = errorAt.addingTimeInterval(30)
+    var status = ControlServerRuntimeStatus.empty
+    status.lastRequestAt = requestAt
+    status.lastErrorAt = errorAt
+
+    #expect(StreamDeckConnectionStatus.resolve(runtime: status, now: requestAt) == .receivingRequests)
+  }
+
+  @Test
+  func streamDeckStatusShowsCurrentServerError() {
+    let requestAt = Date(timeIntervalSince1970: 1_700_000_000)
+    let errorAt = requestAt.addingTimeInterval(30)
+    var status = ControlServerRuntimeStatus.empty
+    status.lastRequestAt = requestAt
+    status.lastErrorAt = errorAt
+
+    #expect(StreamDeckConnectionStatus.resolve(runtime: status, now: errorAt) == .issue)
+  }
+
+  @Test
+  func streamDeckStatusBecomesIdleAfterFiveMinutes() {
+    let requestAt = Date(timeIntervalSince1970: 1_700_000_000)
+    var status = ControlServerRuntimeStatus.empty
+    status.lastRequestAt = requestAt
+
+    #expect(StreamDeckConnectionStatus.resolve(runtime: status, now: requestAt.addingTimeInterval(299)) == .receivingRequests)
+    #expect(StreamDeckConnectionStatus.resolve(runtime: status, now: requestAt.addingTimeInterval(300)) == .idle)
+  }
+
+  @Test
   func germanHotkeyConflictInterpolatesLocalizedActionNames() {
     let names = [HotkeyID.nextStation, .randomStation]
       .map { AppLocalization.string($0.titleResource, language: .german) }

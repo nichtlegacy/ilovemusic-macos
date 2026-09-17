@@ -371,7 +371,7 @@ final class ControlServer: @unchecked Sendable {
   }
 
   private func record(area: String, severity: ControlLogSeverity, message: String) {
-    if severity != .info {
+    if severity == .error {
       mutateStatusOnQueue { $0.lastErrorAt = Date() }
     }
     diagnosticsStore?.append(area: area, severity: severity, message: message)

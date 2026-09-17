@@ -30,12 +30,15 @@ struct LibraryRefreshCoordinatorTests {
       refreshMetadata: { await metadata.increment() }
     )
 
-    try? await Task.sleep(for: .milliseconds(300))
+    let didRefresh = await waitUntil {
+      let catalogValue = await catalog.value
+      let listenerValue = await listeners.value
+      let metadataValue = await metadata.value
+      return catalogValue >= 1 && listenerValue >= 1 && metadataValue >= 1
+    }
     coordinator.stop()
 
-    #expect(await catalog.value >= 1)
-    #expect(await listeners.value >= 1)
-    #expect(await metadata.value >= 1)
+    #expect(didRefresh)
   }
 
   @Test
@@ -99,4 +102,17 @@ struct LibraryRefreshCoordinatorTests {
     let secondWindow = secondRun - firstRun
     #expect(secondWindow <= firstRun * 2 + 2)
   }
+}
+
+@MainActor
+private func waitUntil(
+  timeout: Duration = .seconds(5),
+  condition: () async -> Bool
+) async -> Bool {
+  let deadline = ContinuousClock.now + timeout
+  while ContinuousClock.now < deadline {
+    if await condition() { return true }
+    try? await Task.sleep(for: .milliseconds(20))
+  }
+  return await condition()
 }

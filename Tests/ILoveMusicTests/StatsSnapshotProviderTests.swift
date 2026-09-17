@@ -65,4 +65,38 @@ struct StatsSnapshotProviderTests {
     #expect(computed == 2)
     #expect(provider.computeCount == 2)
   }
+
+  @Test
+  func calendarDayChangeForcesRecompute() {
+    let provider = StatsSnapshotProvider()
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = TimeZone(secondsFromGMT: 0) ?? .current
+    let beforeMidnight = Date(timeIntervalSince1970: 1_700_006_340)
+    let afterMidnight = beforeMidnight.addingTimeInterval(120)
+    var computed = 0
+
+    _ = provider.snapshot(for: .today, now: beforeMidnight, calendar: calendar) {
+      computed += 1
+      return PlayHistoryStats.snapshot(
+        events: [],
+        window: .today,
+        stationLookup: [:],
+        now: beforeMidnight,
+        calendar: calendar
+      )
+    }
+    _ = provider.snapshot(for: .today, now: afterMidnight, calendar: calendar) {
+      computed += 1
+      return PlayHistoryStats.snapshot(
+        events: [],
+        window: .today,
+        stationLookup: [:],
+        now: afterMidnight,
+        calendar: calendar
+      )
+    }
+
+    #expect(computed == 2)
+    #expect(provider.computeCount == 2)
+  }
 }

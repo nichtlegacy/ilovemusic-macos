@@ -377,11 +377,11 @@ struct PlayHistoryStats {
   private static func dailyStreak(events: [PlayEvent], now: Date, calendar: Calendar) -> Int {
     guard !events.isEmpty else { return 0 }
 
-    let dailyTotals = Dictionary(
-      grouping: clippedEvents(events: events, window: .lifetime, now: now, calendar: calendar),
-      by: { calendar.startOfDay(for: $0.clippedStart) }
-    ).mapValues { dayEvents in
-      dayEvents.reduce(0) { $0 + $1.effectiveSeconds }
+    var dailyTotals: [Date: Double] = [:]
+    for event in clippedEvents(events: events, window: .lifetime, now: now, calendar: calendar) {
+      for item in distributeAcrossDays(event: event, calendar: calendar) {
+        dailyTotals[item.date, default: 0] += item.seconds
+      }
     }
 
     let today = calendar.startOfDay(for: now)

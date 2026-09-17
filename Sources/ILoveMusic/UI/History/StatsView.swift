@@ -5,26 +5,28 @@ struct StatsView: View {
   let window: HistoryWindow
 
   var body: some View {
-    let snapshot = appModel.statsSnapshot(for: window)
+    TimelineView(.periodic(from: .now, by: 60)) { context in
+      let snapshot = appModel.statsSnapshot(for: window, now: context.date)
 
-    GeometryReader { proxy in
-      let contentWidth = min(proxy.size.width - 48, StatsLayout.maximumContentWidth)
+      GeometryReader { proxy in
+        let contentWidth = min(proxy.size.width - 48, StatsLayout.maximumContentWidth)
 
-      ScrollView {
-        VStack(alignment: .leading, spacing: 18) {
-          if StatsLayout.showsPageEmptyState(eventCountInWindow: snapshot.eventCountInWindow) {
-            StatsPageEmptyState(window: window)
-          } else {
-            StatsSummaryStrip(snapshot: snapshot)
-            primaryTrend(snapshot: snapshot)
-            supportingBreakdowns(snapshot: snapshot, width: contentWidth)
-            listeningPatterns(snapshot: snapshot, width: contentWidth)
-            rankings(snapshot: snapshot, width: contentWidth)
+        ScrollView {
+          VStack(alignment: .leading, spacing: 18) {
+            if StatsLayout.showsPageEmptyState(eventCountInWindow: snapshot.eventCountInWindow) {
+              StatsPageEmptyState(window: window)
+            } else {
+              StatsSummaryStrip(snapshot: snapshot)
+              primaryTrend(snapshot: snapshot)
+              supportingBreakdowns(snapshot: snapshot, width: contentWidth)
+              listeningPatterns(snapshot: snapshot, width: contentWidth)
+              rankings(snapshot: snapshot, width: contentWidth)
+            }
           }
+          .frame(width: max(0, contentWidth), alignment: .topLeading)
+          .padding(.vertical, 24)
+          .frame(maxWidth: .infinity)
         }
-        .frame(width: max(0, contentWidth), alignment: .topLeading)
-        .padding(.vertical, 24)
-        .frame(maxWidth: .infinity)
       }
     }
   }
