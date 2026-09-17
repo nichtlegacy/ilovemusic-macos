@@ -5,6 +5,15 @@
     <description>Most recent changes for ILoveMusic.</description>
     <language>en</language>
     <item>
+      <title>Version 0.2.0</title>
+      <pubDate>Thu, 17 Sep 2026 20:26:55 +0000</pubDate>
+      <sparkle:version>31</sparkle:version>
+      <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description>&lt;ul&gt;&lt;li&gt;Komplett überarbeitetes Einstellungsfenster mit nativer Seitenleiste, klar getrennten Bereichen und macOS-typischem Layout.&lt;/li&gt;&lt;li&gt;Neu aufgebautes Fenster für Verlauf und Statistik, das sich an die Fenstergröße anpasst und die wichtigsten Kennzahlen auf einen Blick zeigt.&lt;/li&gt;&lt;li&gt;Interaktive Diagramme für Hörtrend, Sender, Genres, Tageszeiten und Wochentage sowie Ranglisten für Künstler und Songs.&lt;/li&gt;&lt;li&gt;Durchsuchbarer Hörverlauf mit Senderfilter und nativer Darstellung nach Tagen.&lt;/li&gt;&lt;li&gt;Der gespeicherte Hörverlauf behält unbekannte Daten bei Bereinigung und Löschvorgängen. Bestehende Statistiken überstehen App-Updates.&lt;/li&gt;&lt;li&gt;Deutsche und englische Oberfläche mit den Optionen Systemstandard, Deutsch und Englisch. Ein Sprachwechsel kann ILoveMusic direkt neu starten.&lt;/li&gt;&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/nichtlegacy/ilovemusic_mac/releases/download/v0.2.0/ILoveMusic-0.2.0.dmg" type="application/octet-stream" sparkle:edSignature="4XYHBQkJXcyrce0tYYJrRp8b1pdgCGBaQWRcQ7DSaQHniQzT8y/VU3XAbyVREELCy2942KwmUWvF4fBk208uDg==" length="3210200" />
+    </item>
+    <item>
       <title>Version 0.1.1</title>
       <pubDate>Wed, 16 Sep 2026 19:15:31 +0000</pubDate>
       <sparkle:version>4</sparkle:version>
