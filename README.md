@@ -94,7 +94,7 @@ cd ilovemusic_mac
 
 swift build      # bauen
 swift run ILoveMusic   # starten
-swift test       # 91 Tests
+swift test       # 104 Tests
 ```
 
 Nach dem Start erscheint **kein Fenster** – ILoveMusic setzt ein Symbol in die Menüleiste (`NSStatusItem`). Linksklick öffnet das Player-Panel, Rechtsklick zeigt ein natives Menü mit Wiedergabe-, Aktualisieren-, Verlauf-, Einstellungen- und Beenden-Aktionen. Das Dock-Symbol ist standardmäßig aus (`setActivationPolicy(.accessory)`).
@@ -394,7 +394,7 @@ ilovemusic_mac/
 
 ## Tests
 
-94 Tests über 21 Dateien unter [`Tests/ILoveMusicTests`](Tests/ILoveMusicTests), basierend auf dem `swift-testing`-Framework. Abdeckung u. a.: Live-DTO-Decoding, Katalog-Normalisierung & Sichtbarkeitsfilter, Recent-Tracks-XML-Parsing, Lautstärke-/Control-Server-Flows, Verlaufs-Recording und Stats-Aggregation, Discord-IPC/-Presence, App-Support-Pfade, Persistenz-Verträge sowie Menüleisten- und Einstellungs-Audits.
+104 Tests über 22 Dateien unter [`Tests/ILoveMusicTests`](Tests/ILoveMusicTests), basierend auf dem `swift-testing`-Framework. Abdeckung u. a.: Live-DTO-Decoding, Katalog-Normalisierung & Sichtbarkeitsfilter, Recent-Tracks-XML-Parsing, Lautstärke-/Control-Server-Flows, Verlaufs-Recording und Stats-Aggregation, Discord-IPC/-Presence, App-Support-Pfade, Persistenz-Verträge sowie Menüleisten- und Einstellungs-Audits.
 
 ```bash
 swift test
