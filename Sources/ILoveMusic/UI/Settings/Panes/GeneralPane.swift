@@ -40,7 +40,7 @@ struct GeneralPane: View {
         if appModel.requiresLanguageRestart {
           VStack(alignment: .leading, spacing: 8) {
             Label {
-              Text("The language changes after you restart ILoveMusic.", bundle: #bundle)
+              restartText(Self.languageRestartNoticeResource)
             } icon: {
               Image(systemName: "arrow.clockwise")
             }
@@ -55,7 +55,7 @@ struct GeneralPane: View {
                   relaunchFailed = true
                 }
               } label: {
-                Text("Restart ILoveMusic", bundle: #bundle)
+                restartText(Self.restartButtonResource)
               }
             }
           }
@@ -79,15 +79,51 @@ struct GeneralPane: View {
     }
     .settingsFormStyle()
     .alert(
-      Text("ILoveMusic couldn’t restart.", bundle: #bundle),
+      restartText(Self.restartFailedResource),
       isPresented: $relaunchFailed
     ) {
       Button(role: .cancel) {
       } label: {
-        Text("Cancel", bundle: #bundle)
+        restartText(Self.cancelResource)
       }
     } message: {
-      Text("Quit and reopen ILoveMusic to apply the language.", bundle: #bundle)
+      restartText(Self.restartFailureHelpResource)
     }
   }
+
+  /// The pending-restart controls use the newly selected language so the user
+  /// can understand the action that applies that choice.
+  private func restartText(_ resource: LocalizedStringResource) -> Text {
+    Text(verbatim: AppLocalization.string(resource, language: appModel.appLanguage))
+  }
+
+  static let languageRestartNoticeResource = LocalizedStringResource(
+    "The language changes after you restart ILoveMusic.",
+    bundle: #bundle,
+    comment: "Explanation shown after selecting a different app language."
+  )
+
+  static let restartButtonResource = LocalizedStringResource(
+    "Restart ILoveMusic",
+    bundle: #bundle,
+    comment: "Button that relaunches the app to apply a language change."
+  )
+
+  static let restartFailedResource = LocalizedStringResource(
+    "ILoveMusic couldn’t restart.",
+    bundle: #bundle,
+    comment: "Alert title shown when relaunching after a language change fails."
+  )
+
+  static let cancelResource = LocalizedStringResource(
+    "Cancel",
+    bundle: #bundle,
+    comment: "Button that dismisses the language relaunch failure alert."
+  )
+
+  static let restartFailureHelpResource = LocalizedStringResource(
+    "Quit and reopen ILoveMusic to apply the language.",
+    bundle: #bundle,
+    comment: "Recovery instruction after relaunching for a language change fails."
+  )
 }

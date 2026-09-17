@@ -6,6 +6,7 @@ import Foundation
 @main
 enum ILoveMusicRelauncher {
   private static let maximumOpenAttempts = 30
+  private static let launchServicesSettlingDelay = DispatchTimeInterval.milliseconds(300)
 
   static func main() {
     guard CommandLine.arguments.count == 3,
@@ -24,7 +25,7 @@ enum ILoveMusicRelauncher {
     }
 
     if kill(processIdentifier, 0) == -1, errno == ESRCH {
-      open(bundleURL, remainingAttempts: maximumOpenAttempts)
+      openAfterTerminationSettles(bundleURL)
       dispatchMain()
     }
 
@@ -35,16 +36,25 @@ enum ILoveMusicRelauncher {
     )
     source.setEventHandler {
       source.cancel()
-      open(bundleURL, remainingAttempts: maximumOpenAttempts)
+      openAfterTerminationSettles(bundleURL)
     }
     source.resume()
     dispatchMain()
+  }
+
+  /// Process exit can precede Launch Services unregistering the old app
+  /// instance. Give it a brief settling window before requesting a new one.
+  private static func openAfterTerminationSettles(_ bundleURL: URL) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + launchServicesSettlingDelay) {
+      open(bundleURL, remainingAttempts: maximumOpenAttempts)
+    }
   }
 
   private static func open(_ bundleURL: URL, remainingAttempts: Int) {
     let configuration = NSWorkspace.OpenConfiguration()
     configuration.activates = false
     configuration.allowsRunningApplicationSubstitution = false
+    configuration.promptsUserIfNeeded = false
     NSWorkspace.shared.openApplication(
       at: bundleURL,
       configuration: configuration

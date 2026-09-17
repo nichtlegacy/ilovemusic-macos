@@ -44,6 +44,19 @@ struct LocalizationTests {
     #expect(AppLocalization.string(HistoryWindow.lifetime.titleResource, language: .german) == "Gesamter Zeitraum")
   }
 
+  @MainActor
+  @Test
+  func pendingRestartControlsUseSelectedGermanLanguage() {
+    #expect(
+      AppLocalization.string(GeneralPane.restartButtonResource, language: .german)
+        == "ILoveMusic neu starten"
+    )
+    #expect(
+      AppLocalization.string(GeneralPane.languageRestartNoticeResource, language: .german)
+        == "Die Sprache ändert sich nach einem Neustart von ILoveMusic."
+    )
+  }
+
   @Test
   func rawValuesAreStable() {
     #expect(AppLanguage.system.rawValue == "system")

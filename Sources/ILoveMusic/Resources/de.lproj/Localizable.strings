@@ -192,6 +192,8 @@
 	<string>ILOVEMUSIC.DE</string>
 	<key>ILoveMusic – History &amp; Stats</key>
 	<string>ILoveMusic – Verlauf &amp; Statistiken</string>
+	<key>ILoveMusic couldn’t restart.</key>
+	<string>ILoveMusic konnte nicht neu gestartet werden.</string>
 	<key>Idle</key>
 	<string>Inaktiv</string>
 	<key>Include Listen button</key>
@@ -354,6 +356,8 @@
 	<string>ILoveMusic beenden</string>
 	<key>Quit ILoveMusic (⌥⌘Q)</key>
 	<string>ILoveMusic beenden (⌥⌘Q)</string>
+	<key>Quit and reopen ILoveMusic to apply the language.</key>
+	<string>Beende und öffne ILoveMusic erneut, um die Sprache anzuwenden.</string>
 	<key>Random Station</key>
 	<string>Zufälliger Sender</string>
 	<key>Random station</key>
@@ -402,6 +406,8 @@
 	<string>Auf Standard zurücksetzen (%@)</string>
 	<key>Restart</key>
 	<string>Neu starten</string>
+	<key>Restart ILoveMusic</key>
+	<string>ILoveMusic neu starten</string>
 	<key>Resume last station on launch</key>
 	<string>Letzten Sender beim Start fortsetzen</string>
 	<key>Rich Presence</key>
