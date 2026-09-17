@@ -20,7 +20,11 @@ struct StationsScrollView: View {
         LazyVStack(alignment: .leading, spacing: 0) {
           Section {
             if favoriteStations.isEmpty {
-              Text("Tap the heart on any station to pin it here.")
+              Text(
+                "Tap the heart on any station to pin it here.",
+                bundle: #bundle,
+                comment: "Empty-state guidance shown in the Favorites station section."
+              )
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .padding(.horizontal, 16)
@@ -32,7 +36,7 @@ struct StationsScrollView: View {
             }
           } header: {
             SectionHeader(
-              title: "Favorites",
+              title: LocalizedStringResource("Favorites", bundle: #bundle, comment: "Heading above favorite stations."),
               channelCount: favoriteStations.isEmpty ? nil : favoriteStations.count
             )
           }
@@ -43,7 +47,7 @@ struct StationsScrollView: View {
             }
           } header: {
             SectionHeader(
-              title: "All Channels",
+              title: LocalizedStringResource("All Channels", bundle: #bundle, comment: "Heading above all available stations."),
               channelCount: channelStations.count,
               listenerTotal: totalListeners > 0 ? totalListeners : nil
             )
@@ -160,11 +164,11 @@ struct StationRowFramePreferenceKey: PreferenceKey {
 }
 
 struct SectionHeader: View {
-  let title: String
+  let title: LocalizedStringResource
   let channelCount: Int?
   var listenerTotal: Int? = nil
 
-  init(title: String, channelCount: Int?, listenerTotal: Int? = nil) {
+  init(title: LocalizedStringResource, channelCount: Int?, listenerTotal: Int? = nil) {
     self.title = title
     self.channelCount = channelCount
     self.listenerTotal = listenerTotal
@@ -179,10 +183,26 @@ struct SectionHeader: View {
         .foregroundStyle(.secondary)
       Spacer()
       if let listenerTotal {
-        SectionHeaderBadge(systemImage: "person.fill", value: listenerTotal)
+        SectionHeaderBadge(
+          systemImage: "person.fill",
+          value: listenerTotal,
+          accessibilityLabel: LocalizedStringResource(
+            "\(listenerTotal) listeners",
+            bundle: #bundle,
+            comment: "Total number of people listening across the listed stations."
+          )
+        )
       }
       if let channelCount {
-        SectionHeaderBadge(systemImage: "dot.radiowaves.left.and.right", value: channelCount)
+        SectionHeaderBadge(
+          systemImage: "dot.radiowaves.left.and.right",
+          value: channelCount,
+          accessibilityLabel: LocalizedStringResource(
+            "\(channelCount) channels",
+            bundle: #bundle,
+            comment: "Number of stations in a menu-bar section."
+          )
+        )
       }
     }
     .padding(.horizontal, 16)
@@ -194,15 +214,17 @@ struct SectionHeader: View {
 struct SectionHeaderBadge: View {
   let systemImage: String
   let value: Int
+  let accessibilityLabel: LocalizedStringResource
 
   var body: some View {
     HStack(spacing: 4) {
       Image(systemName: systemImage)
         .font(.system(size: 9, weight: .semibold))
         .frame(width: 10)
-      Text("\(value)")
+      Text(value, format: .number)
         .font(.system(size: 10, weight: .medium).monospacedDigit())
     }
     .foregroundStyle(.tertiary)
+    .accessibilityLabel(Text(accessibilityLabel))
   }
 }

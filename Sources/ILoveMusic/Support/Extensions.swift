@@ -52,6 +52,12 @@ func relativeLuminance(hex: String) -> Double {
 
 extension Date {
   var shortTimeOrDateTime: String {
-    formatted(date: .abbreviated, time: .shortened)
+    shortTimeOrDateTime(locale: .current)
+  }
+
+  func shortTimeOrDateTime(locale: Locale) -> String {
+    formatted(
+      Date.FormatStyle(date: .abbreviated, time: .shortened, locale: locale)
+    )
   }
 }

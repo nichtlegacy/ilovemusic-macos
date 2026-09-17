@@ -21,7 +21,10 @@ final class HistoryStatsWindowController: NSWindowController, NSWindowDelegate {
     self.appModel = appModel
     self.selection = selection
 
-    window.title = AppIdentity.historyWindowTitle
+    window.title = AppLocalization.string(
+      AppIdentity.historyWindowTitleResource,
+      language: appModel.activeLanguage
+    )
     window.titlebarAppearsTransparent = true
     window.titlebarSeparatorStyle = .none
     window.toolbarStyle = .unified
@@ -29,6 +32,7 @@ final class HistoryStatsWindowController: NSWindowController, NSWindowDelegate {
     window.identifier = NSUserInterfaceItemIdentifier("history-stats")
     window.contentViewController = NSHostingController(
       rootView: HistoryStatsRootView(appModel: appModel, selection: selection)
+        .environment(\.locale, appModel.activeLanguage.resolvedLocale)
     )
     window.isReleasedWhenClosed = false
 

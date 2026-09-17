@@ -17,15 +17,15 @@ enum SettingsTab: String, CaseIterable, Identifiable, Hashable {
     rawValue.flatMap(Self.init(rawValue:)) ?? .general
   }
 
-  var title: String {
+  var titleResource: LocalizedStringResource {
     switch self {
-    case .general: "General"
-    case .playback: "Playback"
-    case .discord: "Discord"
-    case .streamDeck: "Stream Deck"
-    case .data: "Data"
-    case .advanced: "Advanced"
-    case .about: "About"
+    case .general: LocalizedStringResource("General", bundle: #bundle, comment: "Settings sidebar item")
+    case .playback: LocalizedStringResource("Playback", bundle: #bundle, comment: "Settings sidebar item")
+    case .discord: LocalizedStringResource("Discord", bundle: #bundle, comment: "Settings sidebar item")
+    case .streamDeck: LocalizedStringResource("Stream Deck", bundle: #bundle, comment: "Settings sidebar item")
+    case .data: LocalizedStringResource("Data", bundle: #bundle, comment: "Settings sidebar item")
+    case .advanced: LocalizedStringResource("Advanced", bundle: #bundle, comment: "Settings sidebar item")
+    case .about: LocalizedStringResource("About", bundle: #bundle, comment: "Settings sidebar item")
     }
   }
 
@@ -100,6 +100,7 @@ struct SettingsView: View {
       }
     }
     .frame(minWidth: 800, minHeight: 540)
+    .environment(\.locale, appModel.activeLanguage.resolvedLocale)
     .onChange(of: selection.tab) { _, tab in
       onSelectionChange(tab)
     }

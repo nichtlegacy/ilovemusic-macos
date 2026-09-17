@@ -1,17 +1,29 @@
 import SwiftUI
 
 struct StatsSection<Content: View>: View {
-  let title: String
-  var subtitle: String? = nil
+  let title: LocalizedStringResource
+  let subtitle: LocalizedStringResource?
   @ViewBuilder let content: () -> Content
+
+  @Environment(\.locale) private var locale
+
+  init(
+    title: String.LocalizationValue,
+    subtitle: String.LocalizationValue? = nil,
+    @ViewBuilder content: @escaping () -> Content
+  ) {
+    self.title = LocalizedStringResource(title, bundle: #bundle)
+    self.subtitle = subtitle.map { LocalizedStringResource($0, bundle: #bundle) }
+    self.content = content
+  }
 
   var body: some View {
     VStack(alignment: .leading, spacing: 14) {
       VStack(alignment: .leading, spacing: 3) {
-        Text(title)
+        Text(title.resolved(in: locale))
           .font(.headline)
         if let subtitle {
-          Text(subtitle)
+          Text(subtitle.resolved(in: locale))
             .font(.caption)
             .foregroundStyle(.secondary)
         }
@@ -30,15 +42,22 @@ struct StatsSection<Content: View>: View {
 }
 
 struct StatsSectionEmptyState: View {
-  let title: String
-  let subtitle: String
+  let title: LocalizedStringResource
+  let subtitle: LocalizedStringResource
+
+  @Environment(\.locale) private var locale
+
+  init(title: String.LocalizationValue, subtitle: String.LocalizationValue) {
+    self.title = LocalizedStringResource(title, bundle: #bundle)
+    self.subtitle = LocalizedStringResource(subtitle, bundle: #bundle)
+  }
 
   var body: some View {
     VStack(spacing: 8) {
-      Text(title)
+      Text(title.resolved(in: locale))
         .font(.system(size: 14, weight: .semibold))
         .foregroundStyle(.secondary)
-      Text(subtitle)
+      Text(subtitle.resolved(in: locale))
         .font(.footnote)
         .foregroundStyle(.tertiary)
         .multilineTextAlignment(.center)

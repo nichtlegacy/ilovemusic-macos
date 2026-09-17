@@ -80,6 +80,17 @@ enum HistoryWindow: Equatable, Hashable {
   case lifetime
   case custom(start: Date, end: Date)
 
+  var titleResource: LocalizedStringResource {
+    switch self {
+    case .today: LocalizedStringResource("Today", bundle: #bundle)
+    case .last7Days: LocalizedStringResource("7 Days", bundle: #bundle)
+    case .last30Days: LocalizedStringResource("30 Days", bundle: #bundle)
+    case .last90Days: LocalizedStringResource("90 Days", bundle: #bundle)
+    case .lifetime: LocalizedStringResource("All Time", bundle: #bundle)
+    case .custom: LocalizedStringResource("Custom Range", bundle: #bundle)
+    }
+  }
+
   func dateRange(now: Date, calendar: Calendar) -> (start: Date, end: Date) {
     switch self {
     case .today:

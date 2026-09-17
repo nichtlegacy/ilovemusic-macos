@@ -40,3 +40,39 @@ func interceptViewMonitorLifecycleFollowsWindowPresence() {
   view.viewDidMoveToWindow()
   view.viewDidMoveToWindow()
 }
+
+@Test
+func contextMenuTitlesResolveInGermanAndPreserveMetadata() {
+  let text = MenuBarContextMenuText(language: .german)
+  let stationName = "I LOVE RADIO"
+  let songLine = "Artist — Track"
+  let titles = text.allTitles(
+    stationName: stationName,
+    songLine: songLine,
+    isPlaying: false,
+    panelShown: false
+  )
+
+  #expect(titles.contains(stationName))
+  #expect(titles.contains(songLine))
+  #expect(titles.contains("Wiedergeben"))
+  #expect(titles.contains("Nächster Sender"))
+  #expect(titles.contains("Zufälliger Sender"))
+  #expect(titles.contains("Einstellungen…"))
+  #expect(titles.contains("ILoveMusic beenden"))
+}
+
+@Test
+func contextMenuTitlesResolveInEnglish() {
+  let titles = MenuBarContextMenuText(language: .english).allTitles(
+    stationName: nil,
+    songLine: nil,
+    isPlaying: true,
+    panelShown: true
+  )
+
+  #expect(titles.contains("No station playing"))
+  #expect(titles.contains("Pause"))
+  #expect(titles.contains("Hide Panel"))
+  #expect(titles.contains("Check for Updates…"))
+}

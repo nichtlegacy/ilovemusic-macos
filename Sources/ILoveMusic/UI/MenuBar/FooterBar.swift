@@ -11,14 +11,28 @@ struct FooterBar: View {
       }
 
       if appModel.preferences.recordHistoryEnabled ?? true {
-        FooterButton(systemImage: "clock.arrow.circlepath", help: "History & Stats") {
+        FooterButton(
+          systemImage: "clock.arrow.circlepath",
+          help: LocalizedStringResource(
+            "History & Stats",
+            bundle: #bundle,
+            comment: "Help text for the button that opens listening history and statistics."
+          )
+        ) {
           openHistoryWindow()
         }
       }
 
       Spacer()
 
-      FooterButton(systemImage: "power", help: "Quit ILoveMusic (⌥⌘Q)") {
+      FooterButton(
+        systemImage: "power",
+        help: LocalizedStringResource(
+          "Quit ILoveMusic (⌥⌘Q)",
+          bundle: #bundle,
+          comment: "Help text for the quit button, including its keyboard shortcut."
+        )
+      ) {
         NSApplication.shared.terminate(nil)
       }
 
@@ -55,7 +69,8 @@ struct SettingsButton: View {
     .buttonStyle(.plain)
     .focusEffectDisabled()
     .onHover { isHovering = $0 }
-    .help("Settings")
+    .help(Text("Settings", bundle: #bundle, comment: "Help text for the button that opens Settings."))
+    .accessibilityLabel(Text("Settings", bundle: #bundle, comment: "Accessibility label for the button that opens Settings."))
   }
 }
 
@@ -89,7 +104,8 @@ struct RefreshButton: View {
     .buttonStyle(.plain)
     .focusEffectDisabled()
     .onHover { isHovering = $0 }
-    .help(helpText)
+    .help(Text(helpText))
+    .accessibilityLabel(Text(helpText))
     .onChange(of: outcome, initial: true) { _, new in
       spinning = (new == .refreshing)
     }
@@ -112,19 +128,27 @@ struct RefreshButton: View {
     }
   }
 
-  private var helpText: String {
+  private var helpText: LocalizedStringResource {
     switch outcome {
-    case .success: return "Refresh succeeded"
-    case .failed: return "Refresh failed — using cached data"
-    case .refreshing: return "Refreshing…"
-    case .idle: return "Refresh everything"
+    case .success:
+      LocalizedStringResource("Refresh succeeded", bundle: #bundle, comment: "Help text after station data refreshed successfully.")
+    case .failed:
+      LocalizedStringResource(
+        "Refresh failed — using cached data",
+        bundle: #bundle,
+        comment: "Help text after refreshing station data failed and cached data is shown."
+      )
+    case .refreshing:
+      LocalizedStringResource("Refreshing…", bundle: #bundle, comment: "Help text while station data is refreshing.")
+    case .idle:
+      LocalizedStringResource("Refresh everything", bundle: #bundle, comment: "Help text for the button that refreshes all station data.")
     }
   }
 }
 
 struct FooterButton: View {
   let systemImage: String
-  let help: String
+  let help: LocalizedStringResource
   let action: () -> Void
 
   @State private var isHovering = false
@@ -144,6 +168,7 @@ struct FooterButton: View {
     .buttonStyle(.plain)
     .focusEffectDisabled()
     .onHover { isHovering = $0 }
-    .help(help)
+    .help(Text(help))
+    .accessibilityLabel(Text(help))
   }
 }

@@ -14,6 +14,12 @@ struct SettingsNavigationTests {
   }
 
   @Test
+  func settingsTabTitlesResolveInGerman() {
+    #expect(AppLocalization.string(SettingsTab.general.titleResource, language: .german) == "Allgemein")
+    #expect(AppLocalization.string(SettingsTab.advanced.titleResource, language: .german) == "Erweitert")
+  }
+
+  @Test
   func unknownPersistedSelectionFallsBackToGeneral() {
     #expect(SettingsTab.persistedValue("discord") == .discord)
     #expect(SettingsTab.persistedValue("removed-pane") == .general)
@@ -44,6 +50,7 @@ struct SettingsNavigationTests {
     #expect(window.styleMask.contains(.resizable))
     #expect(window.contentMinSize == NSSize(width: 800, height: 540))
     #expect(window.frameAutosaveName == "settings-window")
+    #expect(window.title == AppLocalization.string(SettingsTab.general.titleResource, language: fixture.model.activeLanguage))
   }
 
   private func makeSettingsTestModel() throws -> (model: AppModel, directory: URL) {

@@ -8,12 +8,12 @@ enum LogSeverityFilter: String, CaseIterable, Identifiable, Hashable {
   case error
 
   var id: String { rawValue }
-  var title: String {
+  var titleResource: LocalizedStringResource {
     switch self {
-    case .all: "All"
-    case .info: "Info"
-    case .warning: "Warning"
-    case .error: "Error"
+    case .all: LocalizedStringResource("All", bundle: #bundle, comment: "Log severity filter")
+    case .info: LocalizedStringResource("Info", bundle: #bundle, comment: "Log severity filter")
+    case .warning: LocalizedStringResource("Warning", bundle: #bundle, comment: "Log severity filter")
+    case .error: LocalizedStringResource("Error", bundle: #bundle, comment: "Log severity filter")
     }
   }
 
@@ -30,6 +30,7 @@ enum LogSeverityFilter: String, CaseIterable, Identifiable, Hashable {
 /// Compact rolling log used by the Advanced pane.
 @MainActor
 struct LogPanel: View {
+  @Environment(\.locale) private var locale
   let entries: [ControlLogEntry]
   /// Persistence cap. Shown in the footer ("auto-pruned after N") so the user
   /// understands why old entries disappear.
@@ -63,20 +64,24 @@ struct LogPanel: View {
 
   var body: some View {
     HStack {
-      Picker("Severity", selection: $severity) {
+      Picker(selection: $severity) {
         ForEach(LogSeverityFilter.allCases) { filter in
-          Text(filter.title).tag(filter)
+          Text(filter.titleResource.resolved(in: locale)).tag(filter)
         }
+      } label: {
+        Text("Severity", bundle: #bundle)
       }
       .labelsHidden()
       .pickerStyle(.menu)
       .frame(maxWidth: 110)
       Spacer()
-      Button("Clear") { onClear() }
+      Button { onClear() } label: { Text("Clear", bundle: #bundle) }
         .disabled(entries.isEmpty)
     }
     if filteredEntries.isEmpty {
-      Text(entries.isEmpty ? "No events yet." : "No entries match this filter.")
+      (entries.isEmpty
+        ? Text("No events yet.", bundle: #bundle)
+        : Text("No entries match this filter.", bundle: #bundle))
         .font(.footnote)
         .foregroundStyle(.tertiary)
     } else {
@@ -88,7 +93,7 @@ struct LogPanel: View {
           }
         }
       }
-      Text("Showing \(filteredEntries.count) of \(matchingEntryCount) matching entries · stores up to \(persistedCap)")
+      Text("Showing \(filteredEntries.count) of \(matchingEntryCount) matching entries · stores up to \(persistedCap)", bundle: #bundle)
         .font(.caption2)
         .foregroundStyle(.tertiary)
     }
@@ -98,23 +103,24 @@ struct LogPanel: View {
 /// Individual rolling-log row.
 @MainActor
 struct LogPanelRow: View {
+  @Environment(\.locale) private var locale
   let entry: ControlLogEntry
 
   var body: some View {
     HStack(alignment: .firstTextBaseline, spacing: 8) {
-      Text(entry.timestamp.shortTimeOrDateTime)
+      Text(verbatim: entry.timestamp.shortTimeOrDateTime(locale: locale))
         .font(.caption.monospacedDigit())
         .foregroundStyle(.secondary)
         .frame(width: 104, alignment: .leading)
-      Text(entry.area)
+      Text(verbatim: entry.area)
         .font(.caption.weight(.semibold))
         .frame(width: 82, alignment: .leading)
         .lineLimit(1)
       Circle()
         .fill(severityColor)
         .frame(width: 7, height: 7)
-        .accessibilityLabel(severityLabel)
-      Text(entry.message)
+        .accessibilityLabel(Text(severityResource.resolved(in: locale)))
+      Text(verbatim: entry.message)
         .font(.caption)
         .fixedSize(horizontal: false, vertical: true)
     }
@@ -129,11 +135,11 @@ struct LogPanelRow: View {
     }
   }
 
-  private var severityLabel: String {
+  private var severityResource: LocalizedStringResource {
     switch entry.severity {
-    case .info: return "Info"
-    case .warning: return "Warning"
-    case .error: return "Error"
+    case .info: return LocalizedStringResource("Info", bundle: #bundle, comment: "Accessible log severity")
+    case .warning: return LocalizedStringResource("Warning", bundle: #bundle, comment: "Accessible log severity")
+    case .error: return LocalizedStringResource("Error", bundle: #bundle, comment: "Accessible log severity")
     }
   }
 }

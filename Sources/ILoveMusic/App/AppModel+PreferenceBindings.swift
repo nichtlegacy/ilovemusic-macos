@@ -28,6 +28,11 @@ extension AppModel {
     set { updateResumeLastStation(newValue) }
   }
 
+  var appLanguage: AppLanguage {
+    get { preferences.effectiveAppLanguage }
+    set { updateAppLanguage(newValue) }
+  }
+
   // MARK: - Playback
 
   var globalHotkeysEnabled: Bool {

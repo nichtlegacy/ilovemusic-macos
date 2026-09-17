@@ -2,37 +2,74 @@ import AppKit
 import SwiftUI
 
 struct GeneralPane: View {
+  @Environment(\.locale) private var locale
   @Bindable var appModel: AppModel
 
   var body: some View {
     Form {
-      Section("System") {
+      Section {
         SettingsToggle(
-          "Launch at login",
-          subtitle: "Automatically opens ILoveMusic when you start your Mac.",
+          LocalizedStringResource("Launch at login", bundle: #bundle, comment: "Settings toggle"),
+          subtitle: LocalizedStringResource("Automatically opens ILoveMusic when you start your Mac.", bundle: #bundle, comment: "Launch at login explanation"),
           isOn: $appModel.launchAtLogin
         )
-        if let message = appModel.launchAtLoginStatus.message {
-          Label(message, systemImage: "exclamationmark.triangle")
+        if let message = appModel.launchAtLoginStatus.messageResource {
+          Label {
+            Text(message.resolved(in: locale))
+          } icon: {
+            Image(systemName: "exclamationmark.triangle")
+          }
             .font(.footnote)
             .foregroundStyle(.secondary)
         }
         SettingsToggle(
-          "Resume last station on launch",
-          subtitle: "Reopens the station that was active before quitting.",
+          LocalizedStringResource("Resume last station on launch", bundle: #bundle, comment: "Settings toggle"),
+          subtitle: LocalizedStringResource("Reopens the station that was active before quitting.", bundle: #bundle, comment: "Resume playback explanation"),
           isOn: $appModel.resumeLastStationOnLaunch
         )
+        Picker(selection: $appModel.appLanguage) {
+          Text("System Default", bundle: #bundle).tag(AppLanguage.system)
+          Text("Deutsch", bundle: #bundle).tag(AppLanguage.german)
+          Text("English", bundle: #bundle).tag(AppLanguage.english)
+        } label: {
+          Text("Language", bundle: #bundle)
+        }
+        .pickerStyle(.menu)
+
+        if appModel.requiresLanguageRestart {
+          VStack(alignment: .leading, spacing: 8) {
+            Label {
+              Text("The language changes after you restart ILoveMusic.", bundle: #bundle)
+            } icon: {
+              Image(systemName: "arrow.clockwise")
+            }
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            HStack {
+              Spacer()
+              Button {
+                NSApplication.shared.terminate(nil)
+              } label: {
+                Text("Quit ILoveMusic", bundle: #bundle)
+              }
+            }
+          }
+        }
+      } header: {
+        Text("System", bundle: #bundle)
       }
 
       Section {
-        Picker("Channel order", selection: $appModel.stationSort) {
-          ForEach(StationSortPreference.allCases) { Text($0.title).tag($0) }
+        Picker(selection: $appModel.stationSort) {
+          ForEach(StationSortPreference.allCases) { Text($0.titleResource.resolved(in: locale)).tag($0) }
+        } label: {
+          Text("Channel order", bundle: #bundle)
         }
         .pickerStyle(.menu)
       } header: {
-        Text("Library")
+        Text("Library", bundle: #bundle)
       } footer: {
-        Text("Popularity sorts by current listener count; Alphabetical sorts by name.")
+        Text("Popularity sorts by current listener count; Alphabetical sorts by name.", bundle: #bundle)
       }
     }
     .settingsFormStyle()

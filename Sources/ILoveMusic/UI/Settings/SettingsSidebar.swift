@@ -2,13 +2,17 @@ import AppKit
 import SwiftUI
 
 struct SettingsSidebar: View {
+  @Environment(\.locale) private var locale
   @Binding var selection: SettingsTab
 
-  private var versionString: String {
+  private var versionResource: LocalizedStringResource {
     let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
       ?? "0.1.0"
     let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
-    return build.map { "Version \(version) (\($0))" } ?? "Version \(version)"
+    if let build {
+      return LocalizedStringResource("Version \(version) (\(build))", bundle: #bundle, comment: "App version and build shown in the Settings sidebar")
+    }
+    return LocalizedStringResource("Version \(version)", bundle: #bundle, comment: "App version shown in the Settings sidebar")
   }
 
   var body: some View {
@@ -20,7 +24,7 @@ struct SettingsSidebar: View {
           ForEach(SettingsTab.allCases) { tab in
             HStack(spacing: 9) {
               SettingsIconChip(tab: tab)
-              Text(tab.title)
+              Text(tab.titleResource.resolved(in: locale))
             }
             .tag(tab)
             .listRowInsets(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
@@ -35,9 +39,9 @@ struct SettingsSidebar: View {
         HStack(spacing: 10) {
           appIcon
           VStack(alignment: .leading, spacing: 1) {
-            Text(AppIdentity.displayName)
+            Text(verbatim: AppIdentity.displayName)
               .font(.callout.weight(.semibold))
-            Text(versionString)
+            Text(versionResource.resolved(in: locale))
               .font(.caption)
               .foregroundStyle(.tertiary)
               .monospacedDigit()
@@ -66,7 +70,7 @@ struct SettingsSidebar: View {
         .fill(.pink.gradient)
         .frame(width: 36, height: 36)
         .overlay {
-          Text("I♥")
+          Text(verbatim: "I♥")
             .font(.system(size: 16, weight: .black))
             .foregroundStyle(.white)
         }

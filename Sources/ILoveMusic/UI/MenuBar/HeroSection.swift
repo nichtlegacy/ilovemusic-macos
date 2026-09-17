@@ -5,6 +5,7 @@ struct HeroSection: View {
   let appModel: AppModel
   let playbackController: PlaybackController
 
+  @Environment(\.locale) private var locale
   @State private var isDetailShown = false
   @State private var isHoveringArtwork = false
   @State private var isHoveringNowPlaying = false
@@ -37,7 +38,7 @@ struct HeroSection: View {
             if let metadata, !metadata.artist.isEmpty || !metadata.title.isEmpty {
               VStack(alignment: .leading, spacing: 3) {
                 if !metadata.artist.isEmpty {
-                  Text(metadata.artist)
+                  Text(verbatim: metadata.artist)
                     .font(.system(size: 20, weight: .bold))
                     .foregroundStyle(.primary)
                     .lineLimit(1)
@@ -45,7 +46,7 @@ struct HeroSection: View {
                     .allowsTightening(true)
                 }
                 if !metadata.title.isEmpty {
-                  Text(metadata.title)
+                  Text(verbatim: metadata.title)
                     .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(accent.opacity(0.92))
                     .lineLimit(2)
@@ -62,10 +63,21 @@ struct HeroSection: View {
                   .foregroundStyle(.primary)
                   .lineLimit(2)
 
-                Text(station?.tagline ?? "Pick a station to start listening")
+                if let station {
+                  Text(verbatim: station.tagline)
+                    .font(.system(size: 12))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+                } else {
+                  Text(
+                    "Pick a station to start listening",
+                    bundle: #bundle,
+                    comment: "Prompt shown in the menu-bar panel before a station is selected."
+                  )
                   .font(.system(size: 12))
                   .foregroundStyle(.secondary)
                   .lineLimit(2)
+                }
               }
               .onHover { hovering in
                 setNowPlayingHover(hovering: hovering, hasStation: station != nil)
@@ -118,20 +130,29 @@ struct HeroSection: View {
 
             IconControlButton(
               systemImage: "forward.fill",
-              help: "Next station (⌥⌘N)"
+              help: LocalizedStringResource(
+                "Next station (⌥⌘N)",
+                bundle: #bundle,
+                comment: "Help text for the next-station button, including its keyboard shortcut."
+              )
             ) {
               Task { await appModel.playNextStation() }
             }
 
             IconControlButton(
               systemImage: "shuffle",
-              help: "Random station"
+              help: LocalizedStringResource(
+                "Random station",
+                bundle: #bundle,
+                comment: "Help text for the random-station button."
+              )
             ) {
               Task { await appModel.playRandomStation() }
             }
 
             AirPlayButton()
-              .help("AirPlay…")
+              .help(Text("AirPlay…", bundle: #bundle, comment: "Help text for the AirPlay output picker."))
+              .accessibilityLabel(Text("AirPlay", bundle: #bundle, comment: "Accessibility label for the AirPlay output picker."))
           }
           Spacer(minLength: 0)
           VolumeRow(playbackController: playbackController, appModel: appModel, accent: accent)
@@ -139,7 +160,7 @@ struct HeroSection: View {
 
         if let error = playbackController.state.errorMessage,
            playbackController.state.phase == .failed {
-          Text(error)
+          playbackErrorText(error)
             .font(.caption)
             .foregroundStyle(.red)
             .lineLimit(2)
@@ -161,6 +182,31 @@ struct HeroSection: View {
 
   private var isHoveringInteractiveArea: Bool {
     isHoveringArtwork || isHoveringNowPlaying || isHoveringPopover
+  }
+
+  private func playbackErrorText(_ error: String) -> Text {
+    switch error {
+    case "Stream failed to start.":
+      Text(
+        LocalizedStringResource(
+          "Stream failed to start.",
+          locale: locale,
+          bundle: #bundle,
+          comment: "Playback error shown when the selected radio stream cannot start."
+        )
+      )
+    case "Stream stalled too often.":
+      Text(
+        LocalizedStringResource(
+          "Stream stalled too often.",
+          locale: locale,
+          bundle: #bundle,
+          comment: "Playback error shown after repeated automatic reconnect attempts."
+        )
+      )
+    default:
+      Text(verbatim: error)
+    }
   }
 
   private func setArtworkHover(hovering: Bool, hasStation: Bool) {
@@ -229,7 +275,24 @@ struct PlayPauseButton: View {
       .background(accent.gradient, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
     }
     .buttonStyle(.plain)
-    .help(isPlayingLike ? "Pause (⌥⌘P)" : "Play (⌥⌘P)")
+    .help(Text(isPlayingLike ? pauseHelp : playHelp))
+    .accessibilityLabel(Text(isPlayingLike ? pauseHelp : playHelp))
+  }
+
+  private var pauseHelp: LocalizedStringResource {
+    LocalizedStringResource(
+      "Pause (⌥⌘P)",
+      bundle: #bundle,
+      comment: "Help text for the pause button, including its keyboard shortcut."
+    )
+  }
+
+  private var playHelp: LocalizedStringResource {
+    LocalizedStringResource(
+      "Play (⌥⌘P)",
+      bundle: #bundle,
+      comment: "Help text for the play button, including its keyboard shortcut."
+    )
   }
 }
 
@@ -248,13 +311,22 @@ struct FavoriteButton: View {
     }
     .buttonStyle(.plain)
     .focusEffectDisabled()
-    .help(isFavorite ? "Remove from favorites" : "Add to favorites")
+    .help(Text(isFavorite ? removeHelp : addHelp))
+    .accessibilityLabel(Text(isFavorite ? removeHelp : addHelp))
+  }
+
+  private var removeHelp: LocalizedStringResource {
+    LocalizedStringResource("Remove from favorites", bundle: #bundle, comment: "Action that removes a station from favorites.")
+  }
+
+  private var addHelp: LocalizedStringResource {
+    LocalizedStringResource("Add to favorites", bundle: #bundle, comment: "Action that adds a station to favorites.")
   }
 }
 
 struct IconControlButton: View {
   let systemImage: String
-  let help: String
+  let help: LocalizedStringResource
   let action: () -> Void
 
   var body: some View {
@@ -268,7 +340,8 @@ struct IconControlButton: View {
     .buttonStyle(.plain)
     .focusEffectDisabled()
     .background(.quaternary, in: RoundedRectangle(cornerRadius: CornerRadius.lg, style: .continuous))
-    .help(help)
+    .help(Text(help))
+    .accessibilityLabel(Text(help))
   }
 }
 
@@ -304,16 +377,16 @@ struct StatusPill: View {
     )
   }
 
-  private var statusTitle: String {
+  private var statusTitle: LocalizedStringResource {
     switch state.phase {
     case .playing, .buffering, .reconnecting:
-      return "Live"
+      LocalizedStringResource("Live", bundle: #bundle, comment: "Status shown while a station is playing live.")
     case .paused:
-      return "Paused"
+      LocalizedStringResource("Paused", bundle: #bundle, comment: "Status shown while playback is paused.")
     case .idle:
-      return "Ready"
+      LocalizedStringResource("Ready", bundle: #bundle, comment: "Status shown when the player is ready but idle.")
     case .failed:
-      return "Failed"
+      LocalizedStringResource("Failed", bundle: #bundle, comment: "Status shown when playback failed.")
     }
   }
 
@@ -358,7 +431,8 @@ struct VolumeRow: View {
       }
       .buttonStyle(.plain)
       .focusEffectDisabled()
-      .help(playbackController.isMuted ? "Unmute" : "Mute")
+      .help(Text(playbackController.isMuted ? unmuteHelp : muteHelp))
+      .accessibilityLabel(Text(playbackController.isMuted ? unmuteHelp : muteHelp))
 
       Slider(
         value: Binding(
@@ -371,8 +445,12 @@ struct VolumeRow: View {
       .controlSize(.small)
       .tint(accent)
       .opacity(playbackController.isMuted ? 0.4 : 1)
+      .accessibilityLabel(Text("Volume", bundle: #bundle, comment: "Accessibility label for the playback volume slider."))
 
-      Text("\(playbackController.volumePercent)%")
+      Text(
+        Double(playbackController.volumePercent) / 100,
+        format: .percent.precision(.fractionLength(0))
+      )
         .font(.caption2.monospacedDigit())
         .foregroundStyle(.secondary)
         .frame(width: 28, alignment: .trailing)
@@ -387,6 +465,14 @@ struct VolumeRow: View {
     if v < 33 { return "speaker.wave.1.fill" }
     if v < 66 { return "speaker.wave.2.fill" }
     return "speaker.wave.3.fill"
+  }
+
+  private var unmuteHelp: LocalizedStringResource {
+    LocalizedStringResource("Unmute", bundle: #bundle, comment: "Action that turns audio back on.")
+  }
+
+  private var muteHelp: LocalizedStringResource {
+    LocalizedStringResource("Mute", bundle: #bundle, comment: "Action that turns audio off.")
   }
 }
 
@@ -419,7 +505,13 @@ struct HeroMetaRow: View {
     HStack(alignment: .center, spacing: 10) {
       if let count = station?.listenerCount, count > 0 {
         Label {
-          Text("\(formattedListenerCount(count)) listeners")
+          Text(
+            LocalizedStringResource(
+              "\(count) listeners",
+              bundle: #bundle,
+              comment: "Number of people currently listening to a station."
+            )
+          )
         } icon: {
           Image(systemName: "person.2.fill")
         }
@@ -432,11 +524,4 @@ struct HeroMetaRow: View {
     .lineLimit(1)
   }
 
-  private func formattedListenerCount(_ count: Int) -> String {
-    if count >= 1000 {
-      let value = Double(count) / 1000.0
-      return String(format: "%.1fk", value)
-    }
-    return "\(count)"
-  }
 }

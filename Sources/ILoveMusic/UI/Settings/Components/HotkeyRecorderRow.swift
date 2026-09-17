@@ -18,6 +18,7 @@ import SwiftUI
 /// of another action that already uses this combo so the row can flag it.
 @MainActor
 struct HotkeyRecorderRow: View {
+  @Environment(\.locale) private var locale
   let id: HotkeyID
   /// Current binding for this slot. `nil` means "no shortcut assigned".
   let binding: HotkeyBinding?
@@ -42,23 +43,23 @@ struct HotkeyRecorderRow: View {
 
   var body: some View {
     HStack(spacing: 12) {
-      Text(id.title)
+      Text(id.titleResource.resolved(in: locale))
       Spacer()
       pill
       Button { resetToDefault() } label: {
         Image(systemName: "arrow.uturn.backward")
       }
       .buttonStyle(.borderless)
-      .help("Reset to default (\(defaultBinding.display))")
-      .accessibilityLabel("Reset \(id.title) to default")
+      .help(Text(LocalizedStringResource("Reset to default (\(defaultBinding.display))", bundle: #bundle, comment: "Help for restoring a hotkey's default shortcut").resolved(in: locale)))
+      .accessibilityLabel(Text(LocalizedStringResource("Reset \(String(localized: id.titleResource.resolved(in: locale))) to default", bundle: #bundle, comment: "Accessibility label for restoring a hotkey action's default shortcut").resolved(in: locale)))
       .disabled(binding == defaultBinding && !isRecording)
 
       Button { clear() } label: {
         Image(systemName: "trash")
       }
       .buttonStyle(.borderless)
-      .help("Clear shortcut")
-      .accessibilityLabel("Clear \(id.title) shortcut")
+      .help(Text("Clear shortcut", bundle: #bundle))
+      .accessibilityLabel(Text(LocalizedStringResource("Clear \(String(localized: id.titleResource.resolved(in: locale))) shortcut", bundle: #bundle, comment: "Accessibility label for clearing a hotkey action").resolved(in: locale)))
       .disabled(binding == nil && !isRecording)
     }
   }
@@ -77,7 +78,7 @@ struct HotkeyRecorderRow: View {
       Button {
         startRecording()
       } label: {
-        Text(binding?.display ?? "—")
+        Text(verbatim: binding?.display ?? "—")
           .font(.system(.callout, design: .monospaced).weight(.medium))
           .padding(.horizontal, 8)
           .padding(.vertical, 2)
@@ -95,10 +96,10 @@ struct HotkeyRecorderRow: View {
     return AnyShapeStyle(.quaternary)
   }
 
-  private var helpText: String {
-    if let conflictMessage { return conflictMessage }
-    if binding == nil { return "Tap to record a shortcut" }
-    return "Tap to re-record"
+  private var helpText: Text {
+    if let conflictMessage { return Text(verbatim: conflictMessage) }
+    if binding == nil { return Text("Tap to record a shortcut", bundle: #bundle) }
+    return Text("Tap to re-record", bundle: #bundle)
   }
 
   // MARK: - Recording lifecycle
@@ -135,7 +136,7 @@ struct HotkeyRecorderRow: View {
 
     let candidate = HotkeyBinding(keyCode: keyCode, modifiers: modifiers)
     if let conflict = conflictForCandidate(candidate) {
-      conflictMessage = "Conflicts with \(conflict)"
+      conflictMessage = String(localized: LocalizedStringResource("Conflicts with \(conflict)", bundle: #bundle, comment: "Hotkey recording conflict with another localized action name").resolved(in: locale))
       // Stay in recording mode so the user can try again. The pill turns red.
       return
     }
@@ -167,6 +168,7 @@ struct HotkeyRecorderRow: View {
 /// and shows the held modifier glyphs as live feedback.
 @MainActor
 private struct RecordingPill: View {
+  @Environment(\.locale) private var locale
   /// Receives the captured key code and the raw modifier-flag rawValue.
   /// We avoid passing `NSEvent` directly because it's non-Sendable.
   let onCapture: (UInt32, UInt) -> Void
@@ -175,7 +177,7 @@ private struct RecordingPill: View {
   @State private var liveModifiers: NSEvent.ModifierFlags = []
 
   var body: some View {
-    Text(displayText)
+    Text(verbatim: displayText)
       .font(.system(.callout, design: .monospaced).weight(.medium))
       .padding(.horizontal, 8)
       .padding(.vertical, 2)
@@ -195,7 +197,7 @@ private struct RecordingPill: View {
     let mods = KeyCodeFormatter.carbonModifiers(from: liveModifiers)
     let prefix = KeyCodeFormatter.modifierString(mods)
     if prefix.isEmpty {
-      return "Press keys…"
+      return String(localized: LocalizedStringResource("Press keys…", bundle: #bundle, comment: "Hotkey recorder prompt").resolved(in: locale))
     }
     return prefix + "…"
   }

@@ -5,18 +5,19 @@ struct HourOfDayChart: View {
   let secondsPerHour: [Double]
 
   @State private var selectedHour: Int?
+  @Environment(\.locale) private var locale
 
   var body: some View {
     Chart(Array(secondsPerHour.enumerated()), id: \.offset) { bucket in
       BarMark(
-        x: .value("Stunde", bucket.offset),
-        y: .value("Zeit", bucket.element)
+        x: .value(localized("Hour"), bucket.offset),
+        y: .value(localized("Time"), bucket.element)
       )
       .foregroundStyle(.tint)
       .opacity(opacity(hour: bucket.offset, seconds: bucket.element))
       .cornerRadius(3)
-      .accessibilityLabel("\(bucket.offset):00 to \((bucket.offset + 1) % 24):00")
-      .accessibilityValue(formatShortListeningDuration(bucket.element))
+      .accessibilityLabel(hourRange(bucket.offset))
+      .accessibilityValue(formatShortListeningDuration(bucket.element, locale: locale))
     }
     .chartXAxis {
       AxisMarks(values: Array(stride(from: 0, through: 23, by: 3))) { value in
@@ -32,7 +33,7 @@ struct HourOfDayChart: View {
         AxisGridLine()
         AxisTick()
         if let seconds = value.as(Double.self) {
-          AxisValueLabel(formatAxisListeningDuration(seconds))
+          AxisValueLabel(formatAxisListeningDuration(seconds, locale: locale))
         }
       }
     }
@@ -64,9 +65,9 @@ struct HourOfDayChart: View {
     .overlay(alignment: .topTrailing) {
       if let selectedHour, secondsPerHour.indices.contains(selectedHour) {
         VStack(alignment: .leading, spacing: 2) {
-          Text("\(selectedHour):00–\((selectedHour + 1) % 24):00")
+          Text(verbatim: "\(selectedHour):00–\((selectedHour + 1) % 24):00")
             .font(.caption.bold())
-          Text(formatShortListeningDuration(secondsPerHour[selectedHour]))
+          Text(verbatim: formatShortListeningDuration(secondsPerHour[selectedHour], locale: locale))
             .font(.caption.monospacedDigit())
             .foregroundStyle(.secondary)
         }
@@ -76,7 +77,7 @@ struct HourOfDayChart: View {
       }
     }
     .frame(height: 175)
-    .accessibilityLabel("Listening by hour")
+    .accessibilityLabel(Text("Listening by hour", bundle: #bundle))
     .overlay {
       if secondsPerHour.allSatisfy({ $0 == 0 }) {
         StatsEmptyState(title: "No data", subtitle: "Once you've built up some history, the hour-of-day distribution will appear here.")
@@ -88,5 +89,20 @@ struct HourOfDayChart: View {
     if seconds == 0 { return 0.12 }
     if selectedHour == nil || selectedHour == hour { return 0.9 }
     return 0.45
+  }
+
+  private func localized(_ value: String.LocalizationValue) -> String {
+    String(localized: LocalizedStringResource(value, locale: locale, bundle: #bundle))
+  }
+
+  private func hourRange(_ hour: Int) -> String {
+    String(
+      localized: LocalizedStringResource(
+        "\(hour):00 to \((hour + 1) % 24):00",
+        locale: locale,
+        bundle: #bundle,
+        comment: "Accessible hour range in a listening chart."
+      )
+    )
   }
 }

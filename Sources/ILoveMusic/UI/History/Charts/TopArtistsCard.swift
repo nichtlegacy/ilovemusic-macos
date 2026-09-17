@@ -3,6 +3,8 @@ import SwiftUI
 struct TopArtistsCard: View {
   let artists: [ArtistTotal]
 
+  @Environment(\.locale) private var locale
+
   var body: some View {
     if artists.isEmpty {
       StatsEmptyState(title: "No artists yet", subtitle: "Your most-played artists will land here.")
@@ -12,14 +14,16 @@ struct TopArtistsCard: View {
         ForEach(Array(artists.enumerated()), id: \.element.id) { index, artist in
           VStack(alignment: .leading, spacing: 5) {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
-              Text("\(index + 1).")
+              Text(verbatim: "\(index + 1).")
                 .font(.caption2.bold().monospacedDigit())
                 .foregroundStyle(.tertiary)
-              Text(artist.artist)
+              Text(verbatim: artist.artist)
                 .font(.caption.bold())
                 .lineLimit(1)
               Spacer()
-              Text("\(formatShortListeningDuration(artist.listenedSeconds)) · \(artist.playCount) plays")
+              Text(
+                verbatim: "\(formatShortListeningDuration(artist.listenedSeconds, locale: locale)) · \(localizedPlayCount(artist.playCount, locale: locale))"
+              )
                 .font(.caption2.monospacedDigit())
                 .foregroundStyle(.secondary)
             }

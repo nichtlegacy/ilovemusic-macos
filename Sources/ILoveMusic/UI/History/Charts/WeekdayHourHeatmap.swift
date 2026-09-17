@@ -15,13 +15,13 @@ struct HeatmapSelection: Hashable {
 struct WeekdayHourHeatmap: View {
   let matrix: [[Double]]
 
-  private let weekdayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
   private let rowLabelWidth: CGFloat = 28
   private let cellSpacing: CGFloat = 3
 
   @State private var selection: HeatmapSelection?
   @State private var hoveredSelection: HeatmapSelection?
   @FocusState private var isFocused: Bool
+  @Environment(\.locale) private var locale
 
   private var effectiveSelection: HeatmapSelection? {
     hoveredSelection ?? selection
@@ -41,13 +41,13 @@ struct WeekdayHourHeatmap: View {
         cells(maxValue: maxValue, cellSize: cellSize, gridWidth: gridWidth)
 
         HStack(spacing: 6) {
-          Text("Less")
+          Text("Less", bundle: #bundle)
           ForEach([0.12, 0.35, 0.65, 1.0], id: \.self) { opacity in
             RoundedRectangle(cornerRadius: 2, style: .continuous)
               .fill(.tint.opacity(opacity))
               .frame(width: 11, height: 11)
           }
-          Text("More")
+          Text("More", bundle: #bundle)
           Spacer()
           if let selection = effectiveSelection {
             Text(selectionDescription(selection))
@@ -72,8 +72,8 @@ struct WeekdayHourHeatmap: View {
       }
     }
     .accessibilityElement(children: .contain)
-    .accessibilityLabel("Listening by weekday and hour")
-    .accessibilityValue(effectiveSelection.map(selectionDescription) ?? "No cell selected")
+    .accessibilityLabel(Text("Listening by weekday and hour", bundle: #bundle))
+    .accessibilityValue(effectiveSelection.map(selectionDescription) ?? localized("No cell selected"))
     .accessibilityAdjustableAction { direction in
       adjustSelection(direction)
     }
@@ -131,7 +131,7 @@ struct WeekdayHourHeatmap: View {
               }
               .help(accessibilityLabel(for: coordinate, value: value))
               .accessibilityLabel(accessibilityLabel(for: coordinate, value: value))
-              .accessibilityValue(formatShortListeningDuration(value))
+              .accessibilityValue(formatShortListeningDuration(value, locale: locale))
             }
           }
           .frame(width: gridWidth, alignment: .leading)
@@ -170,11 +170,28 @@ struct WeekdayHourHeatmap: View {
 
   private func selectionDescription(_ coordinate: HeatmapSelection) -> String {
     let value = matrix[safe: coordinate.row]?[safe: coordinate.hour] ?? 0
-    return "\(weekdayLabels[safe: coordinate.row] ?? "") · \(coordinate.hour):00 · \(formatShortListeningDuration(value))"
+    return "\(weekdayLabels[safe: coordinate.row] ?? "") · \(coordinate.hour):00 · \(formatShortListeningDuration(value, locale: locale))"
   }
 
   private func accessibilityLabel(for coordinate: HeatmapSelection, value: Double) -> String {
-    "\(weekdayLabels[safe: coordinate.row] ?? ""), \(coordinate.hour):00 to \((coordinate.hour + 1) % 24):00, \(formatShortListeningDuration(value))"
+    let weekday = weekdayLabels[safe: coordinate.row] ?? ""
+    let duration = formatShortListeningDuration(value, locale: locale)
+    return String(
+      localized: LocalizedStringResource(
+        "\(weekday), \(coordinate.hour):00 to \((coordinate.hour + 1) % 24):00, \(duration)",
+        locale: locale,
+        bundle: #bundle,
+        comment: "Accessible heatmap cell with weekday, hour range, and listening duration."
+      )
+    )
+  }
+
+  private var weekdayLabels: [String] {
+    localizedMondayFirstWeekdaySymbols(locale: locale)
+  }
+
+  private func localized(_ value: String.LocalizationValue) -> String {
+    String(localized: LocalizedStringResource(value, locale: locale, bundle: #bundle))
   }
 }
 

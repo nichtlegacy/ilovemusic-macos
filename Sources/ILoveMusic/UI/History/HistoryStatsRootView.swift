@@ -7,7 +7,12 @@ enum HistoryStatsTab: String, CaseIterable, Hashable, Identifiable {
   case stats
 
   var id: Self { self }
-  var title: String { self == .history ? "History" : "Stats" }
+  var titleResource: LocalizedStringResource {
+    switch self {
+    case .history: LocalizedStringResource("History", bundle: #bundle)
+    case .stats: LocalizedStringResource("Stats", bundle: #bundle)
+    }
+  }
   var symbol: String { self == .history ? "clock.arrow.circlepath" : "chart.bar.xaxis" }
 }
 
@@ -33,6 +38,7 @@ struct HistoryStatsRootView: View {
   let selection: HistoryStatsSelection
 
   @AppStorage("historyStatsWindow") private var historyStatsWindowRaw = HistoryWindow.last7Days.rawValue
+  @Environment(\.locale) private var locale
 
   var body: some View {
     @Bindable var selection = selection
@@ -40,10 +46,17 @@ struct HistoryStatsRootView: View {
     content
       .toolbar {
         ToolbarItem(placement: .principal) {
-          Picker("View", selection: $selection.destination) {
+          Picker(selection: $selection.destination) {
             ForEach(HistoryStatsTab.allCases) { tab in
-              Label(tab.title, systemImage: tab.symbol).tag(tab)
+              Label {
+                Text(tab.titleResource.resolved(in: locale))
+              } icon: {
+                Image(systemName: tab.symbol)
+              }
+              .tag(tab)
             }
+          } label: {
+            Text("View", bundle: #bundle)
           }
           .pickerStyle(.segmented)
           .frame(width: 210)
@@ -51,12 +64,12 @@ struct HistoryStatsRootView: View {
 
         if selection.destination == .stats {
           ToolbarItem(placement: .primaryAction) {
-            Picker("Time Range", selection: $historyStatsWindowRaw) {
-              Text("Today").tag(HistoryWindow.today.rawValue)
-              Text("7 Days").tag(HistoryWindow.last7Days.rawValue)
-              Text("30 Days").tag(HistoryWindow.last30Days.rawValue)
-              Text("90 Days").tag(HistoryWindow.last90Days.rawValue)
-              Text("All Time").tag(HistoryWindow.lifetime.rawValue)
+            Picker(selection: $historyStatsWindowRaw) {
+              ForEach([HistoryWindow.today, .last7Days, .last30Days, .last90Days, .lifetime], id: \.self) { window in
+                Text(window.titleResource.resolved(in: locale)).tag(window.rawValue)
+              }
+            } label: {
+              Text("Time Range", bundle: #bundle)
             }
             .pickerStyle(.menu)
             .frame(width: 150)

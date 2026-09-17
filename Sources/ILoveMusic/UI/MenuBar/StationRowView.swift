@@ -69,7 +69,7 @@ struct StationRow: View {
               .lineLimit(1)
 
             if let metadata, !metadata.artist.isEmpty {
-              Text(metadata.artist)
+              Text(verbatim: metadata.artist)
                 .font(.system(size: 9.5, weight: .bold))
                 .textCase(.uppercase)
                 .tracking(0.15)
@@ -77,7 +77,7 @@ struct StationRow: View {
                 .lineLimit(1)
             }
             if let metadata, !metadata.title.isEmpty {
-              Text(metadata.title)
+              Text(verbatim: metadata.title)
                 .font(.system(size: 9.5, weight: .regular))
                 .textCase(.uppercase)
                 .tracking(0.15)
@@ -90,6 +90,8 @@ struct StationRow: View {
         }
         .contentShape(Rectangle())
         .onTapGesture(perform: playStation)
+        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel(Text(verbatim: station.displayName))
 
         trailingAccessory
       }
@@ -176,7 +178,16 @@ struct StationRow: View {
         dismissDetail()
       }
     }
-    .help(isFavorite ? "Unfavorite" : "Favorite")
+    .help(Text(isFavorite ? unfavoriteHelp : favoriteHelp))
+    .accessibilityLabel(Text(isFavorite ? unfavoriteHelp : favoriteHelp))
+  }
+
+  private var unfavoriteHelp: LocalizedStringResource {
+    LocalizedStringResource("Unfavorite", bundle: #bundle, comment: "Action that removes a station from favorites.")
+  }
+
+  private var favoriteHelp: LocalizedStringResource {
+    LocalizedStringResource("Favorite", bundle: #bundle, comment: "Action that adds a station to favorites.")
   }
 
   private func playStation() {
@@ -196,18 +207,19 @@ struct ListenerBadge: View {
     HStack(spacing: 3) {
       Image(systemName: "person.fill")
         .font(.system(size: 8, weight: .semibold))
-      Text(formatted)
+      Text(count, format: .number.notation(.compactName))
         .font(.system(size: 10, weight: .medium).monospacedDigit())
     }
     .foregroundStyle(.tertiary)
-  }
-
-  private var formatted: String {
-    if count >= 1000 {
-      let value = Double(count) / 1000.0
-      return String(format: "%.1fk", value)
-    }
-    return "\(count)"
+    .accessibilityLabel(
+      Text(
+        LocalizedStringResource(
+          "\(count) listeners",
+          bundle: #bundle,
+          comment: "Number of people currently listening to a station."
+        )
+      )
+    )
   }
 }
 

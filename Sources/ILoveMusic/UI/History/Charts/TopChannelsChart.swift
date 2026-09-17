@@ -5,6 +5,7 @@ struct TopChannelsChart: View {
   let channels: [ChannelTotal]
 
   @State private var selectedIndex: Int?
+  @Environment(\.locale) private var locale
 
   var body: some View {
     if channels.isEmpty {
@@ -12,21 +13,21 @@ struct TopChannelsChart: View {
     } else {
       Chart(Array(channels.enumerated()), id: \.element.id) { index, channel in
         BarMark(
-          x: .value("Time", channel.listenedSeconds),
-          y: .value("Channel", channel.stationName)
+          x: .value(localized("Time"), channel.listenedSeconds),
+          y: .value(localized("Channel"), channel.stationName)
         )
         .foregroundStyle(Color(hex: channel.accentHex))
         .opacity(selectedIndex == nil || selectedIndex == index ? 1 : 0.42)
         .cornerRadius(4)
         .accessibilityLabel(channel.stationName)
-        .accessibilityValue("\(formatShortListeningDuration(channel.listenedSeconds)), \(channel.playCount) plays")
+        .accessibilityValue("\(formatShortListeningDuration(channel.listenedSeconds, locale: locale)), \(localizedPlayCount(channel.playCount, locale: locale))")
       }
       .chartXAxis {
         AxisMarks(position: .bottom) { value in
           AxisGridLine()
           AxisTick()
           if let seconds = value.as(Double.self) {
-            AxisValueLabel(formatAxisListeningDuration(seconds))
+            AxisValueLabel(formatAxisListeningDuration(seconds, locale: locale))
           }
         }
       }
@@ -61,9 +62,11 @@ struct TopChannelsChart: View {
         if let selectedIndex, channels.indices.contains(selectedIndex) {
           let channel = channels[selectedIndex]
           VStack(alignment: .leading, spacing: 2) {
-            Text(channel.stationName)
+            Text(verbatim: channel.stationName)
               .font(.caption.bold())
-            Text("\(formatShortListeningDuration(channel.listenedSeconds)) · \(channel.playCount) plays")
+            Text(
+              verbatim: "\(formatShortListeningDuration(channel.listenedSeconds, locale: locale)) · \(localizedPlayCount(channel.playCount, locale: locale))"
+            )
               .font(.caption.monospacedDigit())
               .foregroundStyle(.secondary)
           }
@@ -73,7 +76,11 @@ struct TopChannelsChart: View {
         }
       }
       .frame(height: max(170, CGFloat(channels.count) * 25))
-      .accessibilityLabel("Top channels")
+      .accessibilityLabel(Text("Top channels", bundle: #bundle))
     }
+  }
+
+  private func localized(_ value: String.LocalizationValue) -> String {
+    String(localized: LocalizedStringResource(value, locale: locale, bundle: #bundle))
   }
 }

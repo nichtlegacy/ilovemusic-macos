@@ -79,6 +79,17 @@ if [ -d "${BUILD_DIR}/${RESOURCE_BUNDLE}" ]; then
   cp -R "${BUILD_DIR}/${RESOURCE_BUNDLE}" "$APP_DIR/Contents/Resources/"
 fi
 
+# SwiftPM's command-line build currently copies String Catalog sources without
+# compiling them. Compile the shipping catalog into the copied resource bundle
+# so Foundation can discover the German `.lproj` at runtime.
+STRING_CATALOG="Sources/ILoveMusic/Resources/Localizable.xcstrings"
+if [ -f "$STRING_CATALOG" ]; then
+  xcrun xcstringstool compile "$STRING_CATALOG" \
+    --output-directory "$APP_DIR/Contents/Resources/${RESOURCE_BUNDLE}" \
+    --language en \
+    --language de
+fi
+
 if [ -f "Sources/ILoveMusic/Resources/AppIcon.icns" ]; then
   cp "Sources/ILoveMusic/Resources/AppIcon.icns" "$APP_DIR/Contents/Resources/"
 fi
@@ -108,6 +119,12 @@ cat > "$APP_DIR/Contents/Info.plist" <<EOF
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
   <key>CFBundleSignature</key><string>????</string>
+  <key>CFBundleDevelopmentRegion</key><string>en</string>
+  <key>CFBundleLocalizations</key>
+  <array>
+    <string>en</string>
+    <string>de</string>
+  </array>
   <key>LSMinimumSystemVersion</key><string>${MIN_OS}</string>
   <key>LSUIElement</key><true/>
   <key>NSHighResolutionCapable</key><true/>

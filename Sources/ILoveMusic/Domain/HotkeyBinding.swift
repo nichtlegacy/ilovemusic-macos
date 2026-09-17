@@ -19,6 +19,15 @@ enum HotkeyID: UInt32, CaseIterable, Codable, Hashable {
     case .quit: "Quit"
     }
   }
+
+  var titleResource: LocalizedStringResource {
+    switch self {
+    case .playPause: LocalizedStringResource("Play / Pause", bundle: #bundle, comment: "Global hotkey action name.")
+    case .nextStation: LocalizedStringResource("Next station", bundle: #bundle, comment: "Global hotkey action name.")
+    case .randomStation: LocalizedStringResource("Random station", bundle: #bundle, comment: "Global hotkey action name.")
+    case .quit: LocalizedStringResource("Quit", bundle: #bundle, comment: "Global hotkey action name.")
+    }
+  }
 }
 
 /// User-defined keyboard shortcut for one global action.

@@ -47,6 +47,8 @@ struct StationDetailPopover: View {
   let onToggleFavorite: () -> Void
   let onOpenWebsite: () -> Void
 
+  @Environment(\.locale) private var locale
+
   private var accent: Color { Color(hex: station.accentHex) }
   private var nowPlaying: NowPlaying? { appModel.metadata(for: station) }
   private var recent: [NowPlaying] { appModel.stationRecentSongs(for: station) }
@@ -98,7 +100,13 @@ struct StationDetailPopover: View {
           HStack(spacing: 4) {
             Image(systemName: "person.fill")
               .font(.system(size: 9))
-            Text("\(count) listening")
+            Text(
+              LocalizedStringResource(
+                "\(count) listeners",
+                bundle: #bundle,
+                comment: "Number of people currently listening to a station."
+              )
+            )
               .font(.system(size: 10, weight: .medium))
           }
           .foregroundStyle(.secondary)
@@ -110,10 +118,12 @@ struct StationDetailPopover: View {
 
   private var nowPlayingSection: some View {
     VStack(alignment: .leading, spacing: 4) {
-      sectionHeader("Now playing")
+      sectionHeader(
+        LocalizedStringResource("Now playing", bundle: #bundle, comment: "Heading above the current track in a station popover.")
+      )
       if let nowPlaying, !nowPlaying.artist.isEmpty || !nowPlaying.title.isEmpty {
         if !nowPlaying.artist.isEmpty {
-          Text(nowPlaying.artist)
+          Text(verbatim: nowPlaying.artist)
             .font(.system(size: 11, weight: .bold))
             .textCase(.uppercase)
             .tracking(0.2)
@@ -121,7 +131,7 @@ struct StationDetailPopover: View {
             .fixedSize(horizontal: false, vertical: true)
         }
         if !nowPlaying.title.isEmpty {
-          Text(nowPlaying.title)
+          Text(verbatim: nowPlaying.title)
             .font(.system(size: 11))
             .textCase(.uppercase)
             .tracking(0.2)
@@ -129,7 +139,11 @@ struct StationDetailPopover: View {
             .fixedSize(horizontal: false, vertical: true)
         }
       } else {
-        Text("Not on air right now.")
+        Text(
+          "Not on air right now.",
+          bundle: #bundle,
+          comment: "Message shown when a station has no current track metadata."
+        )
           .font(.system(size: 10.5))
           .foregroundStyle(.secondary)
       }
@@ -138,14 +152,16 @@ struct StationDetailPopover: View {
 
   private var recentSection: some View {
     VStack(alignment: .leading, spacing: 5) {
-      sectionHeader("Recent")
+      sectionHeader(
+        LocalizedStringResource("Recent", bundle: #bundle, comment: "Heading above a station's recently played tracks.")
+      )
       ForEach(Array(recent.prefix(5).enumerated()), id: \.offset) { _, entry in
         HStack(alignment: .firstTextBaseline, spacing: 8) {
-          Text(entry.updatedAt.formatted(date: .omitted, time: .shortened))
+          Text(entry.updatedAt.formatted(Date.FormatStyle(date: .omitted, time: .shortened, locale: locale)))
             .font(.system(size: 10, weight: .medium).monospacedDigit())
             .foregroundStyle(.tertiary)
             .frame(width: 38, alignment: .leading)
-          Text(entry.displayLine)
+          Text(verbatim: entry.displayLine)
             .font(.system(size: 10.5))
             .foregroundStyle(.secondary)
             .fixedSize(horizontal: false, vertical: true)
@@ -161,7 +177,7 @@ struct StationDetailPopover: View {
         HStack(spacing: 5) {
           Image(systemName: isActive ? "arrow.clockwise" : "play.fill")
             .font(.system(size: 10, weight: .heavy))
-          Text(isActive ? "Restart" : "Play")
+          Text(isActive ? restartTitle : playTitle)
             .font(.system(size: 11, weight: .semibold))
         }
         .padding(.horizontal, 12)
@@ -171,6 +187,7 @@ struct StationDetailPopover: View {
       }
       .buttonStyle(.plain)
       .focusEffectDisabled()
+      .accessibilityLabel(Text(isActive ? restartTitle : playTitle))
 
       Button(action: onToggleFavorite) {
         Image(systemName: isFav ? "heart.fill" : "heart")
@@ -182,13 +199,14 @@ struct StationDetailPopover: View {
       }
       .buttonStyle(.plain)
       .focusEffectDisabled()
-      .help(isFav ? "Remove from favorites" : "Add to favorites")
+      .help(Text(isFav ? removeFavoriteHelp : addFavoriteHelp))
+      .accessibilityLabel(Text(isFav ? removeFavoriteHelp : addFavoriteHelp))
 
       Spacer()
 
       Button(action: onOpenWebsite) {
         HStack(spacing: 5) {
-          Text("Website")
+          Text("Website", bundle: #bundle, comment: "Button that opens a station's website.")
             .font(.system(size: 11, weight: .semibold))
           Image(systemName: "arrow.up.right")
             .font(.system(size: 9, weight: .bold))
@@ -200,11 +218,27 @@ struct StationDetailPopover: View {
       }
       .buttonStyle(.plain)
       .focusEffectDisabled()
-      .help("Open ilovemusic.de")
+      .help(Text("Open ilovemusic.de", bundle: #bundle, comment: "Help text for the station website button."))
     }
   }
 
-  private func sectionHeader(_ text: String) -> some View {
+  private var restartTitle: LocalizedStringResource {
+    LocalizedStringResource("Restart", bundle: #bundle, comment: "Button that restarts the station already being played.")
+  }
+
+  private var playTitle: LocalizedStringResource {
+    LocalizedStringResource("Play", bundle: #bundle, comment: "Button that starts playing a station.")
+  }
+
+  private var removeFavoriteHelp: LocalizedStringResource {
+    LocalizedStringResource("Remove from favorites", bundle: #bundle, comment: "Action that removes a station from favorites.")
+  }
+
+  private var addFavoriteHelp: LocalizedStringResource {
+    LocalizedStringResource("Add to favorites", bundle: #bundle, comment: "Action that adds a station to favorites.")
+  }
+
+  private func sectionHeader(_ text: LocalizedStringResource) -> some View {
     Text(text)
       .font(.system(size: 9, weight: .semibold))
       .textCase(.uppercase)

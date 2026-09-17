@@ -70,6 +70,27 @@ struct HistoryStatsUITests {
   }
 
   @Test
+  func weekdaySymbolsFollowLocaleAndStayMondayFirst() {
+    let english = localizedMondayFirstWeekdaySymbols(locale: Locale(identifier: "en_US"))
+    let german = localizedMondayFirstWeekdaySymbols(locale: Locale(identifier: "de_DE"))
+
+    #expect(english.first == "Mon")
+    #expect(german.first == "Mo")
+    #expect(english.last == "Sun")
+    #expect(german.last == "So")
+  }
+
+  @Test
+  func listeningDurationUsesTheRequestedLocale() {
+    let english = formatShortListeningDuration(65, locale: Locale(identifier: "en_US"))
+    let german = formatShortListeningDuration(65, locale: Locale(identifier: "de_DE"))
+
+    #expect(!english.isEmpty)
+    #expect(!german.isEmpty)
+    #expect(formatShortListeningDuration(0, locale: Locale(identifier: "de_DE")) != "0 sec")
+  }
+
+  @Test
   func historyWindowUsesNativeResizableChrome() throws {
     let fixture = try makeModel()
     defer { try? FileManager.default.removeItem(at: fixture.directory) }

@@ -19,6 +19,7 @@ struct HistoryListView: View {
 
   @State private var query = ""
   @State private var stationFilter: StationFilter = .all
+  @Environment(\.locale) private var locale
 
   private var recorder: PlayHistoryRecorder { appModel.historyRecorder }
 
@@ -36,23 +37,29 @@ struct HistoryListView: View {
       Divider()
       content(days: days)
     }
-    .searchable(text: $query, placement: .toolbar, prompt: "Songs, artists, or channels")
+    .searchable(
+      text: $query,
+      placement: .toolbar,
+      prompt: Text("Songs, artists, or channels", bundle: #bundle)
+    )
   }
 
   private func filterBar(matchCount: Int) -> some View {
     HStack(spacing: 10) {
-      Picker("Channel", selection: $stationFilter) {
-        Text("All Channels").tag(StationFilter.all)
+      Picker(selection: $stationFilter) {
+        Text("All Channels", bundle: #bundle).tag(StationFilter.all)
         ForEach(stationsForMenu, id: \.stationID) { station in
-          Text(station.stationName).tag(StationFilter.station(station.stationID))
+          Text(verbatim: station.stationName).tag(StationFilter.station(station.stationID))
         }
+      } label: {
+        Text("Channel", bundle: #bundle)
       }
       .pickerStyle(.menu)
       .frame(maxWidth: 220)
 
       Spacer()
 
-      Text("\(matchCount.formatted(.number)) songs")
+      Text(verbatim: localizedSongCount(matchCount, locale: locale))
         .font(.caption.monospacedDigit())
         .foregroundStyle(.secondary)
     }
@@ -65,10 +72,10 @@ struct HistoryListView: View {
     if recorder.events.isEmpty {
       HistoryEmptyState(
         icon: "clock.arrow.circlepath",
-        title: "No history yet",
+        title: LocalizedStringResource("No history yet", bundle: #bundle),
         subtitle: appModel.preferences.recordHistoryEnabled == false
-          ? "History recording is disabled in Settings."
-          : "Once you listen to a channel for at least 10 seconds, it shows up here.",
+          ? LocalizedStringResource("History recording is disabled in Settings.", bundle: #bundle)
+          : LocalizedStringResource("Once you listen to a channel for at least 10 seconds, it shows up here.", bundle: #bundle),
         openSettings: appModel.preferences.recordHistoryEnabled == false
           ? { appModel.requestOpenSettingsWindow?() }
           : nil
@@ -76,9 +83,9 @@ struct HistoryListView: View {
     } else if days.isEmpty {
       HistoryEmptyState(
         icon: "line.3.horizontal.decrease.circle",
-        title: "No matches for this selection",
-        subtitle: "Adjust the search or channel filter.",
-        buttonTitle: "Reset filters",
+        title: LocalizedStringResource("No matches for this selection", bundle: #bundle),
+        subtitle: LocalizedStringResource("Adjust the search or channel filter.", bundle: #bundle),
+        buttonTitle: LocalizedStringResource("Reset filters", bundle: #bundle),
         action: {
           query = ""
           stationFilter = .all
@@ -181,29 +188,38 @@ private struct HistoryDayHeader: View {
   let totalSeconds: Double
   let eventCount: Int
 
+  @Environment(\.locale) private var locale
+
   var body: some View {
     HStack {
-      Text(title)
-        .font(.system(size: 12, weight: .semibold))
-        .foregroundStyle(.secondary)
+      Group {
+        if Calendar.current.isDateInToday(date) {
+          Text("Today", bundle: #bundle)
+        } else if Calendar.current.isDateInYesterday(date) {
+          Text("Yesterday", bundle: #bundle)
+        } else {
+          Text(verbatim: date.formatted(
+            Date.FormatStyle(
+              date: .abbreviated,
+              time: .omitted,
+              locale: locale
+            )
+            .weekday(.abbreviated)
+          ))
+        }
+      }
+      .font(.system(size: 12, weight: .semibold))
+      .foregroundStyle(.secondary)
       Spacer()
-      Text("\(formatDuration(totalSeconds)) · \(eventCount.formatted(.number)) Songs")
+      Text(
+        verbatim: "\(formatShortListeningDuration(totalSeconds, locale: locale)) · \(localizedSongCount(eventCount, locale: locale))"
+      )
         .font(.system(size: 11, weight: .medium).monospacedDigit())
         .foregroundStyle(.tertiary)
     }
     .padding(.vertical, 4)
   }
 
-  private var title: String {
-    let calendar = Calendar.current
-    if calendar.isDateInToday(date) {
-      return "Today"
-    }
-    if calendar.isDateInYesterday(date) {
-      return "Yesterday"
-    }
-    return date.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated))
-  }
 }
 
 private struct HistoryRow: View {
@@ -212,6 +228,8 @@ private struct HistoryRow: View {
   let accent: Color
   let onCopy: () -> Void
   let onFilterStation: () -> Void
+
+  @Environment(\.locale) private var locale
 
   var body: some View {
     HStack(spacing: 12) {
@@ -223,10 +241,17 @@ private struct HistoryRow: View {
       )
 
       VStack(alignment: .leading, spacing: 4) {
-        Text(trackLine)
+        if trackLine.isEmpty {
+          Text("Unknown Track", bundle: #bundle)
+            .font(.system(size: 13, weight: .semibold))
+            .foregroundStyle(.primary)
+            .lineLimit(1)
+        } else {
+          Text(verbatim: trackLine)
           .font(.system(size: 13, weight: .semibold))
           .foregroundStyle(.primary)
           .lineLimit(1)
+        }
 
         Text(tintedStationName(event.stationName, accent: accent))
           .font(.caption)
@@ -237,7 +262,9 @@ private struct HistoryRow: View {
       Spacer(minLength: 12)
 
       VStack(alignment: .trailing, spacing: 4) {
-        Text(event.startedAt.formatted(date: .omitted, time: .shortened))
+        Text(verbatim: event.startedAt.formatted(
+          Date.FormatStyle(date: .omitted, time: .shortened, locale: locale)
+        ))
           .font(.system(size: 12, weight: .medium).monospacedDigit())
           .foregroundStyle(.secondary)
         Text(formatClockDuration(event.listenedSeconds ?? 0))
@@ -249,29 +276,35 @@ private struct HistoryRow: View {
     .listRowInsets(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
     .listRowSeparator(.visible)
     .contextMenu {
-      Button("Copy") {
+      Button {
         onCopy()
+      } label: {
+        Text("Copy", bundle: #bundle)
       }
 
-      Button("Filter by This Channel") {
+      Button {
         onFilterStation()
+      } label: {
+        Text("Filter by This Channel", bundle: #bundle)
       }
     }
   }
 
   private var trackLine: String {
     let parts = [event.artist, event.title].filter { !$0.isEmpty }
-    return parts.isEmpty ? "Unknown Track" : parts.joined(separator: " – ")
+    return parts.joined(separator: " – ")
   }
 }
 
 private struct HistoryEmptyState: View {
   let icon: String
-  let title: String
-  let subtitle: String
+  let title: LocalizedStringResource
+  let subtitle: LocalizedStringResource
   var openSettings: (() -> Void)? = nil
-  var buttonTitle: String?
+  var buttonTitle: LocalizedStringResource?
   var action: (() -> Void)?
+
+  @Environment(\.locale) private var locale
 
   var body: some View {
     VStack(spacing: 12) {
@@ -279,32 +312,28 @@ private struct HistoryEmptyState: View {
       Image(systemName: icon)
         .font(.system(size: 44, weight: .light))
         .foregroundStyle(.tertiary)
-      Text(title)
+      Text(title.resolved(in: locale))
         .font(.system(size: 18, weight: .semibold))
-      Text(subtitle)
+      Text(subtitle.resolved(in: locale))
         .font(.callout)
         .foregroundStyle(.secondary)
         .multilineTextAlignment(.center)
         .frame(maxWidth: 360)
 
       if let openSettings {
-        Button("Open Settings…", action: openSettings)
+        Button(action: openSettings) {
+          Text("Open Settings…", bundle: #bundle)
+        }
       } else if let buttonTitle, let action {
-        Button(buttonTitle, action: action)
+        Button(action: action) {
+          Text(buttonTitle.resolved(in: locale))
+        }
       }
 
       Spacer()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
   }
-}
-
-private func formatDuration(_ seconds: Double) -> String {
-  let formatter = DateComponentsFormatter()
-  formatter.allowedUnits = seconds >= 3600 ? [.hour, .minute] : (seconds >= 60 ? [.minute] : [.second])
-  formatter.unitsStyle = .short
-  formatter.maximumUnitCount = 2
-  return formatter.string(from: seconds) ?? "0 sec"
 }
 
 private func formatClockDuration(_ seconds: Double) -> String {

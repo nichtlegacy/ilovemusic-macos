@@ -8,6 +8,11 @@ enum AppIdentity {
   static let logSubsystem = bundleIdentifier
   static let menuBarFallbackLabel = "I♥"
   static let historyWindowTitle = "ILoveMusic – History & Stats"
+  static let historyWindowTitleResource = LocalizedStringResource(
+    "ILoveMusic – History & Stats",
+    bundle: #bundle,
+    comment: "Title of the listening history and statistics window."
+  )
 }
 
 enum AppSupportPaths {

@@ -3,6 +3,8 @@ import SwiftUI
 struct TopSongsCard: View {
   let songs: [SongTotal]
 
+  @Environment(\.locale) private var locale
+
   var body: some View {
     if songs.isEmpty {
       StatsEmptyState(title: "No songs yet", subtitle: "Once you've built up some history, your most-played tracks will appear here.")
@@ -18,22 +20,34 @@ struct TopSongsCard: View {
             )
 
             VStack(alignment: .leading, spacing: 3) {
-              Text(song.title.isEmpty ? "Unknown song" : song.title)
-                .font(.caption.bold())
-                .lineLimit(1)
-              Text(song.artist.isEmpty ? "Unknown artist" : song.artist)
-                .font(.caption2)
-                .foregroundStyle(.secondary)
-                .lineLimit(1)
+              Group {
+                if song.title.isEmpty {
+                  Text("Unknown song", bundle: #bundle)
+                } else {
+                  Text(verbatim: song.title)
+                }
+              }
+              .font(.caption.bold())
+              .lineLimit(1)
+              Group {
+                if song.artist.isEmpty {
+                  Text("Unknown artist", bundle: #bundle)
+                } else {
+                  Text(verbatim: song.artist)
+                }
+              }
+              .font(.caption2)
+              .foregroundStyle(.secondary)
+              .lineLimit(1)
             }
 
             Spacer()
 
             VStack(alignment: .trailing, spacing: 3) {
-              Text(formatShortListeningDuration(song.listenedSeconds))
+              Text(verbatim: formatShortListeningDuration(song.listenedSeconds, locale: locale))
                 .font(.caption2.monospacedDigit())
                 .foregroundStyle(.secondary)
-              Text("\(song.playCount) plays")
+              Text(verbatim: localizedPlayCount(song.playCount, locale: locale))
                 .font(.caption2.monospacedDigit())
                 .foregroundStyle(.tertiary)
             }

@@ -18,11 +18,17 @@ struct AboutPane: View {
           .frame(width: 92, height: 92)
           .accessibilityHidden(true)
         VStack(alignment: .leading, spacing: 5) {
-          Text(AppIdentity.displayName)
+          Text(verbatim: AppIdentity.displayName)
             .font(.title.bold())
-          Text(build.map { "Version \(version) (\($0))" } ?? "Version \(version)")
-            .foregroundStyle(.secondary)
-          Text("A native macOS menu bar player for the public ILoveMusic radio streams.")
+          Group {
+            if let build {
+              Text("Version \(version) (\(build))", bundle: #bundle)
+            } else {
+              Text("Version \(version)", bundle: #bundle)
+            }
+          }
+          .foregroundStyle(.secondary)
+          Text("A native macOS menu bar player for the public ILoveMusic radio streams.", bundle: #bundle)
             .font(.callout)
             .foregroundStyle(.secondary)
             .fixedSize(horizontal: false, vertical: true)
@@ -31,8 +37,10 @@ struct AboutPane: View {
       .padding(.vertical, 10)
       .listRowBackground(Color.clear)
 
-      Section("Updates") {
+      Section {
         UpdatesSection()
+      } header: {
+        Text("Updates", bundle: #bundle)
       }
 
       Section {
@@ -43,9 +51,9 @@ struct AboutPane: View {
           Label("ILOVEMUSIC.DE", systemImage: "globe")
         }
       } header: {
-        Text("Links")
+        Text("Links", bundle: #bundle)
       } footer: {
-        Text("© 2026 nichtlegacy")
+        Text(verbatim: "© 2026 nichtlegacy")
       }
     }
     .settingsFormStyle()
@@ -54,24 +62,28 @@ struct AboutPane: View {
 
 @MainActor
 private struct UpdatesSection: View {
+  @Environment(\.locale) private var locale
   @ObservedObject private var updater = UpdaterManager.shared
 
-  private var lastCheckedText: String {
-    updater.lastUpdateCheckDate?.shortTimeOrDateTime ?? "Never"
+  private var lastCheckedText: Text {
+    if let date = updater.lastUpdateCheckDate {
+      return Text(verbatim: date.shortTimeOrDateTime(locale: locale))
+    }
+    return Text("Never", bundle: #bundle)
   }
 
   var body: some View {
     SettingsToggle(
-      "Check for updates automatically",
-      subtitle: "Look for new releases in the background and ask before installing.",
+      LocalizedStringResource("Check for updates automatically", bundle: #bundle, comment: "Settings toggle"),
+      subtitle: LocalizedStringResource("Look for new releases in the background and ask before installing.", bundle: #bundle, comment: "Automatic update checks explanation"),
       isOn: Binding(
         get: { updater.automaticallyChecksForUpdates },
         set: { updater.automaticallyChecksForUpdates = $0 }
       )
     )
     SettingsToggle(
-      "Download updates in the background",
-      subtitle: "Fetch releases ahead of time so they are ready to install.",
+      LocalizedStringResource("Download updates in the background", bundle: #bundle, comment: "Settings toggle"),
+      subtitle: LocalizedStringResource("Fetch releases ahead of time so they are ready to install.", bundle: #bundle, comment: "Automatic update downloads explanation"),
       isOn: Binding(
         get: { updater.automaticallyDownloadsUpdates },
         set: { updater.automaticallyDownloadsUpdates = $0 }
@@ -79,10 +91,16 @@ private struct UpdatesSection: View {
     )
     .disabled(!updater.automaticallyChecksForUpdates)
     .opacity(updater.automaticallyChecksForUpdates ? 1 : 0.5)
-    LabeledContent("Last checked", value: lastCheckedText)
+    LabeledContent {
+      lastCheckedText
+    } label: {
+      Text("Last checked", bundle: #bundle)
+    }
     HStack {
-      Button("Check for Updates…") {
+      Button {
         updater.checkForUpdates()
+      } label: {
+        Text("Check for Updates…", bundle: #bundle)
       }
       .disabled(!updater.canCheckForUpdates)
       Spacer()

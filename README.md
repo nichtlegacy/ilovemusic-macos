@@ -42,6 +42,7 @@ Das Projekt bleibt bewusst:
 - **Verlauf & Statistik** – eigenes Fenster mit Streak, Genre-Verteilung, Top-Sendern/Künstlern/Songs, 24-Stunden- und Wochentag×Stunde-Heatmaps.
 - **Native Wiedergabe** – `AVPlayer` mit AAC→MP3→`.m3u`-Fallback und automatischem Reconnect.
 - **Konfigurierbare globale Tastenkürzel** – funktionieren systemweit, jede Aktion frei belegbar mit Konflikterkennung.
+- **Deutsch und Englisch** – folgt standardmäßig der macOS-App-Sprache oder lässt sich in den Einstellungen fest auswählen.
 - **Discord Rich Presence** – optional; zeigt Sender, Song, Cover und Hörerzahl im Discord-Profil.
 - **[Stream Deck](#stream-deck)** – eigenes Plugin über einen lokalen, token-gesicherten HTTP-Control-Server: Sender-Tasten mit Live-Cover, Transport, Favorit, Lautstärke.
 - **Start bei Anmeldung** und **letzten Sender fortsetzen**.
@@ -122,7 +123,7 @@ Die Einstellungen öffnen in einem eigenen nativen macOS-Fenster mit sieben Bere
 
 | Tab | Inhalt |
 | --- | --- |
-| **General** | Start bei Anmeldung · letzten Sender fortsetzen · Sender-Reihenfolge (Beliebtheit/Alphabet) |
+| **General** | Start bei Anmeldung · letzten Sender fortsetzen · Sprache (Systemstandard/Deutsch/English) · Sender-Reihenfolge (Beliebtheit/Alphabet) |
 | **Playback** | Standard-Lautstärke (perzeptuelle Kurve, Stummschalten, „Maximallautstärke entsperren") · globale Tastenkürzel ein/aus · pro-Aktion belegbare Hotkeys mit Konflikterkennung |
 | **Discord** | Rich Presence ein/aus · Cover senden · „Listen"-Button · Hörerzahl anzeigen · Senderlogo · eigene Discord-Application-ID |
 | **Stream Deck** | Status der lokalen HTTP-Brücke · letzter Request/Handshake · letzter Fehler |
@@ -142,6 +143,17 @@ Die Einstellungen öffnen in einem eigenen nativen macOS-Fenster mit sieben Bere
 Registriert über die Carbon-`RegisterEventHotKey`-API in [`GlobalShortcutManager.swift`](Sources/ILoveMusic/Services/GlobalShortcutManager.swift).
 
 </details>
+
+### Sprache
+
+ILoveMusic unterstützt Deutsch und Englisch. Standardmäßig folgt die Oberfläche der macOS-App-Sprache. Unter **Einstellungen → Allgemein → System → Sprache** kann Deutsch oder Englisch fest gewählt werden. Die Auswahl wird sofort gespeichert und nach dem nächsten Start von ILoveMusic aktiv; bis dahin zeigt die App einen Neustart-Hinweis.
+
+Übersetzungen werden in `Sources/ILoveMusic/Resources/Localizable.xcstrings` gepflegt. Nach Änderungen die eingecheckten Laufzeit-Ressourcen für `swift run` und `swift test` neu erzeugen:
+
+```bash
+xcrun xcstringstool compile Sources/ILoveMusic/Resources/Localizable.xcstrings \
+  --output-directory Sources/ILoveMusic/Resources --language en --language de
+```
 
 ## Verlauf & Statistik
 

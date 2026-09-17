@@ -69,6 +69,7 @@ struct AppStateStoreTests {
     prefs.favoriteIDs = ["a", "b"]
     prefs.lastStationID = "a"
     prefs.volume = 0.42
+    prefs.appLanguage = .german
 
     let station = sampleStation(id: "a")
     let nowPlaying = NowPlaying(
@@ -98,6 +99,7 @@ struct AppStateStoreTests {
     let reloaded = reloadedStore.load()
 
     #expect(reloaded.preferences == prefs)
+    #expect(reloaded.preferences.effectiveAppLanguage == .german)
     #expect(reloaded.history == history)
     #expect(reloaded.cachedStations.count == 1)
     #expect(reloaded.cachedStations.first?.id == "a")

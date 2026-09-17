@@ -24,19 +24,20 @@ struct SettingsIconChip: View {
 }
 
 struct SettingsRowLabel: View {
-  let title: String
-  let subtitle: String?
+  @Environment(\.locale) private var locale
+  let title: LocalizedStringResource
+  let subtitle: LocalizedStringResource?
 
-  init(_ title: String, subtitle: String? = nil) {
+  init(_ title: LocalizedStringResource, subtitle: LocalizedStringResource? = nil) {
     self.title = title
     self.subtitle = subtitle
   }
 
   var body: some View {
     VStack(alignment: .leading, spacing: 2) {
-      Text(title)
-      if let subtitle, !subtitle.isEmpty {
-        Text(subtitle)
+      Text(title.resolved(in: locale))
+      if let subtitle {
+        Text(subtitle.resolved(in: locale))
           .font(.caption)
           .foregroundStyle(.secondary)
           .fixedSize(horizontal: false, vertical: true)
@@ -47,11 +48,11 @@ struct SettingsRowLabel: View {
 
 @MainActor
 struct SettingsToggle: View {
-  let title: String
-  let subtitle: String?
+  let title: LocalizedStringResource
+  let subtitle: LocalizedStringResource?
   @Binding var isOn: Bool
 
-  init(_ title: String, subtitle: String? = nil, isOn: Binding<Bool>) {
+  init(_ title: LocalizedStringResource, subtitle: LocalizedStringResource? = nil, isOn: Binding<Bool>) {
     self.title = title
     self.subtitle = subtitle
     self._isOn = isOn
@@ -75,11 +76,11 @@ struct SettingsStatusDot: View {
       Circle()
         .fill(color)
         .frame(width: 7, height: 7)
-      Text(label)
+      Text(verbatim: label)
         .foregroundStyle(.secondary)
     }
     .accessibilityElement(children: .ignore)
-    .accessibilityLabel(label)
+    .accessibilityLabel(Text(verbatim: label))
   }
 }
 

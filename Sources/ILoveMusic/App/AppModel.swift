@@ -16,6 +16,9 @@ final class AppModel {
   private(set) var songHistoryByStationID: [String: [NowPlaying]] = [:]
   private(set) var liveRecentSongsByStationID: [String: [NowPlaying]] = [:]
   private(set) var preferences: UserPreferences
+  /// Language captured from persisted preferences at launch. It intentionally
+  /// stays unchanged until the process restarts.
+  private(set) var activeLanguage: AppLanguage
   private(set) var history: [PlaybackHistoryEntry]
   private(set) var historyRecorder: PlayHistoryRecorder
   private(set) var diagnostics = DiagnosticsSnapshot.empty
@@ -79,6 +82,7 @@ final class AppModel {
 
     let persisted = self.stateStore.load()
     preferences = persisted.preferences
+    activeLanguage = persisted.preferences.effectiveAppLanguage
     history = persisted.history
     metadataByStationID = persisted.cachedNowPlaying
     songHistoryByStationID = persisted.songHistoryByStationID ?? [:]
@@ -542,6 +546,15 @@ final class AppModel {
     preferences.stationSort = value
     recomputeVisibleStations()
     persist()
+  }
+
+  func updateAppLanguage(_ value: AppLanguage) {
+    preferences.appLanguage = value
+    persist()
+  }
+
+  var requiresLanguageRestart: Bool {
+    preferences.effectiveAppLanguage != activeLanguage
   }
 
   func updateLaunchAtLogin(_ value: Bool) {

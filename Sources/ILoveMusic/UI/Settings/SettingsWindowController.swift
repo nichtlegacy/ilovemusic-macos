@@ -21,14 +21,14 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate {
       appModel: appModel,
       selection: selection,
       onSelectionChange: { [weak window] tab in
-        window?.title = tab.title
+        window?.title = AppLocalization.string(tab.titleResource, language: appModel.activeLanguage)
       }
     )
 
     self.appModel = appModel
     self.selection = selection
 
-    window.title = selection.tab.title
+    window.title = AppLocalization.string(selection.tab.titleResource, language: appModel.activeLanguage)
     window.titlebarAppearsTransparent = true
     window.titleVisibility = .visible
     window.titlebarSeparatorStyle = .none

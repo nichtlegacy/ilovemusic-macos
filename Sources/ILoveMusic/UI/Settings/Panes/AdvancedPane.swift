@@ -1,70 +1,95 @@
 import SwiftUI
 
 struct AdvancedPane: View {
+  @Environment(\.locale) private var locale
   @Bindable var appModel: AppModel
-  @State private var maintenanceStatus: String?
+  @State private var maintenanceStatus: LocalizedStringResource?
 
   var body: some View {
     Form {
       Section {
-        LabeledContent("Station data") {
-          Button("Refresh Now") {
+        LabeledContent {
+          Button {
             Task {
               await appModel.refreshAll()
-              maintenanceStatus = "Refresh complete"
+              maintenanceStatus = LocalizedStringResource("Refresh complete", bundle: #bundle, comment: "Maintenance operation result")
             }
+          } label: {
+            Text("Refresh Now", bundle: #bundle)
           }
+        } label: {
+          Text("Station data", bundle: #bundle)
         }
-        LabeledContent("Catalog cache") {
-          Button("Clear Cache") {
+        LabeledContent {
+          Button {
             Task {
               await appModel.clearCachedCatalog()
-              maintenanceStatus = "Catalog cache cleared"
+              maintenanceStatus = LocalizedStringResource("Catalog cache cleared", bundle: #bundle, comment: "Maintenance operation result")
             }
+          } label: {
+            Text("Clear Cache", bundle: #bundle)
           }
+        } label: {
+          Text("Catalog cache", bundle: #bundle)
         }
-        LabeledContent("Artwork cache") {
-          Button("Clear Cache") {
+        LabeledContent {
+          Button {
             appModel.clearCachedArtwork()
-            maintenanceStatus = "Artwork cache cleared"
+            maintenanceStatus = LocalizedStringResource("Artwork cache cleared", bundle: #bundle, comment: "Maintenance operation result")
+          } label: {
+            Text("Clear Cache", bundle: #bundle)
           }
+        } label: {
+          Text("Artwork cache", bundle: #bundle)
         }
         if let maintenanceStatus {
-          Label(maintenanceStatus, systemImage: "checkmark.circle.fill")
+          Label {
+            Text(maintenanceStatus.resolved(in: locale))
+          } icon: {
+            Image(systemName: "checkmark.circle.fill")
+          }
             .font(.caption)
             .foregroundStyle(.secondary)
         }
       } header: {
-        Text("Maintenance")
+        Text("Maintenance", bundle: #bundle)
       } footer: {
-        Text("Catalog refreshes every 15 minutes, listeners every 2 minutes, and now-playing data every 30 seconds.")
+        Text("Catalog refreshes every 15 minutes, listeners every 2 minutes, and now-playing data every 30 seconds.", bundle: #bundle)
       }
 
-      Section("Catalog diagnostics") {
-        LabeledContent("Catalog source", value: appModel.diagnostics.source.title)
-        LabeledContent("Raw stations", value: "\(appModel.diagnostics.rawStationCount)")
-        LabeledContent("Visible stations", value: "\(appModel.diagnostics.visibleStationCount)")
-        LabeledContent("Filtered out", value: "\(appModel.diagnostics.filteredOutCount)")
-        LabeledContent("Active station", value: appModel.diagnostics.activeStationName ?? "None")
-        LabeledContent("Last metadata", value: appModel.diagnostics.lastMetadataRefreshAt?.shortTimeOrDateTime ?? "Never")
-        LabeledContent("Artwork cleared", value: appModel.diagnostics.lastArtworkCacheClearAt?.shortTimeOrDateTime ?? "Never")
+      Section {
+        LabeledContent { Text(appModel.diagnostics.source.titleResource.resolved(in: locale)) } label: { Text("Catalog source", bundle: #bundle) }
+        LabeledContent { Text(verbatim: "\(appModel.diagnostics.rawStationCount)") } label: { Text("Raw stations", bundle: #bundle) }
+        LabeledContent { Text(verbatim: "\(appModel.diagnostics.visibleStationCount)") } label: { Text("Visible stations", bundle: #bundle) }
+        LabeledContent { Text(verbatim: "\(appModel.diagnostics.filteredOutCount)") } label: { Text("Filtered out", bundle: #bundle) }
+        LabeledContent {
+          if let name = appModel.diagnostics.activeStationName { Text(verbatim: name) } else { Text("None", bundle: #bundle) }
+        } label: { Text("Active station", bundle: #bundle) }
+        LabeledContent {
+          if let date = appModel.diagnostics.lastMetadataRefreshAt { Text(verbatim: date.shortTimeOrDateTime(locale: locale)) } else { Text("Never", bundle: #bundle) }
+        } label: { Text("Last metadata", bundle: #bundle) }
+        LabeledContent {
+          if let date = appModel.diagnostics.lastArtworkCacheClearAt { Text(verbatim: date.shortTimeOrDateTime(locale: locale)) } else { Text("Never", bundle: #bundle) }
+        } label: { Text("Artwork cleared", bundle: #bundle) }
+      } header: {
+        Text("Catalog diagnostics", bundle: #bundle)
       }
 
-      Section("Discord log") {
+      Section {
         LogPanel(
           entries: appModel.discordConnectionLog,
           persistedCap: 80,
           onClear: { appModel.clearDiscordConnectionLog() }
         )
-      }
+      } header: { Text("Discord log", bundle: #bundle) }
 
-      Section("Stream Deck log") {
+      Section {
         LogPanel(
           entries: appModel.controlConnectionLog,
           persistedCap: 80,
           onClear: { appModel.clearControlConnectionLog() }
         )
-      }
+      } header: { Text("Stream Deck log", bundle: #bundle) }
     }
     .settingsFormStyle()
   }

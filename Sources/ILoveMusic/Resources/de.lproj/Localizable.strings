@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>%@, %@</key>
+	<string>%1$@, %2$@</string>
+	<key>%@, %lld:00 to %lld:00, %@</key>
+	<string>%1$@, %2$lld:00 bis %3$lld:00, %4$@</string>
+	<key>%lld</key>
+	<string>%lld</string>
+	<key>%lld.</key>
+	<string>%lld.</string>
+	<key>%lld:00 to %lld:00</key>
+	<string>%1$lld:00 bis %2$lld:00</string>
+	<key>%lld:00–%lld:00</key>
+	<string>%1$lld:00–%2$lld:00</string>
+	<key>30 Days</key>
+	<string>30 Tage</string>
+	<key>7 Days</key>
+	<string>7 Tage</string>
+	<key>90 Days</key>
+	<string>90 Tage</string>
+	<key>A native macOS menu bar player for the public ILoveMusic radio streams.</key>
+	<string>Ein nativer macOS-Menüleistenplayer für die öffentlichen Radiosender von ILoveMusic.</string>
+	<key>AAC</key>
+	<string>AAC</string>
+	<key>About</key>
+	<string>Über</string>
+	<key>Active station</key>
+	<string>Aktiver Sender</string>
+	<key>Add a button to your profile that opens the station on ilovemusic.de.</key>
+	<string>Fügt deinem Profil einen Button hinzu, der den Sender auf ilovemusic.de öffnet.</string>
+	<key>Add to favorites</key>
+	<string>Zu Favoriten hinzufügen</string>
+	<key>Adjust the search or channel filter.</key>
+	<string>Passe die Suche oder den Senderfilter an.</string>
+	<key>Advanced</key>
+	<string>Erweitert</string>
+	<key>AirPlay</key>
+	<string>AirPlay</string>
+	<key>AirPlay…</key>
+	<string>AirPlay…</string>
+	<key>All</key>
+	<string>Alle</string>
+	<key>All Channels</key>
+	<string>Alle Sender</string>
+	<key>All Time</key>
+	<string>Gesamter Zeitraum</string>
+	<key>All locally stored listening events will be removed immediately.</key>
+	<string>Alle lokal gespeicherten Wiedergabeereignisse werden sofort gelöscht.</string>
+	<key>Alphabetical</key>
+	<string>Alphabetisch</string>
+	<key>Application ID</key>
+	<string>Anwendungs-ID</string>
+	<key>Artwork cache</key>
+	<string>Cover-Cache</string>
+	<key>Artwork cache cleared</key>
+	<string>Cover-Cache geleert</string>
+	<key>Artwork cleared</key>
+	<string>Cover gelöscht</string>
+	<key>Auto</key>
+	<string>Automatisch</string>
+	<key>Automatically opens ILoveMusic when you start your Mac.</key>
+	<string>Öffnet ILoveMusic automatisch beim Start deines Macs.</string>
+	<key>Average Session</key>
+	<string>Durchschnittliche Sitzung</string>
+	<key>Bridge</key>
+	<string>Bridge</string>
+	<key>Buffering</key>
+	<string>Wird geladen</string>
+	<key>Bundled</key>
+	<string>Mitgeliefert</string>
+	<key>Cached</key>
+	<string>Zwischengespeichert</string>
+	<key>Cancel</key>
+	<string>Abbrechen</string>
+	<key>Catalog</key>
+	<string>Katalog</string>
+	<key>Catalog and metadata are live from ilovemusic.de.</key>
+	<string>Katalog und Metadaten werden live von ilovemusic.de geladen.</string>
+	<key>Catalog cache</key>
+	<string>Katalog-Cache</string>
+	<key>Catalog cache cleared</key>
+	<string>Katalog-Cache geleert</string>
+	<key>Catalog diagnostics</key>
+	<string>Katalogdiagnose</string>
+	<key>Catalog refreshes every 15 minutes, listeners every 2 minutes, and now-playing data every 30 seconds.</key>
+	<string>Der Katalog wird alle 15 Minuten, die Hörerzahlen alle 2 Minuten und die aktuellen Titel alle 30 Sekunden aktualisiert.</string>
+	<key>Catalog source</key>
+	<string>Katalogquelle</string>
+	<key>Channel</key>
+	<string>Sender</string>
+	<key>Channel order</key>
+	<string>Senderreihenfolge</string>
+	<key>Check for Updates…</key>
+	<string>Nach Updates suchen…</string>
+	<key>Check for updates automatically</key>
+	<string>Automatisch nach Updates suchen</string>
+	<key>Chill</key>
+	<string>Chill</string>
+	<key>Choose a broader time range or start listening to see your activity here.</key>
+	<string>Wähle einen größeren Zeitraum oder starte die Wiedergabe, um hier deine Aktivität zu sehen.</string>
+	<key>Clear</key>
+	<string>Leeren</string>
+	<key>Clear %@ shortcut</key>
+	<string>Kurzbefehl für %@ löschen</string>
+	<key>Clear Cache</key>
+	<string>Cache leeren</string>
+	<key>Clear shortcut</key>
+	<string>Kurzbefehl löschen</string>
+	<key>Conflicts with %@</key>
+	<string>Konflikt mit %@</string>
+	<key>Connection</key>
+	<string>Verbindung</string>
+	<key>Copy</key>
+	<string>Kopieren</string>
+	<key>Create an application at developer.discord.com, then copy its Application ID here.</key>
+	<string>Erstelle eine Anwendung auf developer.discord.com und kopiere anschließend deren Anwendungs-ID hierher.</string>
+	<key>Custom Range</key>
+	<string>Eigener Zeitraum</string>
+	<key>Dance &amp; DJ</key>
+	<string>Dance &amp; DJ</string>
+	<key>Data</key>
+	<string>Daten</string>
+	<key>Day</key>
+	<string>Tag</string>
+	<key>Default volume</key>
+	<string>Standardlautstärke</string>
+	<key>Deletes the local listening history immediately.</key>
+	<string>Löscht den lokalen Wiedergabeverlauf sofort.</string>
+	<key>Deutsch</key>
+	<string>Deutsch</string>
+	<key>Discord</key>
+	<string>Discord</string>
+	<key>Discord log</key>
+	<string>Discord-Protokoll</string>
+	<key>Display the I Love Radio logo as the small artwork badge.</key>
+	<string>Zeigt das I-Love-Radio-Logo als kleines Cover-Abzeichen an.</string>
+	<key>Download updates in the background</key>
+	<string>Updates im Hintergrund laden</string>
+	<key>Enable Discord Rich Presence</key>
+	<string>Discord Rich Presence aktivieren</string>
+	<key>Enable global hotkeys</key>
+	<string>Globale Tastenkürzel aktivieren</string>
+	<key>English</key>
+	<string>English</string>
+	<key>Error</key>
+	<string>Fehler</string>
+	<key>Failed</key>
+	<string>Fehlgeschlagen</string>
+	<key>Favorite</key>
+	<string>Favorit</string>
+	<key>Favorites</key>
+	<string>Favoriten</string>
+	<key>Fetch releases ahead of time so they are ready to install.</key>
+	<string>Lädt neue Versionen vorab, damit sie zur Installation bereitstehen.</string>
+	<key>Filter by This Channel</key>
+	<string>Nach diesem Sender filtern</string>
+	<key>Filtered out</key>
+	<string>Ausgefiltert</string>
+	<key>General</key>
+	<string>Allgemein</string>
+	<key>Genre distribution</key>
+	<string>Genreverteilung</string>
+	<key>Genre distribution appears once there is some listening history.</key>
+	<string>Die Genreverteilung erscheint, sobald ein Wiedergabeverlauf vorhanden ist.</string>
+	<key>Genres</key>
+	<string>Genres</string>
+	<key>GitHub</key>
+	<string>GitHub</string>
+	<key>Handshake</key>
+	<string>Handshake</string>
+	<key>Hide Panel</key>
+	<string>Panel ausblenden</string>
+	<key>Hip Hop</key>
+	<string>Hip Hop</string>
+	<key>History</key>
+	<string>Verlauf</string>
+	<key>History &amp; Stats</key>
+	<string>Verlauf &amp; Statistiken</string>
+	<key>History &amp; Stats…</key>
+	<string>Verlauf &amp; Statistiken…</string>
+	<key>History recording is disabled in Settings.</key>
+	<string>Die Aufzeichnung des Verlaufs ist in den Einstellungen deaktiviert.</string>
+	<key>Hotkeys</key>
+	<string>Tastenkürzel</string>
+	<key>Hotkeys work from anywhere on the system, not just when the menu is open.</key>
+	<string>Tastenkürzel funktionieren systemweit, nicht nur bei geöffnetem Menü.</string>
+	<key>Hour</key>
+	<string>Stunde</string>
+	<key>ILOVEMUSIC.DE</key>
+	<string>ILOVEMUSIC.DE</string>
+	<key>ILoveMusic – History &amp; Stats</key>
+	<string>ILoveMusic – Verlauf &amp; Statistiken</string>
+	<key>Idle</key>
+	<string>Inaktiv</string>
+	<key>Include Listen button</key>
+	<string>„Anhören“-Button anzeigen</string>
+	<key>Include current listeners</key>
+	<string>Aktuelle Hörerzahl anzeigen</string>
+	<key>Include current song artwork</key>
+	<string>Cover des aktuellen Titels anzeigen</string>
+	<key>Info</key>
+	<string>Info</string>
+	<key>Issue</key>
+	<string>Problem</string>
+	<key>Language</key>
+	<string>Sprache</string>
+	<key>Last checked</key>
+	<string>Zuletzt geprüft</string>
+	<key>Last issue</key>
+	<string>Letztes Problem</string>
+	<key>Last metadata</key>
+	<string>Letzte Metadaten</string>
+	<key>Last refresh</key>
+	<string>Letzte Aktualisierung</string>
+	<key>Last request</key>
+	<string>Letzte Anfrage</string>
+	<key>Launch at login</key>
+	<string>Beim Anmelden öffnen</string>
+	<key>Less</key>
+	<string>Weniger</string>
+	<key>Library</key>
+	<string>Bibliothek</string>
+	<key>Links</key>
+	<string>Links</string>
+	<key>Listening Trend</key>
+	<string>Wiedergabeverlauf</string>
+	<key>Listening by Hour</key>
+	<string>Wiedergabe nach Stunde</string>
+	<key>Listening by hour</key>
+	<string>Wiedergabe nach Stunde</string>
+	<key>Listening by weekday and hour</key>
+	<string>Wiedergabe nach Wochentag und Stunde</string>
+	<key>Listening time across the selected period</key>
+	<string>Wiedergabezeit im ausgewählten Zeitraum</string>
+	<key>Listening trend</key>
+	<string>Wiedergabeverlauf</string>
+	<key>Live</key>
+	<string>Live</string>
+	<key>Live refresh failed — showing cached catalog. Will retry automatically.</key>
+	<string>Die Live-Aktualisierung ist fehlgeschlagen — der zwischengespeicherte Katalog wird angezeigt. Ein neuer Versuch erfolgt automatisch.</string>
+	<key>Look for new releases in the background and ask before installing.</key>
+	<string>Sucht im Hintergrund nach neuen Versionen und fragt vor der Installation nach.</string>
+	<key>MP3</key>
+	<string>MP3</string>
+	<key>Maintenance</key>
+	<string>Wartung</string>
+	<key>Misc</key>
+	<string>Sonstiges</string>
+	<key>More</key>
+	<string>Mehr</string>
+	<key>Mute</key>
+	<string>Stummschalten</string>
+	<key>Never</key>
+	<string>Nie</string>
+	<key>Next Station</key>
+	<string>Nächster Sender</string>
+	<key>Next station</key>
+	<string>Nächster Sender</string>
+	<key>Next station (⌥⌘N)</key>
+	<string>Nächster Sender (⌥⌘N)</string>
+	<key>No artists yet</key>
+	<string>Noch keine Künstler</string>
+	<key>No cell selected</key>
+	<string>Kein Feld ausgewählt</string>
+	<key>No channels played yet</key>
+	<string>Noch keine Sender wiedergegeben</string>
+	<key>No data</key>
+	<string>Keine Daten</string>
+	<key>No entries match this filter.</key>
+	<string>Keine Einträge entsprechen diesem Filter.</string>
+	<key>No events yet.</key>
+	<string>Noch keine Ereignisse.</string>
+	<key>No history yet</key>
+	<string>Noch kein Verlauf</string>
+	<key>No listening in this period</key>
+	<string>Keine Wiedergabe in diesem Zeitraum</string>
+	<key>No matches for this selection</key>
+	<string>Keine Treffer für diese Auswahl</string>
+	<key>No request yet</key>
+	<string>Noch keine Anfrage</string>
+	<key>No songs yet</key>
+	<string>Noch keine Titel</string>
+	<key>No station playing</key>
+	<string>Kein Sender wird wiedergegeben</string>
+	<key>None</key>
+	<string>Keine</string>
+	<key>Not enough data yet</key>
+	<string>Noch nicht genügend Daten</string>
+	<key>Not on air right now</key>
+	<string>Gerade nicht auf Sendung</string>
+	<key>Not on air right now.</key>
+	<string>Gerade nicht auf Sendung.</string>
+	<key>Not written yet</key>
+	<string>Noch nicht geschrieben</string>
+	<key>Now playing</key>
+	<string>Aktueller Titel</string>
+	<key>Off: output is capped below full power so low slider positions are easier to fine-tune. On: the slider reaches full volume.</key>
+	<string>Aus: Die Ausgabe bleibt unter der Maximalleistung, damit sich niedrige Reglerpositionen feiner einstellen lassen. An: Der Regler erreicht die volle Lautstärke.</string>
+	<key>Offline</key>
+	<string>Offline</string>
+	<key>Once there's listening history in the selected range, your trend will appear here.</key>
+	<string>Sobald im ausgewählten Zeitraum ein Wiedergabeverlauf vorhanden ist, erscheint hier dein Verlauf.</string>
+	<key>Once you listen to a channel for at least 10 seconds, it shows up here.</key>
+	<string>Sobald du einen Sender mindestens 10 Sekunden lang hörst, erscheint er hier.</string>
+	<key>Once you've built up some history, the hour-of-day distribution will appear here.</key>
+	<string>Sobald genügend Verlauf vorhanden ist, erscheint hier die Verteilung nach Tageszeit.</string>
+	<key>Once you've built up some history, your most-played tracks will appear here.</key>
+	<string>Sobald genügend Verlauf vorhanden ist, erscheinen hier deine meistgespielten Titel.</string>
+	<key>Once you've listened to something today, the hourly trend will show up here.</key>
+	<string>Sobald du heute etwas gehört hast, erscheint hier der stündliche Verlauf.</string>
+	<key>Only works in an installed app bundle, not when running from source.</key>
+	<string>Funktioniert nur mit einer installierten App, nicht beim Ausführen aus dem Quellcode.</string>
+	<key>Open Settings…</key>
+	<string>Einstellungen öffnen…</string>
+	<key>Open ilovemusic.de</key>
+	<string>ilovemusic.de öffnen</string>
+	<key>Overview</key>
+	<string>Übersicht</string>
+	<key>Party</key>
+	<string>Party</string>
+	<key>Pause</key>
+	<string>Pause</string>
+	<key>Pause (⌥⌘P)</key>
+	<string>Pause (⌥⌘P)</string>
+	<key>Paused</key>
+	<string>Pausiert</string>
+	<key>Pick a station to start listening</key>
+	<string>Wähle einen Sender, um die Wiedergabe zu starten</string>
+	<key>Play</key>
+	<string>Wiedergeben</string>
+	<key>Play (⌥⌘P)</key>
+	<string>Wiedergeben (⌥⌘P)</string>
+	<key>Play / Pause</key>
+	<string>Wiedergabe / Pause</string>
+	<key>Playback</key>
+	<string>Wiedergabe</string>
+	<key>Playing</key>
+	<string>Wiedergabe</string>
+	<key>Pop &amp; Hits</key>
+	<string>Pop &amp; Hits</string>
+	<key>Popularity</key>
+	<string>Beliebtheit</string>
+	<key>Popularity sorts by current listener count; Alphabetical sorts by name.</key>
+	<string>Beliebtheit sortiert nach aktueller Hörerzahl, Alphabetisch nach Namen.</string>
+	<key>Press keys…</key>
+	<string>Tasten drücken…</string>
+	<key>Quit</key>
+	<string>Beenden</string>
+	<key>Quit %@</key>
+	<string>%@ beenden</string>
+	<key>Quit ILoveMusic</key>
+	<string>ILoveMusic beenden</string>
+	<key>Quit ILoveMusic (⌥⌘Q)</key>
+	<string>ILoveMusic beenden (⌥⌘Q)</string>
+	<key>Random Station</key>
+	<string>Zufälliger Sender</string>
+	<key>Random station</key>
+	<string>Zufälliger Sender</string>
+	<key>Raw stations</key>
+	<string>Ungefilterte Sender</string>
+	<key>Ready</key>
+	<string>Bereit</string>
+	<key>Receiving Requests</key>
+	<string>Anfragen werden empfangen</string>
+	<key>Recent</key>
+	<string>Zuletzt gespielt</string>
+	<key>Reconnecting</key>
+	<string>Verbindung wird wiederhergestellt</string>
+	<key>Record listening history</key>
+	<string>Wiedergabeverlauf aufzeichnen</string>
+	<key>Refresh</key>
+	<string>Aktualisieren</string>
+	<key>Refresh Now</key>
+	<string>Jetzt aktualisieren</string>
+	<key>Refresh complete</key>
+	<string>Aktualisierung abgeschlossen</string>
+	<key>Refresh everything</key>
+	<string>Alles aktualisieren</string>
+	<key>Refresh failed — using cached data</key>
+	<string>Aktualisierung fehlgeschlagen — zwischengespeicherte Daten werden verwendet</string>
+	<key>Refresh succeeded</key>
+	<string>Aktualisierung erfolgreich</string>
+	<key>Refreshing…</key>
+	<string>Wird aktualisiert…</string>
+	<key>Remove from favorites</key>
+	<string>Aus Favoriten entfernen</string>
+	<key>Reopens the station that was active before quitting.</key>
+	<string>Öffnet den Sender erneut, der vor dem Beenden aktiv war.</string>
+	<key>Reset %@ to default</key>
+	<string>%@ auf Standard zurücksetzen</string>
+	<key>Reset filters</key>
+	<string>Filter zurücksetzen</string>
+	<key>Reset history</key>
+	<string>Verlauf zurücksetzen</string>
+	<key>Reset history…</key>
+	<string>Verlauf zurücksetzen…</string>
+	<key>Reset listening history?</key>
+	<string>Wiedergabeverlauf zurücksetzen?</string>
+	<key>Reset to default (%@)</key>
+	<string>Auf Standard zurücksetzen (%@)</string>
+	<key>Restart</key>
+	<string>Neu starten</string>
+	<key>Resume last station on launch</key>
+	<string>Letzten Sender beim Start fortsetzen</string>
+	<key>Rich Presence</key>
+	<string>Rich Presence</string>
+	<key>Seasonal</key>
+	<string>Saisonal</string>
+	<key>Selected Period</key>
+	<string>Ausgewählter Zeitraum</string>
+	<key>Selected day</key>
+	<string>Ausgewählter Tag</string>
+	<key>Selected hour</key>
+	<string>Ausgewählte Stunde</string>
+	<key>Selected time</key>
+	<string>Ausgewählte Zeit</string>
+	<key>Send the cover image of the song currently playing.</key>
+	<string>Sendet das Cover des aktuell wiedergegebenen Titels.</string>
+	<key>Settings</key>
+	<string>Einstellungen</string>
+	<key>Settings…</key>
+	<string>Einstellungen…</string>
+	<key>Severity</key>
+	<string>Schweregrad</string>
+	<key>Show Panel</key>
+	<string>Panel anzeigen</string>
+	<key>Show station logo badge</key>
+	<string>Senderlogo-Abzeichen anzeigen</string>
+	<key>Show the station's live listener count next to the channel name.</key>
+	<string>Zeigt die aktuelle Hörerzahl des Senders neben dem Sendernamen an.</string>
+	<key>Show your current ILoveMusic station and song in your Discord profile.</key>
+	<string>Zeigt deinen aktuellen ILoveMusic-Sender und Titel in deinem Discord-Profil an.</string>
+	<key>Showing %lld of %lld matching entries · stores up to %lld</key>
+	<string>%1$lld von %2$lld passenden Einträgen · speichert bis zu %3$lld</string>
+	<key>Showing bundled fallback stations. No live data yet.</key>
+	<string>Mitgelieferte Ersatzsender werden angezeigt. Es liegen noch keine Live-Daten vor.</string>
+	<key>Showing locally cached catalog from last successful refresh.</key>
+	<string>Der lokal zwischengespeicherte Katalog der letzten erfolgreichen Aktualisierung wird angezeigt.</string>
+	<key>Songs, artists, or channels</key>
+	<string>Titel, Künstler oder Sender</string>
+	<key>Source</key>
+	<string>Quelle</string>
+	<key>Specials</key>
+	<string>Specials</string>
+	<key>Station data</key>
+	<string>Senderdaten</string>
+	<key>Stats</key>
+	<string>Statistiken</string>
+	<key>Status</key>
+	<string>Status</string>
+	<key>Stores tracks you listen to locally on this Mac. When disabled, no new entries are written, and the History &amp; Stats button is hidden from the menu footer.</key>
+	<string>Speichert gehörte Titel lokal auf diesem Mac. Wenn deaktiviert, werden keine neuen Einträge geschrieben und der Button „Verlauf &amp; Statistiken“ in der Menüfußzeile ausgeblendet.</string>
+	<key>Streak</key>
+	<string>Serie</string>
+	<key>Stream Deck</key>
+	<string>Stream Deck</string>
+	<key>Stream Deck log</key>
+	<string>Stream-Deck-Protokoll</string>
+	<key>Stream failed to start.</key>
+	<string>Der Stream konnte nicht gestartet werden.</string>
+	<key>Stream stalled too often.</key>
+	<string>Der Stream wurde zu häufig unterbrochen.</string>
+	<key>System</key>
+	<string>System</string>
+	<key>System Default</key>
+	<string>Systemstandard</string>
+	<key>Tap a shortcut to record. Press Esc to clear, or use the trash icon.</key>
+	<string>Klicke auf ein Tastenkürzel, um es neu aufzunehmen. Drücke Esc oder verwende das Papierkorbsymbol, um es zu löschen.</string>
+	<key>Tap the heart on any station to pin it here.</key>
+	<string>Klicke bei einem Sender auf das Herz, um ihn hier anzuheften.</string>
+	<key>Tap to re-record</key>
+	<string>Klicken, um neu aufzunehmen</string>
+	<key>Tap to record a shortcut</key>
+	<string>Klicken, um ein Tastenkürzel aufzunehmen</string>
+	<key>The heatmap fills in as you listen more.</key>
+	<string>Die Heatmap füllt sich, je mehr du hörst.</string>
+	<key>The language changes after you restart ILoveMusic.</key>
+	<string>Die Sprache ändert sich nach einem Neustart von ILoveMusic.</string>
+	<key>The plugin reads the local control file and calls ILoveMusic's HTTP bridge. It reconnects automatically after the app or plugin restarts.</key>
+	<string>Das Plugin liest die lokale Steuerdatei und ruft die HTTP-Bridge von ILoveMusic auf. Nach einem Neustart der App oder des Plugins stellt es die Verbindung automatisch wieder her.</string>
+	<key>The selected time range is %@.</key>
+	<string>Der ausgewählte Zeitraum ist %@.</string>
+	<key>The slider in the menu uses a perceptual curve — 50% sounds quieter than half power.</key>
+	<string>Der Regler im Menü verwendet eine wahrnehmungsbasierte Kurve — 50 % klingt leiser als die halbe Leistung.</string>
+	<key>Throwbacks</key>
+	<string>Throwbacks</string>
+	<key>Time</key>
+	<string>Zeit</string>
+	<key>Time Range</key>
+	<string>Zeitraum</string>
+	<key>Today</key>
+	<string>Heute</string>
+	<key>Top Artists</key>
+	<string>Top-Künstler</string>
+	<key>Top Channels</key>
+	<string>Top-Sender</string>
+	<key>Top Songs</key>
+	<string>Top-Titel</string>
+	<key>Top channels</key>
+	<string>Top-Sender</string>
+	<key>Unfavorite</key>
+	<string>Aus Favoriten entfernen</string>
+	<key>Unknown Track</key>
+	<string>Unbekannter Titel</string>
+	<key>Unknown artist</key>
+	<string>Unbekannter Künstler</string>
+	<key>Unknown song</key>
+	<string>Unbekannter Titel</string>
+	<key>Unlock maximum volume</key>
+	<string>Maximale Lautstärke freigeben</string>
+	<key>Unmute</key>
+	<string>Stummschaltung aufheben</string>
+	<key>Updates</key>
+	<string>Updates</string>
+	<key>Version %@</key>
+	<string>Version %@</string>
+	<key>Version %@ (%@)</key>
+	<string>Version %1$@ (%2$@)</string>
+	<key>View</key>
+	<string>Ansicht</string>
+	<key>Visible stations</key>
+	<string>Sichtbare Sender</string>
+	<key>Volume</key>
+	<string>Lautstärke</string>
+	<key>Waiting for Plugin</key>
+	<string>Warten auf Plugin</string>
+	<key>Warning</key>
+	<string>Warnung</string>
+	<key>Website</key>
+	<string>Website</string>
+	<key>Weekday and Hour</key>
+	<string>Wochentag und Stunde</string>
+	<key>Workout</key>
+	<string>Workout</string>
+	<key>Yesterday</key>
+	<string>Gestern</string>
+	<key>Your most-played artists will land here.</key>
+	<string>Hier erscheinen deine meistgespielten Künstler.</string>
+	<key>Your top stations will appear here once you have enough history.</key>
+	<string>Deine Top-Sender erscheinen hier, sobald genügend Verlauf vorhanden ist.</string>
+	<key>macOS or another app already uses %@. Pick a different combination.</key>
+	<string>macOS oder eine andere App verwendet bereits %@. Wähle eine andere Tastenkombination.</string>
+	<key>macOS refused to register the login item: %@</key>
+	<string>macOS konnte das Anmeldeobjekt nicht registrieren: %@</string>
+</dict>
+</plist>

@@ -1,0 +1,3088 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Custom Range": {
+      "comment": "Label for a custom listening statistics date range.",
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Eigener Zeitraum" } }
+      }
+    },
+    "": {},
+    "%@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@, %2$@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "%@, %lld:00 to %lld:00, %@": {
+      "comment": "Accessible heatmap cell with weekday, hour range, and listening duration.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@, %2$lld:00 to %3$lld:00, %4$@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, %2$lld:00 bis %3$lld:00, %4$@"
+          }
+        }
+      }
+    },
+    "%lld": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        }
+      }
+    },
+    "%lld channels": {
+      "comment": "Number of stations in a menu-bar section.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld channel"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld channels"
+                }
+              }
+            }
+          }
+        },
+        "de": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Sender"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Sender"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld days": {
+      "comment": "Number of consecutive listening days in a streak.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld day"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld days"
+                }
+              }
+            }
+          }
+        },
+        "de": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Tag"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Tage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld listeners": {
+      "comment": "Number of people currently listening to a station.\nTotal number of people listening across the listed stations.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld listener"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld listeners"
+                }
+              }
+            }
+          }
+        },
+        "de": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Hörer"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Hörer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld plays": {
+      "comment": "Number of times a song, artist, or station was played.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld play"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld plays"
+                }
+              }
+            }
+          }
+        },
+        "de": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Wiedergabe"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Wiedergaben"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld songs": {
+      "comment": "Number of songs shown in listening history.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld song"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld songs"
+                }
+              }
+            }
+          }
+        },
+        "de": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Titel"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Titel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld."
+          }
+        }
+      }
+    },
+    "%lld:00 to %lld:00": {
+      "comment": "Accessible hour range in a listening chart.\nAccessible hour range in a listening trend chart.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld:00 to %2$lld:00"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld:00 bis %2$lld:00"
+          }
+        }
+      }
+    },
+    "%lld:00–%lld:00": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld:00–%2$lld:00"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld:00–%2$lld:00"
+          }
+        }
+      }
+    },
+    "30 Days": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 Tage"
+          }
+        }
+      }
+    },
+    "7 Days": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 Tage"
+          }
+        }
+      }
+    },
+    "90 Days": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "90 Tage"
+          }
+        }
+      }
+    },
+    "A native macOS menu bar player for the public ILoveMusic radio streams.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein nativer macOS-Menüleistenplayer für die öffentlichen Radiosender von ILoveMusic."
+          }
+        }
+      }
+    },
+    "AAC": {
+      "comment": "AAC audio format name; do not translate.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AAC"
+          }
+        }
+      }
+    },
+    "About": {
+      "comment": "Settings sidebar item",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Über"
+          }
+        }
+      }
+    },
+    "Active station": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktiver Sender"
+          }
+        }
+      }
+    },
+    "Add a button to your profile that opens the station on ilovemusic.de.": {
+      "comment": "Discord Listen button explanation",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fügt deinem Profil einen Button hinzu, der den Sender auf ilovemusic.de öffnet."
+          }
+        }
+      }
+    },
+    "Add to favorites": {
+      "comment": "Action that adds a station to favorites.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zu Favoriten hinzufügen"
+          }
+        }
+      }
+    },
+    "Adjust the search or channel filter.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passe die Suche oder den Senderfilter an."
+          }
+        }
+      }
+    },
+    "Advanced": {
+      "comment": "Settings sidebar item",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erweitert"
+          }
+        }
+      }
+    },
+    "AirPlay": {
+      "comment": "Accessibility label for the AirPlay output picker.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirPlay"
+          }
+        }
+      }
+    },
+    "AirPlay…": {
+      "comment": "Help text for the AirPlay output picker.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirPlay…"
+          }
+        }
+      }
+    },
+    "All": {
+      "comment": "Log severity filter",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle"
+          }
+        }
+      }
+    },
+    "All Channels": {
+      "comment": "Heading above all available stations.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle Sender"
+          }
+        }
+      }
+    },
+    "All Time": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gesamter Zeitraum"
+          }
+        }
+      }
+    },
+    "All locally stored listening events will be removed immediately.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle lokal gespeicherten Wiedergabeereignisse werden sofort gelöscht."
+          }
+        }
+      }
+    },
+    "Alphabetical": {
+      "comment": "Station sorting option.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alphabetisch"
+          }
+        }
+      }
+    },
+    "Application ID": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anwendungs-ID"
+          }
+        }
+      }
+    },
+    "Artwork cache": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cover-Cache"
+          }
+        }
+      }
+    },
+    "Artwork cache cleared": {
+      "comment": "Maintenance operation result",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cover-Cache geleert"
+          }
+        }
+      }
+    },
+    "Artwork cleared": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cover gelöscht"
+          }
+        }
+      }
+    },
+    "Auto": {
+      "comment": "Automatic stream format option.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatisch"
+          }
+        }
+      }
+    },
+    "Automatically opens ILoveMusic when you start your Mac.": {
+      "comment": "Launch at login explanation",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffnet ILoveMusic automatisch beim Start deines Macs."
+          }
+        }
+      }
+    },
+    "Average Session": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Durchschnittliche Sitzung"
+          }
+        }
+      }
+    },
+    "Bridge": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bridge"
+          }
+        }
+      }
+    },
+    "Buffering": {
+      "comment": "Playback status.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wird geladen"
+          }
+        }
+      }
+    },
+    "Bundled": {
+      "comment": "Bundled station catalog source status.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mitgeliefert"
+          }
+        }
+      }
+    },
+    "Cached": {
+      "comment": "Cached station catalog source status.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zwischengespeichert"
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abbrechen"
+          }
+        }
+      }
+    },
+    "Catalog": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Katalog"
+          }
+        }
+      }
+    },
+    "Catalog and metadata are live from ilovemusic.de.": {
+      "comment": "Explanation of the live station catalog source.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Katalog und Metadaten werden live von ilovemusic.de geladen."
+          }
+        }
+      }
+    },
+    "Catalog cache": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Katalog-Cache"
+          }
+        }
+      }
+    },
+    "Catalog cache cleared": {
+      "comment": "Maintenance operation result",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Katalog-Cache geleert"
+          }
+        }
+      }
+    },
+    "Catalog diagnostics": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Katalogdiagnose"
+          }
+        }
+      }
+    },
+    "Catalog refreshes every 15 minutes, listeners every 2 minutes, and now-playing data every 30 seconds.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Katalog wird alle 15 Minuten, die Hörerzahlen alle 2 Minuten und die aktuellen Titel alle 30 Sekunden aktualisiert."
+          }
+        }
+      }
+    },
+    "Catalog source": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Katalogquelle"
+          }
+        }
+      }
+    },
+    "Channel": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sender"
+          }
+        }
+      }
+    },
+    "Channel order": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senderreihenfolge"
+          }
+        }
+      }
+    },
+    "Check for Updates…": {
+      "comment": "Context-menu action that checks for app updates.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nach Updates suchen…"
+          }
+        }
+      }
+    },
+    "Check for updates automatically": {
+      "comment": "Settings toggle",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatisch nach Updates suchen"
+          }
+        }
+      }
+    },
+    "Chill": {
+      "comment": "Station category name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chill"
+          }
+        }
+      }
+    },
+    "Choose a broader time range or start listening to see your activity here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle einen größeren Zeitraum oder starte die Wiedergabe, um hier deine Aktivität zu sehen."
+          }
+        }
+      }
+    },
+    "Clear": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leeren"
+          }
+        }
+      }
+    },
+    "Clear %@ shortcut": {
+      "comment": "Accessibility label for clearing a hotkey action",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurzbefehl für %@ löschen"
+          }
+        }
+      }
+    },
+    "Clear Cache": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cache leeren"
+          }
+        }
+      }
+    },
+    "Clear shortcut": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurzbefehl löschen"
+          }
+        }
+      }
+    },
+    "Conflicts with %@": {
+      "comment": "Hotkey recording conflict with another localized action name",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konflikt mit %@"
+          }
+        }
+      }
+    },
+    "Connection": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verbindung"
+          }
+        }
+      }
+    },
+    "Copy": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopieren"
+          }
+        }
+      }
+    },
+    "Create an application at developer.discord.com, then copy its Application ID here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erstelle eine Anwendung auf developer.discord.com und kopiere anschließend deren Anwendungs-ID hierher."
+          }
+        }
+      }
+    },
+    "Dance & DJ": {
+      "comment": "Station category name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dance & DJ"
+          }
+        }
+      }
+    },
+    "Data": {
+      "comment": "Settings sidebar item",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daten"
+          }
+        }
+      }
+    },
+    "Day": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tag"
+          }
+        }
+      }
+    },
+    "Default volume": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standardlautstärke"
+          }
+        }
+      }
+    },
+    "Deletes the local listening history immediately.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Löscht den lokalen Wiedergabeverlauf sofort."
+          }
+        }
+      }
+    },
+    "Deutsch": {
+      "comment": "German language picker option.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deutsch"
+          }
+        }
+      }
+    },
+    "Discord": {
+      "comment": "Settings sidebar item",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discord"
+          }
+        }
+      }
+    },
+    "Discord log": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discord-Protokoll"
+          }
+        }
+      }
+    },
+    "Display the I Love Radio logo as the small artwork badge.": {
+      "comment": "Discord station badge explanation",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeigt das I-Love-Radio-Logo als kleines Cover-Abzeichen an."
+          }
+        }
+      }
+    },
+    "Download updates in the background": {
+      "comment": "Settings toggle",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updates im Hintergrund laden"
+          }
+        }
+      }
+    },
+    "Enable Discord Rich Presence": {
+      "comment": "Settings toggle",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discord Rich Presence aktivieren"
+          }
+        }
+      }
+    },
+    "Enable global hotkeys": {
+      "comment": "Settings toggle",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Globale Tastenkürzel aktivieren"
+          }
+        }
+      }
+    },
+    "English": {
+      "comment": "English language picker option.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "English"
+          }
+        }
+      }
+    },
+    "Error": {
+      "comment": "Accessible log severity\nLog severity filter",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fehler"
+          }
+        }
+      }
+    },
+    "Failed": {
+      "comment": "Playback status.\nStatus shown when playback failed.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fehlgeschlagen"
+          }
+        }
+      }
+    },
+    "Favorite": {
+      "comment": "Action that adds a station to favorites.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favorit"
+          }
+        }
+      }
+    },
+    "Favorites": {
+      "comment": "Heading above favorite stations.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favoriten"
+          }
+        }
+      }
+    },
+    "Fetch releases ahead of time so they are ready to install.": {
+      "comment": "Automatic update downloads explanation",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lädt neue Versionen vorab, damit sie zur Installation bereitstehen."
+          }
+        }
+      }
+    },
+    "Filter by This Channel": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nach diesem Sender filtern"
+          }
+        }
+      }
+    },
+    "Filtered out": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ausgefiltert"
+          }
+        }
+      }
+    },
+    "General": {
+      "comment": "Settings sidebar item",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allgemein"
+          }
+        }
+      }
+    },
+    "Genre distribution": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genreverteilung"
+          }
+        }
+      }
+    },
+    "Genre distribution appears once there is some listening history.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Genreverteilung erscheint, sobald ein Wiedergabeverlauf vorhanden ist."
+          }
+        }
+      }
+    },
+    "Genres": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genres"
+          }
+        }
+      }
+    },
+    "GitHub": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub"
+          }
+        }
+      }
+    },
+    "Handshake": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Handshake"
+          }
+        }
+      }
+    },
+    "Hide Panel": {
+      "comment": "Context-menu action that closes the menu-bar panel.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Panel ausblenden"
+          }
+        }
+      }
+    },
+    "Hip Hop": {
+      "comment": "Station category name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hip Hop"
+          }
+        }
+      }
+    },
+    "History": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verlauf"
+          }
+        }
+      }
+    },
+    "History & Stats": {
+      "comment": "Help text for the button that opens listening history and statistics.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verlauf & Statistiken"
+          }
+        }
+      }
+    },
+    "History & Stats…": {
+      "comment": "Context-menu action that opens the History and Stats window.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verlauf & Statistiken…"
+          }
+        }
+      }
+    },
+    "History recording is disabled in Settings.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Aufzeichnung des Verlaufs ist in den Einstellungen deaktiviert."
+          }
+        }
+      }
+    },
+    "Hotkeys": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tastenkürzel"
+          }
+        }
+      }
+    },
+    "Hotkeys work from anywhere on the system, not just when the menu is open.": {
+      "comment": "Global hotkeys explanation",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tastenkürzel funktionieren systemweit, nicht nur bei geöffnetem Menü."
+          }
+        }
+      }
+    },
+    "Hour": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stunde"
+          }
+        }
+      }
+    },
+    "ILOVEMUSIC.DE": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ILOVEMUSIC.DE"
+          }
+        }
+      }
+    },
+    "ILoveMusic – History & Stats": {
+      "comment": "Title of the listening history and statistics window.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ILoveMusic – Verlauf & Statistiken"
+          }
+        }
+      }
+    },
+    "Idle": {
+      "comment": "Stream Deck bridge status",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inaktiv"
+          }
+        }
+      }
+    },
+    "Include Listen button": {
+      "comment": "Settings toggle",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„Anhören“-Button anzeigen"
+          }
+        }
+      }
+    },
+    "Include current listeners": {
+      "comment": "Settings toggle",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktuelle Hörerzahl anzeigen"
+          }
+        }
+      }
+    },
+    "Include current song artwork": {
+      "comment": "Settings toggle",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cover des aktuellen Titels anzeigen"
+          }
+        }
+      }
+    },
+    "Info": {
+      "comment": "Accessible log severity\nLog severity filter",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Info"
+          }
+        }
+      }
+    },
+    "Issue": {
+      "comment": "Stream Deck bridge status",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Problem"
+          }
+        }
+      }
+    },
+    "Language": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sprache"
+          }
+        }
+      }
+    },
+    "Last checked": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zuletzt geprüft"
+          }
+        }
+      }
+    },
+    "Last issue": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Letztes Problem"
+          }
+        }
+      }
+    },
+    "Last metadata": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Letzte Metadaten"
+          }
+        }
+      }
+    },
+    "Last refresh": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Letzte Aktualisierung"
+          }
+        }
+      }
+    },
+    "Last request": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Letzte Anfrage"
+          }
+        }
+      }
+    },
+    "Launch at login": {
+      "comment": "Settings toggle",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beim Anmelden öffnen"
+          }
+        }
+      }
+    },
+    "Less": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weniger"
+          }
+        }
+      }
+    },
+    "Library": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bibliothek"
+          }
+        }
+      }
+    },
+    "Links": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Links"
+          }
+        }
+      }
+    },
+    "Listening Trend": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergabeverlauf"
+          }
+        }
+      }
+    },
+    "Listening by Hour": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergabe nach Stunde"
+          }
+        }
+      }
+    },
+    "Listening by hour": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergabe nach Stunde"
+          }
+        }
+      }
+    },
+    "Listening by weekday and hour": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergabe nach Wochentag und Stunde"
+          }
+        }
+      }
+    },
+    "Listening time across the selected period": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergabezeit im ausgewählten Zeitraum"
+          }
+        }
+      }
+    },
+    "Listening trend": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergabeverlauf"
+          }
+        }
+      }
+    },
+    "Live": {
+      "comment": "Live station catalog source status.\nStatus shown while a station is playing live.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live"
+          }
+        }
+      }
+    },
+    "Live refresh failed — showing cached catalog. Will retry automatically.": {
+      "comment": "Explanation shown when live catalog refresh failed.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Live-Aktualisierung ist fehlgeschlagen — der zwischengespeicherte Katalog wird angezeigt. Ein neuer Versuch erfolgt automatisch."
+          }
+        }
+      }
+    },
+    "Look for new releases in the background and ask before installing.": {
+      "comment": "Automatic update checks explanation",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sucht im Hintergrund nach neuen Versionen und fragt vor der Installation nach."
+          }
+        }
+      }
+    },
+    "MP3": {
+      "comment": "MP3 audio format name; do not translate.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MP3"
+          }
+        }
+      }
+    },
+    "Maintenance": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wartung"
+          }
+        }
+      }
+    },
+    "Misc": {
+      "comment": "Station category name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonstiges"
+          }
+        }
+      }
+    },
+    "More": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mehr"
+          }
+        }
+      }
+    },
+    "Mute": {
+      "comment": "Action that turns audio off.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stummschalten"
+          }
+        }
+      }
+    },
+    "Never": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie"
+          }
+        }
+      }
+    },
+    "Next Station": {
+      "comment": "Context-menu action that starts the next station.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nächster Sender"
+          }
+        }
+      }
+    },
+    "Next station": {
+      "comment": "Global hotkey action name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nächster Sender"
+          }
+        }
+      }
+    },
+    "Next station (⌥⌘N)": {
+      "comment": "Help text for the next-station button, including its keyboard shortcut.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nächster Sender (⌥⌘N)"
+          }
+        }
+      }
+    },
+    "No artists yet": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch keine Künstler"
+          }
+        }
+      }
+    },
+    "No cell selected": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kein Feld ausgewählt"
+          }
+        }
+      }
+    },
+    "No channels played yet": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch keine Sender wiedergegeben"
+          }
+        }
+      }
+    },
+    "No data": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine Daten"
+          }
+        }
+      }
+    },
+    "No entries match this filter.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine Einträge entsprechen diesem Filter."
+          }
+        }
+      }
+    },
+    "No events yet.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch keine Ereignisse."
+          }
+        }
+      }
+    },
+    "No history yet": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch kein Verlauf"
+          }
+        }
+      }
+    },
+    "No listening in this period": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine Wiedergabe in diesem Zeitraum"
+          }
+        }
+      }
+    },
+    "No matches for this selection": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine Treffer für diese Auswahl"
+          }
+        }
+      }
+    },
+    "No request yet": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch keine Anfrage"
+          }
+        }
+      }
+    },
+    "No songs yet": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch keine Titel"
+          }
+        }
+      }
+    },
+    "No station playing": {
+      "comment": "Disabled context-menu row shown when no radio station is selected.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kein Sender wird wiedergegeben"
+          }
+        }
+      }
+    },
+    "None": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine"
+          }
+        }
+      }
+    },
+    "Not enough data yet": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch nicht genügend Daten"
+          }
+        }
+      }
+    },
+    "Not on air right now": {
+      "comment": "Disabled context-menu row shown when the current station has no track metadata.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gerade nicht auf Sendung"
+          }
+        }
+      }
+    },
+    "Not on air right now.": {
+      "comment": "Message shown when a station has no current track metadata.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gerade nicht auf Sendung."
+          }
+        }
+      }
+    },
+    "Not written yet": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch nicht geschrieben"
+          }
+        }
+      }
+    },
+    "Now playing": {
+      "comment": "Heading above the current track in a station popover.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktueller Titel"
+          }
+        }
+      }
+    },
+    "Off: output is capped below full power so low slider positions are easier to fine-tune. On: the slider reaches full volume.": {
+      "comment": "Maximum volume setting explanation",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aus: Die Ausgabe bleibt unter der Maximalleistung, damit sich niedrige Reglerpositionen feiner einstellen lassen. An: Der Regler erreicht die volle Lautstärke."
+          }
+        }
+      }
+    },
+    "Offline": {
+      "comment": "Unavailable live catalog source status.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline"
+          }
+        }
+      }
+    },
+    "Once there's listening history in the selected range, your trend will appear here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sobald im ausgewählten Zeitraum ein Wiedergabeverlauf vorhanden ist, erscheint hier dein Verlauf."
+          }
+        }
+      }
+    },
+    "Once you listen to a channel for at least 10 seconds, it shows up here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sobald du einen Sender mindestens 10 Sekunden lang hörst, erscheint er hier."
+          }
+        }
+      }
+    },
+    "Once you've built up some history, the hour-of-day distribution will appear here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sobald genügend Verlauf vorhanden ist, erscheint hier die Verteilung nach Tageszeit."
+          }
+        }
+      }
+    },
+    "Once you've built up some history, your most-played tracks will appear here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sobald genügend Verlauf vorhanden ist, erscheinen hier deine meistgespielten Titel."
+          }
+        }
+      }
+    },
+    "Once you've listened to something today, the hourly trend will show up here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sobald du heute etwas gehört hast, erscheint hier der stündliche Verlauf."
+          }
+        }
+      }
+    },
+    "Only works in an installed app bundle, not when running from source.": {
+      "comment": "Launch at login is unavailable while running the app from source.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Funktioniert nur mit einer installierten App, nicht beim Ausführen aus dem Quellcode."
+          }
+        }
+      }
+    },
+    "Open Settings…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einstellungen öffnen…"
+          }
+        }
+      }
+    },
+    "Open ilovemusic.de": {
+      "comment": "Help text for the station website button.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ilovemusic.de öffnen"
+          }
+        }
+      }
+    },
+    "Overview": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Übersicht"
+          }
+        }
+      }
+    },
+    "Party": {
+      "comment": "Station category name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Party"
+          }
+        }
+      }
+    },
+    "Pause": {
+      "comment": "Context-menu playback action.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        }
+      }
+    },
+    "Pause (⌥⌘P)": {
+      "comment": "Help text for the pause button, including its keyboard shortcut.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause (⌥⌘P)"
+          }
+        }
+      }
+    },
+    "Paused": {
+      "comment": "Playback status.\nStatus shown while playback is paused.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausiert"
+          }
+        }
+      }
+    },
+    "Pick a station to start listening": {
+      "comment": "Prompt shown in the menu-bar panel before a station is selected.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle einen Sender, um die Wiedergabe zu starten"
+          }
+        }
+      }
+    },
+    "Play": {
+      "comment": "Button that starts playing a station.\nContext-menu playback action.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergeben"
+          }
+        }
+      }
+    },
+    "Play (⌥⌘P)": {
+      "comment": "Help text for the play button, including its keyboard shortcut.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergeben (⌥⌘P)"
+          }
+        }
+      }
+    },
+    "Play / Pause": {
+      "comment": "Global hotkey action name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergabe / Pause"
+          }
+        }
+      }
+    },
+    "Playback": {
+      "comment": "Settings sidebar item",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergabe"
+          }
+        }
+      }
+    },
+    "Playing": {
+      "comment": "Playback status.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergabe"
+          }
+        }
+      }
+    },
+    "Pop & Hits": {
+      "comment": "Station category name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pop & Hits"
+          }
+        }
+      }
+    },
+    "Popularity": {
+      "comment": "Station sorting option.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beliebtheit"
+          }
+        }
+      }
+    },
+    "Popularity sorts by current listener count; Alphabetical sorts by name.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beliebtheit sortiert nach aktueller Hörerzahl, Alphabetisch nach Namen."
+          }
+        }
+      }
+    },
+    "Press keys…": {
+      "comment": "Hotkey recorder prompt",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasten drücken…"
+          }
+        }
+      }
+    },
+    "Quit": {
+      "comment": "Global hotkey action name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beenden"
+          }
+        }
+      }
+    },
+    "Quit %@": {
+      "comment": "Context-menu action that quits the app.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ beenden"
+          }
+        }
+      }
+    },
+    "Quit ILoveMusic": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ILoveMusic beenden"
+          }
+        }
+      }
+    },
+    "Quit ILoveMusic (⌥⌘Q)": {
+      "comment": "Help text for the quit button, including its keyboard shortcut.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ILoveMusic beenden (⌥⌘Q)"
+          }
+        }
+      }
+    },
+    "Random Station": {
+      "comment": "Context-menu action that starts a random station.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zufälliger Sender"
+          }
+        }
+      }
+    },
+    "Random station": {
+      "comment": "Global hotkey action name.\nHelp text for the random-station button.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zufälliger Sender"
+          }
+        }
+      }
+    },
+    "Raw stations": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ungefilterte Sender"
+          }
+        }
+      }
+    },
+    "Ready": {
+      "comment": "Playback status.\nStatus shown when the player is ready but idle.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit"
+          }
+        }
+      }
+    },
+    "Receiving Requests": {
+      "comment": "Stream Deck bridge status",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anfragen werden empfangen"
+          }
+        }
+      }
+    },
+    "Recent": {
+      "comment": "Heading above a station's recently played tracks.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zuletzt gespielt"
+          }
+        }
+      }
+    },
+    "Reconnecting": {
+      "comment": "Playback status.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verbindung wird wiederhergestellt"
+          }
+        }
+      }
+    },
+    "Record listening history": {
+      "comment": "Settings toggle",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergabeverlauf aufzeichnen"
+          }
+        }
+      }
+    },
+    "Refresh": {
+      "comment": "Context-menu action that refreshes station data.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktualisieren"
+          }
+        }
+      }
+    },
+    "Refresh Now": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jetzt aktualisieren"
+          }
+        }
+      }
+    },
+    "Refresh complete": {
+      "comment": "Maintenance operation result",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktualisierung abgeschlossen"
+          }
+        }
+      }
+    },
+    "Refresh everything": {
+      "comment": "Help text for the button that refreshes all station data.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alles aktualisieren"
+          }
+        }
+      }
+    },
+    "Refresh failed — using cached data": {
+      "comment": "Help text after refreshing station data failed and cached data is shown.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktualisierung fehlgeschlagen — zwischengespeicherte Daten werden verwendet"
+          }
+        }
+      }
+    },
+    "Refresh succeeded": {
+      "comment": "Help text after station data refreshed successfully.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktualisierung erfolgreich"
+          }
+        }
+      }
+    },
+    "Refreshing…": {
+      "comment": "Help text while station data is refreshing.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wird aktualisiert…"
+          }
+        }
+      }
+    },
+    "Remove from favorites": {
+      "comment": "Action that removes a station from favorites.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aus Favoriten entfernen"
+          }
+        }
+      }
+    },
+    "Reopens the station that was active before quitting.": {
+      "comment": "Resume playback explanation",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffnet den Sender erneut, der vor dem Beenden aktiv war."
+          }
+        }
+      }
+    },
+    "Reset %@ to default": {
+      "comment": "Accessibility label for restoring a hotkey action's default shortcut",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ auf Standard zurücksetzen"
+          }
+        }
+      }
+    },
+    "Reset filters": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filter zurücksetzen"
+          }
+        }
+      }
+    },
+    "Reset history": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verlauf zurücksetzen"
+          }
+        }
+      }
+    },
+    "Reset history…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verlauf zurücksetzen…"
+          }
+        }
+      }
+    },
+    "Reset listening history?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiedergabeverlauf zurücksetzen?"
+          }
+        }
+      }
+    },
+    "Reset to default (%@)": {
+      "comment": "Help for restoring a hotkey's default shortcut",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auf Standard zurücksetzen (%@)"
+          }
+        }
+      }
+    },
+    "Restart": {
+      "comment": "Button that restarts the station already being played.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neu starten"
+          }
+        }
+      }
+    },
+    "Resume last station on launch": {
+      "comment": "Settings toggle",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Letzten Sender beim Start fortsetzen"
+          }
+        }
+      }
+    },
+    "Rich Presence": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rich Presence"
+          }
+        }
+      }
+    },
+    "Seasonal": {
+      "comment": "Station category name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saisonal"
+          }
+        }
+      }
+    },
+    "Selected Period": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ausgewählter Zeitraum"
+          }
+        }
+      }
+    },
+    "Selected day": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ausgewählter Tag"
+          }
+        }
+      }
+    },
+    "Selected hour": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ausgewählte Stunde"
+          }
+        }
+      }
+    },
+    "Selected time": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ausgewählte Zeit"
+          }
+        }
+      }
+    },
+    "Send the cover image of the song currently playing.": {
+      "comment": "Discord artwork setting explanation",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sendet das Cover des aktuell wiedergegebenen Titels."
+          }
+        }
+      }
+    },
+    "Settings": {
+      "comment": "Accessibility label for the button that opens Settings.\nHelp text for the button that opens Settings.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einstellungen"
+          }
+        }
+      }
+    },
+    "Settings…": {
+      "comment": "Context-menu action that opens Settings.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einstellungen…"
+          }
+        }
+      }
+    },
+    "Severity": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schweregrad"
+          }
+        }
+      }
+    },
+    "Show Panel": {
+      "comment": "Context-menu action that opens the menu-bar panel.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Panel anzeigen"
+          }
+        }
+      }
+    },
+    "Show station logo badge": {
+      "comment": "Settings toggle",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senderlogo-Abzeichen anzeigen"
+          }
+        }
+      }
+    },
+    "Show the station's live listener count next to the channel name.": {
+      "comment": "Discord listener count explanation",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeigt die aktuelle Hörerzahl des Senders neben dem Sendernamen an."
+          }
+        }
+      }
+    },
+    "Show your current ILoveMusic station and song in your Discord profile.": {
+      "comment": "Discord Rich Presence explanation",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeigt deinen aktuellen ILoveMusic-Sender und Titel in deinem Discord-Profil an."
+          }
+        }
+      }
+    },
+    "Showing %lld of %lld matching entries · stores up to %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Showing %1$lld of %2$lld matching entries · stores up to %3$lld"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld von %2$lld passenden Einträgen · speichert bis zu %3$lld"
+          }
+        }
+      }
+    },
+    "Showing bundled fallback stations. No live data yet.": {
+      "comment": "Explanation of the bundled station catalog source.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mitgelieferte Ersatzsender werden angezeigt. Es liegen noch keine Live-Daten vor."
+          }
+        }
+      }
+    },
+    "Showing locally cached catalog from last successful refresh.": {
+      "comment": "Explanation of the cached station catalog source.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der lokal zwischengespeicherte Katalog der letzten erfolgreichen Aktualisierung wird angezeigt."
+          }
+        }
+      }
+    },
+    "Songs, artists, or channels": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Titel, Künstler oder Sender"
+          }
+        }
+      }
+    },
+    "Source": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quelle"
+          }
+        }
+      }
+    },
+    "Specials": {
+      "comment": "Station category name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Specials"
+          }
+        }
+      }
+    },
+    "Station data": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senderdaten"
+          }
+        }
+      }
+    },
+    "Stats": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Statistiken"
+          }
+        }
+      }
+    },
+    "Status": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status"
+          }
+        }
+      }
+    },
+    "Stores tracks you listen to locally on this Mac. When disabled, no new entries are written, and the History & Stats button is hidden from the menu footer.": {
+      "comment": "Listening history setting explanation",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speichert gehörte Titel lokal auf diesem Mac. Wenn deaktiviert, werden keine neuen Einträge geschrieben und der Button „Verlauf & Statistiken“ in der Menüfußzeile ausgeblendet."
+          }
+        }
+      }
+    },
+    "Streak": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serie"
+          }
+        }
+      }
+    },
+    "Stream Deck": {
+      "comment": "Settings sidebar item",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stream Deck"
+          }
+        }
+      }
+    },
+    "Stream Deck log": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stream-Deck-Protokoll"
+          }
+        }
+      }
+    },
+    "System": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System"
+          }
+        }
+      }
+    },
+    "System Default": {
+      "comment": "Language picker option that follows the macOS app language.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Systemstandard"
+          }
+        }
+      }
+    },
+    "Tap a shortcut to record. Press Esc to clear, or use the trash icon.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klicke auf ein Tastenkürzel, um es neu aufzunehmen. Drücke Esc oder verwende das Papierkorbsymbol, um es zu löschen."
+          }
+        }
+      }
+    },
+    "Tap the heart on any station to pin it here.": {
+      "comment": "Empty-state guidance shown in the Favorites station section.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klicke bei einem Sender auf das Herz, um ihn hier anzuheften."
+          }
+        }
+      }
+    },
+    "Tap to re-record": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klicken, um neu aufzunehmen"
+          }
+        }
+      }
+    },
+    "Tap to record a shortcut": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klicken, um ein Tastenkürzel aufzunehmen"
+          }
+        }
+      }
+    },
+    "The heatmap fills in as you listen more.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Heatmap füllt sich, je mehr du hörst."
+          }
+        }
+      }
+    },
+    "The language changes after you restart ILoveMusic.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Sprache ändert sich nach einem Neustart von ILoveMusic."
+          }
+        }
+      }
+    },
+    "The plugin reads the local control file and calls ILoveMusic's HTTP bridge. It reconnects automatically after the app or plugin restarts.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das Plugin liest die lokale Steuerdatei und ruft die HTTP-Bridge von ILoveMusic auf. Nach einem Neustart der App oder des Plugins stellt es die Verbindung automatisch wieder her."
+          }
+        }
+      }
+    },
+    "The selected time range is %@.": {
+      "comment": "Accessibility hint for an empty listening statistics range.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der ausgewählte Zeitraum ist %@."
+          }
+        }
+      }
+    },
+    "The slider in the menu uses a perceptual curve — 50% sounds quieter than half power.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Regler im Menü verwendet eine wahrnehmungsbasierte Kurve — 50 % klingt leiser als die halbe Leistung."
+          }
+        }
+      }
+    },
+    "Throwbacks": {
+      "comment": "Station category name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Throwbacks"
+          }
+        }
+      }
+    },
+    "Time": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeit"
+          }
+        }
+      }
+    },
+    "Time Range": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeitraum"
+          }
+        }
+      }
+    },
+    "Today": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heute"
+          }
+        }
+      }
+    },
+    "Top Artists": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top-Künstler"
+          }
+        }
+      }
+    },
+    "Top Channels": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top-Sender"
+          }
+        }
+      }
+    },
+    "Top Songs": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top-Titel"
+          }
+        }
+      }
+    },
+    "Top channels": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top-Sender"
+          }
+        }
+      }
+    },
+    "Unfavorite": {
+      "comment": "Action that removes a station from favorites.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aus Favoriten entfernen"
+          }
+        }
+      }
+    },
+    "Unknown Track": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unbekannter Titel"
+          }
+        }
+      }
+    },
+    "Unknown artist": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unbekannter Künstler"
+          }
+        }
+      }
+    },
+    "Unknown song": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unbekannter Titel"
+          }
+        }
+      }
+    },
+    "Unlock maximum volume": {
+      "comment": "Settings toggle",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maximale Lautstärke freigeben"
+          }
+        }
+      }
+    },
+    "Unmute": {
+      "comment": "Action that turns audio back on.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stummschaltung aufheben"
+          }
+        }
+      }
+    },
+    "Updates": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updates"
+          }
+        }
+      }
+    },
+    "Version %@": {
+      "comment": "App version shown in the Settings sidebar",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@"
+          }
+        }
+      }
+    },
+    "Version %@ (%@)": {
+      "comment": "App version and build shown in the Settings sidebar",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Version %1$@ (%2$@)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %1$@ (%2$@)"
+          }
+        }
+      }
+    },
+    "View": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ansicht"
+          }
+        }
+      }
+    },
+    "Visible stations": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sichtbare Sender"
+          }
+        }
+      }
+    },
+    "Volume": {
+      "comment": "Accessibility label for the playback volume slider.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lautstärke"
+          }
+        }
+      }
+    },
+    "Waiting for Plugin": {
+      "comment": "Stream Deck bridge status",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warten auf Plugin"
+          }
+        }
+      }
+    },
+    "Warning": {
+      "comment": "Accessible log severity\nLog severity filter",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warnung"
+          }
+        }
+      }
+    },
+    "Website": {
+      "comment": "Button that opens a station's website.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Website"
+          }
+        }
+      }
+    },
+    "Weekday and Hour": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wochentag und Stunde"
+          }
+        }
+      }
+    },
+    "Workout": {
+      "comment": "Station category name.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Workout"
+          }
+        }
+      }
+    },
+    "Yesterday": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gestern"
+          }
+        }
+      }
+    },
+    "Your most-played artists will land here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hier erscheinen deine meistgespielten Künstler."
+          }
+        }
+      }
+    },
+    "Your top stations will appear here once you have enough history.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Top-Sender erscheinen hier, sobald genügend Verlauf vorhanden ist."
+          }
+        }
+      }
+    },
+    "macOS or another app already uses %@. Pick a different combination.": {
+      "comment": "Warning that one or more localized hotkey actions conflict with system shortcuts.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS oder eine andere App verwendet bereits %@. Wähle eine andere Tastenkombination."
+          }
+        }
+      }
+    },
+    "macOS refused to register the login item: %@": {
+      "comment": "Launch at login failed. The interpolated system error remains unchanged.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS konnte das Anmeldeobjekt nicht registrieren: %@"
+          }
+        }
+      }
+    },
+    "Stream failed to start.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Stream konnte nicht gestartet werden."
+          }
+        }
+      }
+    },
+    "Stream stalled too often.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Stream wurde zu häufig unterbrochen."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.1"
+}

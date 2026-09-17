@@ -1,5 +1,38 @@
 import Foundation
 
+enum AppLanguage: String, CaseIterable, Identifiable, Codable, Sendable {
+  case system
+  case german = "de"
+  case english = "en"
+
+  var id: Self { self }
+
+  var titleResource: LocalizedStringResource {
+    switch self {
+    case .system:
+      LocalizedStringResource(
+        "System Default",
+        bundle: #bundle,
+        comment: "Language picker option that follows the macOS app language."
+      )
+    case .german:
+      LocalizedStringResource("Deutsch", bundle: #bundle, comment: "German language picker option.")
+    case .english:
+      LocalizedStringResource("English", bundle: #bundle, comment: "English language picker option.")
+    }
+  }
+
+  init(from decoder: Decoder) throws {
+    let rawValue = try decoder.singleValueContainer().decode(String.self)
+    self = Self(rawValue: rawValue) ?? .system
+  }
+
+  func encode(to encoder: Encoder) throws {
+    var container = encoder.singleValueContainer()
+    try container.encode(rawValue)
+  }
+}
+
 enum StationCategory: String, Codable, CaseIterable, Identifiable {
   case popHits
   case danceDJ
@@ -26,6 +59,21 @@ enum StationCategory: String, Codable, CaseIterable, Identifiable {
     case .specials: "Specials"
     case .seasonal: "Seasonal"
     case .misc: "Misc"
+    }
+  }
+
+  var titleResource: LocalizedStringResource {
+    switch self {
+    case .popHits: LocalizedStringResource("Pop & Hits", bundle: #bundle, comment: "Station category name.")
+    case .danceDJ: LocalizedStringResource("Dance & DJ", bundle: #bundle, comment: "Station category name.")
+    case .hipHop: LocalizedStringResource("Hip Hop", bundle: #bundle, comment: "Station category name.")
+    case .throwbacks: LocalizedStringResource("Throwbacks", bundle: #bundle, comment: "Station category name.")
+    case .chill: LocalizedStringResource("Chill", bundle: #bundle, comment: "Station category name.")
+    case .sport: LocalizedStringResource("Workout", bundle: #bundle, comment: "Station category name.")
+    case .party: LocalizedStringResource("Party", bundle: #bundle, comment: "Station category name.")
+    case .specials: LocalizedStringResource("Specials", bundle: #bundle, comment: "Station category name.")
+    case .seasonal: LocalizedStringResource("Seasonal", bundle: #bundle, comment: "Station category name.")
+    case .misc: LocalizedStringResource("Misc", bundle: #bundle, comment: "Station category name.")
     }
   }
 
@@ -66,6 +114,14 @@ enum StreamFormatPreference: String, Codable, CaseIterable, Identifiable {
 
   var id: String { rawValue }
   var title: String { rawValue.uppercased() == "AUTO" ? "Auto" : rawValue.uppercased() }
+
+  var titleResource: LocalizedStringResource {
+    switch self {
+    case .auto: LocalizedStringResource("Auto", bundle: #bundle, comment: "Automatic stream format option.")
+    case .aac: LocalizedStringResource("AAC", bundle: #bundle, comment: "AAC audio format name; do not translate.")
+    case .mp3: LocalizedStringResource("MP3", bundle: #bundle, comment: "MP3 audio format name; do not translate.")
+    }
+  }
 }
 
 enum StationSortPreference: String, Codable, CaseIterable, Identifiable {
@@ -74,6 +130,13 @@ enum StationSortPreference: String, Codable, CaseIterable, Identifiable {
 
   var id: String { rawValue }
   var title: String { rawValue == "popularity" ? "Popularity" : "Alphabetical" }
+
+  var titleResource: LocalizedStringResource {
+    switch self {
+    case .popularity: LocalizedStringResource("Popularity", bundle: #bundle, comment: "Station sorting option.")
+    case .alphabetical: LocalizedStringResource("Alphabetical", bundle: #bundle, comment: "Station sorting option.")
+    }
+  }
 }
 
 enum CatalogSource: String, Codable {
@@ -97,6 +160,44 @@ enum CatalogSource: String, Codable {
     case .cached: "Showing locally cached catalog from last successful refresh."
     case .live: "Catalog and metadata are live from ilovemusic.de."
     case .degraded: "Live refresh failed — showing cached catalog. Will retry automatically."
+    }
+  }
+
+  var titleResource: LocalizedStringResource {
+    switch self {
+    case .bundled: LocalizedStringResource("Bundled", bundle: #bundle, comment: "Bundled station catalog source status.")
+    case .cached: LocalizedStringResource("Cached", bundle: #bundle, comment: "Cached station catalog source status.")
+    case .live: LocalizedStringResource("Live", bundle: #bundle, comment: "Live station catalog source status.")
+    case .degraded: LocalizedStringResource("Offline", bundle: #bundle, comment: "Unavailable live catalog source status.")
+    }
+  }
+
+  var helpTextResource: LocalizedStringResource {
+    switch self {
+    case .bundled:
+      LocalizedStringResource(
+        "Showing bundled fallback stations. No live data yet.",
+        bundle: #bundle,
+        comment: "Explanation of the bundled station catalog source."
+      )
+    case .cached:
+      LocalizedStringResource(
+        "Showing locally cached catalog from last successful refresh.",
+        bundle: #bundle,
+        comment: "Explanation of the cached station catalog source."
+      )
+    case .live:
+      LocalizedStringResource(
+        "Catalog and metadata are live from ilovemusic.de.",
+        bundle: #bundle,
+        comment: "Explanation of the live station catalog source."
+      )
+    case .degraded:
+      LocalizedStringResource(
+        "Live refresh failed — showing cached catalog. Will retry automatically.",
+        bundle: #bundle,
+        comment: "Explanation shown when live catalog refresh failed."
+      )
     }
   }
 }
@@ -183,6 +284,17 @@ enum PlaybackPhase: String, Codable {
     case .failed: "Failed"
     }
   }
+
+  var titleResource: LocalizedStringResource {
+    switch self {
+    case .idle: LocalizedStringResource("Ready", bundle: #bundle, comment: "Playback status.")
+    case .buffering: LocalizedStringResource("Buffering", bundle: #bundle, comment: "Playback status.")
+    case .playing: LocalizedStringResource("Playing", bundle: #bundle, comment: "Playback status.")
+    case .paused: LocalizedStringResource("Paused", bundle: #bundle, comment: "Playback status.")
+    case .reconnecting: LocalizedStringResource("Reconnecting", bundle: #bundle, comment: "Playback status.")
+    case .failed: LocalizedStringResource("Failed", bundle: #bundle, comment: "Playback status.")
+    }
+  }
 }
 
 struct PlaybackState: Codable, Equatable {
@@ -212,6 +324,8 @@ struct UserPreferences: Codable, Equatable {
   var globalHotkeysEnabled: Bool
   var resumeLastStationOnLaunch: Bool
   var recordHistoryEnabled: Bool?
+  // Optional so state files written before localization continue to decode.
+  var appLanguage: AppLanguage?
 
   // Discord Rich Presence (optional for backwards-compatible decode of old state.json)
   var discordEnabled: Bool?
@@ -244,6 +358,7 @@ struct UserPreferences: Codable, Equatable {
     globalHotkeysEnabled: true,
     resumeLastStationOnLaunch: true,
     recordHistoryEnabled: true,
+    appLanguage: .system,
     discordEnabled: false,
     discordClientID: nil,
     discordShowArtwork: true,
@@ -256,6 +371,8 @@ struct UserPreferences: Codable, Equatable {
     hotkeyRandomStation: .defaultBinding(for: .randomStation),
     hotkeyQuit: .defaultBinding(for: .quit)
   )
+
+  var effectiveAppLanguage: AppLanguage { appLanguage ?? .system }
 
   /// Resolves the four hotkey slots into a dictionary, falling back to the
   /// built-in default if the user hasn't customized one. A slot the user

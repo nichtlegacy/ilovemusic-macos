@@ -7,6 +7,7 @@ struct ListeningTrendChart: View {
   let window: HistoryWindow
 
   @State private var selectedIndex: Int?
+  @Environment(\.locale) private var locale
 
   var body: some View {
     if isHourly {
@@ -16,30 +17,30 @@ struct ListeningTrendChart: View {
         let buckets = Array(hourBuckets.enumerated())
         Chart(buckets, id: \.offset) { bucket in
           AreaMark(
-            x: .value("Hour", bucket.offset),
-            y: .value("Time", bucket.element)
+            x: .value(localized("Hour"), bucket.offset),
+            y: .value(localized("Time"), bucket.element)
           )
           .foregroundStyle(.tint.opacity(0.12))
 
           LineMark(
-            x: .value("Hour", bucket.offset),
-            y: .value("Time", bucket.element)
+            x: .value(localized("Hour"), bucket.offset),
+            y: .value(localized("Time"), bucket.element)
           )
           .foregroundStyle(.tint)
           .lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
-          .accessibilityLabel("\(bucket.offset):00 to \((bucket.offset + 1) % 24):00")
-          .accessibilityValue(formatShortListeningDuration(bucket.element))
+          .accessibilityLabel(hourRange(bucket.offset))
+          .accessibilityValue(formatShortListeningDuration(bucket.element, locale: locale))
 
           if selectedIndex == bucket.offset {
-            RuleMark(x: .value("Selected hour", bucket.offset))
+            RuleMark(x: .value(localized("Selected hour"), bucket.offset))
               .foregroundStyle(.secondary.opacity(0.5))
               .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
               .annotation(position: .top, alignment: annotationAlignment(for: bucket.offset, count: buckets.count)) {
                 tooltip(title: "\(bucket.offset):00–\((bucket.offset + 1) % 24):00", seconds: bucket.element)
               }
             PointMark(
-              x: .value("Selected hour", bucket.offset),
-              y: .value("Selected time", bucket.element)
+              x: .value(localized("Selected hour"), bucket.offset),
+              y: .value(localized("Selected time"), bucket.element)
             )
             .symbolSize(42)
             .foregroundStyle(.tint)
@@ -58,7 +59,7 @@ struct ListeningTrendChart: View {
           AxisMarks(position: .leading) { value in
             AxisGridLine()
             if let seconds = value.as(Double.self) {
-              AxisValueLabel(formatAxisListeningDuration(seconds))
+              AxisValueLabel(formatAxisListeningDuration(seconds, locale: locale))
             }
           }
         }
@@ -67,40 +68,44 @@ struct ListeningTrendChart: View {
           hourlyHoverOverlay(proxy: proxy, count: buckets.count)
         }
         .frame(height: 180)
-        .accessibilityLabel("Listening trend")
+        .accessibilityLabel(Text("Listening trend", bundle: #bundle))
       }
     } else if dailyBuckets.isEmpty || dailyBuckets.allSatisfy({ $0.listenedSeconds == 0 }) {
       StatsEmptyState(title: "Not enough data yet", subtitle: "Once there's listening history in the selected range, your trend will appear here.")
     } else {
       Chart(Array(dailyBuckets.enumerated()), id: \.element.id) { index, bucket in
         AreaMark(
-          x: .value("Day", bucket.date),
-          y: .value("Time", bucket.listenedSeconds)
+          x: .value(localized("Day"), bucket.date),
+          y: .value(localized("Time"), bucket.listenedSeconds)
         )
         .foregroundStyle(.tint.opacity(0.12))
 
         LineMark(
-          x: .value("Day", bucket.date),
-          y: .value("Time", bucket.listenedSeconds)
+          x: .value(localized("Day"), bucket.date),
+          y: .value(localized("Time"), bucket.listenedSeconds)
         )
         .foregroundStyle(.tint)
         .lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
-        .accessibilityLabel(bucket.date.formatted(date: .abbreviated, time: .omitted))
-        .accessibilityValue(formatShortListeningDuration(bucket.listenedSeconds))
+        .accessibilityLabel(bucket.date.formatted(
+          Date.FormatStyle(date: .abbreviated, time: .omitted, locale: locale)
+        ))
+        .accessibilityValue(formatShortListeningDuration(bucket.listenedSeconds, locale: locale))
 
         if selectedIndex == index {
-          RuleMark(x: .value("Selected day", bucket.date))
+          RuleMark(x: .value(localized("Selected day"), bucket.date))
             .foregroundStyle(.secondary.opacity(0.5))
             .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
             .annotation(position: .top, alignment: annotationAlignment(for: index, count: dailyBuckets.count)) {
               tooltip(
-                title: bucket.date.formatted(date: .abbreviated, time: .omitted),
+                title: bucket.date.formatted(
+                  Date.FormatStyle(date: .abbreviated, time: .omitted, locale: locale)
+                ),
                 seconds: bucket.listenedSeconds
               )
             }
           PointMark(
-            x: .value("Selected day", bucket.date),
-            y: .value("Selected time", bucket.listenedSeconds)
+            x: .value(localized("Selected day"), bucket.date),
+            y: .value(localized("Selected time"), bucket.listenedSeconds)
           )
           .symbolSize(42)
           .foregroundStyle(.tint)
@@ -117,7 +122,7 @@ struct ListeningTrendChart: View {
         AxisMarks(position: .leading) { value in
           AxisGridLine()
           if let seconds = value.as(Double.self) {
-            AxisValueLabel(formatAxisListeningDuration(seconds))
+            AxisValueLabel(formatAxisListeningDuration(seconds, locale: locale))
           }
         }
       }
@@ -126,7 +131,7 @@ struct ListeningTrendChart: View {
         dailyHoverOverlay(proxy: proxy)
       }
       .frame(height: 180)
-      .accessibilityLabel("Listening trend")
+      .accessibilityLabel(Text("Listening trend", bundle: #bundle))
     }
   }
 
@@ -153,12 +158,27 @@ struct ListeningTrendChart: View {
     VStack(alignment: .leading, spacing: 2) {
       Text(title)
         .font(.caption.bold())
-      Text(formatShortListeningDuration(seconds))
+      Text(verbatim: formatShortListeningDuration(seconds, locale: locale))
         .font(.caption.monospacedDigit())
         .foregroundStyle(.secondary)
     }
     .padding(8)
     .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+  }
+
+  private func localized(_ value: String.LocalizationValue) -> String {
+    String(localized: LocalizedStringResource(value, locale: locale, bundle: #bundle))
+  }
+
+  private func hourRange(_ hour: Int) -> String {
+    String(
+      localized: LocalizedStringResource(
+        "\(hour):00 to \((hour + 1) % 24):00",
+        locale: locale,
+        bundle: #bundle,
+        comment: "Accessible hour range in a listening trend chart."
+      )
+    )
   }
 
   private func hourlyHoverOverlay(proxy: ChartProxy, count: Int) -> some View {

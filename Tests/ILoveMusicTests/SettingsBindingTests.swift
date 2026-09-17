@@ -54,6 +54,23 @@ struct SettingsBindingTests {
   }
 
   @Test
+  func appLanguageSetterPersistsWithoutChangingActiveLanguage() throws {
+    let dir = try makeTempSupportDirectory()
+    defer { try? FileManager.default.removeItem(at: dir) }
+
+    let store = makeStateStore(supportDirectoryURL: dir)
+    let model = makeAppModel(stateStore: store)
+    #expect(model.activeLanguage == .system)
+
+    model.appLanguage = .german
+
+    #expect(model.preferences.effectiveAppLanguage == .german)
+    #expect(model.activeLanguage == .system)
+    #expect(model.requiresLanguageRestart)
+    #expect(makeStateStore(supportDirectoryURL: dir).load().preferences.effectiveAppLanguage == .german)
+  }
+
+  @Test
   func stationSortBindingPropagates() throws {
     let dir = try makeTempSupportDirectory()
     defer { try? FileManager.default.removeItem(at: dir) }

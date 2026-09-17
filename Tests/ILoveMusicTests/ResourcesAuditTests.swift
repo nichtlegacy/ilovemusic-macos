@@ -13,6 +13,11 @@ import Testing
 
 @Test
 func bundledResourcesArePresentInBundleModule() throws {
+  // Both languages need compiled plural resources in direct SwiftPM builds.
+  #expect(Bundle.module.localizations.contains("en"))
+  #expect(Bundle.module.localizations.contains("de"))
+  #expect(Bundle.module.developmentLocalization == "en")
+
   // JSON loaders rely on these exact resource names + extensions.
   #expect(Bundle.module.url(forResource: "stations_seed", withExtension: "json") != nil)
   #expect(Bundle.module.url(forResource: "visibility_policy", withExtension: "json") != nil)

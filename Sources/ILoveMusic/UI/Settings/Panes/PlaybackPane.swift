@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct PlaybackPane: View {
+  @Environment(\.locale) private var locale
   @Bindable var appModel: AppModel
 
   /// IDs of slots whose recorder rows are actively listening. While any slot
@@ -11,7 +12,7 @@ struct PlaybackPane: View {
   var body: some View {
     Form {
       Section {
-        LabeledContent("Default volume") {
+        LabeledContent {
           HStack(spacing: 8) {
             Button {
               appModel.toggleMute()
@@ -20,33 +21,35 @@ struct PlaybackPane: View {
                 .foregroundStyle(appModel.isVolumeMuted ? .red : .secondary)
             }
             .buttonStyle(.plain)
-            .help(appModel.isVolumeMuted ? "Unmute" : "Mute")
-            .accessibilityLabel(appModel.isVolumeMuted ? "Unmute" : "Mute")
+            .help(appModel.isVolumeMuted ? Text("Unmute", bundle: #bundle) : Text("Mute", bundle: #bundle))
+            .accessibilityLabel(appModel.isVolumeMuted ? Text("Unmute", bundle: #bundle) : Text("Mute", bundle: #bundle))
             Slider(value: Binding(
               get: { Double(appModel.activeVolumePercent) },
               set: { appModel.updateVolumePercent(Int($0.rounded())) }
             ), in: 0...100)
             .frame(minWidth: 120)
-            Text("\(appModel.activeVolumePercent)%")
+            Text(verbatim: "\(appModel.activeVolumePercent)%")
               .font(.callout.monospacedDigit())
               .frame(width: 44, alignment: .trailing)
           }
+        } label: {
+          Text("Default volume", bundle: #bundle)
         }
         SettingsToggle(
-          "Unlock maximum volume",
-          subtitle: "Off: output is capped below full power so low slider positions are easier to fine-tune. On: the slider reaches full volume.",
+          LocalizedStringResource("Unlock maximum volume", bundle: #bundle, comment: "Settings toggle"),
+          subtitle: LocalizedStringResource("Off: output is capped below full power so low slider positions are easier to fine-tune. On: the slider reaches full volume.", bundle: #bundle, comment: "Maximum volume setting explanation"),
           isOn: $appModel.unlockMaxVolume
         )
       } header: {
-        Text("Volume")
+        Text("Volume", bundle: #bundle)
       } footer: {
-        Text("The slider in the menu uses a perceptual curve — 50% sounds quieter than half power.")
+        Text("The slider in the menu uses a perceptual curve — 50% sounds quieter than half power.", bundle: #bundle)
       }
 
       Section {
         SettingsToggle(
-          "Enable global hotkeys",
-          subtitle: "Hotkeys work from anywhere on the system, not just when the menu is open.",
+          LocalizedStringResource("Enable global hotkeys", bundle: #bundle, comment: "Settings toggle"),
+          subtitle: LocalizedStringResource("Hotkeys work from anywhere on the system, not just when the menu is open.", bundle: #bundle, comment: "Global hotkeys explanation"),
           isOn: $appModel.globalHotkeysEnabled
         )
         ForEach(HotkeyID.allCases, id: \.self) { id in
@@ -67,17 +70,18 @@ struct PlaybackPane: View {
           .disabled(!appModel.globalHotkeysEnabled)
         }
         if !appModel.hotkeyConflicts.isEmpty {
-          Label(
-            "macOS or another app already uses \(conflictingHotkeyNames). Pick a different combination.",
-            systemImage: "exclamationmark.triangle"
-          )
+          Label {
+            Text(verbatim: localizedHotkeyConflictMessage(conflictingHotkeyNames, locale: locale))
+          } icon: {
+            Image(systemName: "exclamationmark.triangle")
+          }
           .font(.footnote)
           .foregroundStyle(.secondary)
         }
       } header: {
-        Text("Hotkeys")
+        Text("Hotkeys", bundle: #bundle)
       } footer: {
-        Text("Tap a shortcut to record. Press Esc to clear, or use the trash icon.")
+        Text("Tap a shortcut to record. Press Esc to clear, or use the trash icon.", bundle: #bundle)
       }
     }
     .settingsFormStyle()
@@ -98,7 +102,7 @@ struct PlaybackPane: View {
   private var conflictingHotkeyNames: String {
     HotkeyID.allCases
       .filter { appModel.hotkeyConflicts.contains($0) }
-      .map(\.title)
+      .map { AppLocalization.string($0.titleResource, language: appModel.activeLanguage) }
       .joined(separator: ", ")
   }
 
@@ -107,7 +111,7 @@ struct PlaybackPane: View {
       if let existing = appModel.preferences.hotkeyBinding(for: other),
          existing.keyCode == candidate.keyCode,
          existing.modifiers == candidate.modifiers {
-        return other.title
+        return AppLocalization.string(other.titleResource, language: appModel.activeLanguage)
       }
     }
     return nil
@@ -126,4 +130,12 @@ struct PlaybackPane: View {
       }
     }
   }
+}
+
+func localizedHotkeyConflictMessage(_ actionNames: String, locale: Locale) -> String {
+  String(localized: LocalizedStringResource(
+    "macOS or another app already uses \(actionNames). Pick a different combination.",
+    bundle: #bundle,
+    comment: "Warning that one or more localized hotkey actions conflict with system shortcuts."
+  ).resolved(in: locale))
 }

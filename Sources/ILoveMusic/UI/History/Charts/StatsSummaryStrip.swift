@@ -3,30 +3,32 @@ import SwiftUI
 struct StatsSummaryStrip: View {
   let snapshot: StatsSnapshot
 
-  private var metrics: [(title: String, value: String, symbol: String, accent: Color)] {
+  @Environment(\.locale) private var locale
+
+  private var metrics: [(title: LocalizedStringResource, value: String, symbol: String, accent: Color)] {
     let hasEvents = snapshot.eventCountInWindow > 0
     return [
       (
-        "Selected Period",
-        hasEvents ? formatShortListeningDuration(snapshot.totalListenedSecondsInWindow) : "—",
+        LocalizedStringResource("Selected Period", bundle: #bundle),
+        hasEvents ? formatShortListeningDuration(snapshot.totalListenedSecondsInWindow, locale: locale) : "—",
         "clock",
         .accentColor
       ),
       (
-        "Today",
-        hasEvents ? formatShortListeningDuration(snapshot.totalListenedSecondsToday) : "—",
+        LocalizedStringResource("Today", bundle: #bundle),
+        hasEvents ? formatShortListeningDuration(snapshot.totalListenedSecondsToday, locale: locale) : "—",
         "sun.max",
         .secondary
       ),
       (
-        "Streak",
-        hasEvents ? "\(snapshot.dailyStreak) days" : "—",
+        LocalizedStringResource("Streak", bundle: #bundle),
+        hasEvents ? localizedDayCount(snapshot.dailyStreak, locale: locale) : "—",
         "flame.fill",
         snapshot.dailyStreak >= 3 ? .orange : .secondary
       ),
       (
-        "Average Session",
-        hasEvents ? formatShortListeningDuration(snapshot.averageSessionSeconds) : "—",
+        LocalizedStringResource("Average Session", bundle: #bundle),
+        hasEvents ? formatShortListeningDuration(snapshot.averageSessionSeconds, locale: locale) : "—",
         "timer",
         .secondary
       ),
@@ -57,7 +59,7 @@ struct StatsSummaryStrip: View {
   }
 
   private func metricRow(
-    _ metrics: [(title: String, value: String, symbol: String, accent: Color)]
+    _ metrics: [(title: LocalizedStringResource, value: String, symbol: String, accent: Color)]
   ) -> some View {
     HStack(alignment: .top, spacing: 14) {
       ForEach(Array(metrics.enumerated()), id: \.offset) { index, metric in
@@ -70,13 +72,13 @@ struct StatsSummaryStrip: View {
   }
 
   private func metricCell(
-    _ metric: (title: String, value: String, symbol: String, accent: Color)
+    _ metric: (title: LocalizedStringResource, value: String, symbol: String, accent: Color)
   ) -> some View {
     VStack(alignment: .leading, spacing: 8) {
       HStack(spacing: 6) {
         Image(systemName: metric.symbol)
           .foregroundStyle(metric.accent)
-        Text(metric.title)
+        Text(metric.title.resolved(in: locale))
           .foregroundStyle(.secondary)
       }
       .font(.system(size: 10, weight: .semibold))

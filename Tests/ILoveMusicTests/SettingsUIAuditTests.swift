@@ -17,6 +17,25 @@ import Testing
 @Suite("Settings UI audit — hotkey suspend/resume balance")
 struct SettingsUIAuditTests {
 
+  @Test
+  func diagnosticPayloadsRemainVerbatim() {
+    let originalMessage = "Handshake failed: invalid nonce"
+    let entry = ControlLogEntry(area: "Handshake", severity: .error, message: originalMessage)
+
+    #expect(entry.area == "Handshake")
+    #expect(entry.message == originalMessage)
+  }
+
+  @Test
+  func germanHotkeyConflictInterpolatesLocalizedActionNames() {
+    let names = [HotkeyID.nextStation, .randomStation]
+      .map { AppLocalization.string($0.titleResource, language: .german) }
+      .joined(separator: ", ")
+
+    #expect(localizedHotkeyConflictMessage(names, locale: Locale(identifier: "de"))
+      == "macOS oder eine andere App verwendet bereits Nächster Sender, Zufälliger Sender. Wähle eine andere Tastenkombination.")
+  }
+
   private func makeAppModel() throws -> AppModel {
     let dir = FileManager.default.temporaryDirectory
       .appendingPathComponent(UUID().uuidString, isDirectory: true)

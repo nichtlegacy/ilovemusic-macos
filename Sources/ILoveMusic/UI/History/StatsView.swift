@@ -88,13 +88,28 @@ struct StatsView: View {
 private struct StatsPageEmptyState: View {
   let window: HistoryWindow
 
+  @Environment(\.locale) private var locale
+
   var body: some View {
     ContentUnavailableView {
-      Label("No listening in this period", systemImage: "chart.bar.xaxis")
+      Label {
+        Text("No listening in this period", bundle: #bundle)
+      } icon: {
+        Image(systemName: "chart.bar.xaxis")
+      }
     } description: {
-      Text("Choose a broader time range or start listening to see your activity here.")
+      Text("Choose a broader time range or start listening to see your activity here.", bundle: #bundle)
     }
     .frame(maxWidth: .infinity, minHeight: 360)
-    .accessibilityHint("The selected time range is \(window.rawValue).")
+    .accessibilityHint(
+      Text(
+        LocalizedStringResource(
+          "The selected time range is \(String(localized: window.titleResource.resolved(in: locale))).",
+          locale: locale,
+          bundle: #bundle,
+          comment: "Accessibility hint for an empty listening statistics range."
+        )
+      )
+    )
   }
 }

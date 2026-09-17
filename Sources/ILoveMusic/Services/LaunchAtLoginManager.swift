@@ -11,15 +11,28 @@ enum LaunchAtLoginStatus: Equatable {
   case failed(reason: String)
 
   /// User-facing explanation, or `nil` when there is nothing to report.
-  var message: String? {
+  var messageResource: LocalizedStringResource? {
     switch self {
     case .off, .enabled:
       return nil
     case .unavailable:
-      return "Only works in an installed app bundle, not when running from source."
+      return LocalizedStringResource(
+        "Only works in an installed app bundle, not when running from source.",
+        bundle: #bundle,
+        comment: "Launch at login is unavailable while running the app from source."
+      )
     case .failed(let reason):
-      return "macOS refused to register the login item: \(reason)"
+      return LocalizedStringResource(
+        "macOS refused to register the login item: \(reason)",
+        bundle: #bundle,
+        comment: "Launch at login failed. The interpolated system error remains unchanged."
+      )
     }
+  }
+
+  /// English diagnostic-compatible rendering retained for non-UI callers.
+  var message: String? {
+    messageResource.map { AppLocalization.string($0, language: .english) }
   }
 }
 

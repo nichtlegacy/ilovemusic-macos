@@ -4,6 +4,8 @@ import SwiftUI
 struct GenreDonutChart: View {
   let shares: [GenreShare]
 
+  @Environment(\.locale) private var locale
+
   var body: some View {
     if shares.isEmpty {
       StatsEmptyState(title: "No data", subtitle: "Genre distribution appears once there is some listening history.")
@@ -27,26 +29,26 @@ struct GenreDonutChart: View {
     ZStack {
       Chart(shares) { share in
         SectorMark(
-          angle: .value("Time", share.listenedSeconds),
+          angle: .value(localized("Time"), share.listenedSeconds),
           innerRadius: .ratio(0.62),
           angularInset: 1
         )
         .foregroundStyle(share.category.chartColor)
-        .accessibilityLabel(share.category.title)
-        .accessibilityValue("\(percentString(share.share)), \(formatShortListeningDuration(share.listenedSeconds))")
+        .accessibilityLabel(categoryTitle(share.category))
+        .accessibilityValue("\(percentString(share.share)), \(formatShortListeningDuration(share.listenedSeconds, locale: locale))")
       }
 
       VStack(spacing: 2) {
         Text(percentString(shares[0].share))
           .font(.title3.bold().monospacedDigit())
-        Text(shares[0].category.title)
+        Text(verbatim: categoryTitle(shares[0].category))
           .font(.caption)
           .foregroundStyle(.secondary)
           .lineLimit(1)
       }
     }
     .frame(width: size, height: size)
-    .accessibilityLabel("Genre distribution")
+    .accessibilityLabel(Text("Genre distribution", bundle: #bundle))
   }
 
   private var legend: some View {
@@ -56,11 +58,11 @@ struct GenreDonutChart: View {
           Circle()
             .fill(share.category.chartColor)
             .frame(width: 8, height: 8)
-          Text(share.category.title)
+          Text(verbatim: categoryTitle(share.category))
             .font(.caption)
             .lineLimit(1)
           Spacer(minLength: 8)
-          Text("\(percentString(share.share)) · \(formatShortListeningDuration(share.listenedSeconds))")
+          Text(verbatim: "\(percentString(share.share)) · \(formatShortListeningDuration(share.listenedSeconds, locale: locale))")
             .font(.caption2.monospacedDigit())
             .foregroundStyle(.secondary)
         }
@@ -70,6 +72,14 @@ struct GenreDonutChart: View {
   }
 
   private func percentString(_ value: Double) -> String {
-    "\(Int((value * 100).rounded())) %"
+    value.formatted(.percent.precision(.fractionLength(0)).locale(locale))
+  }
+
+  private func categoryTitle(_ category: StationCategory) -> String {
+    String(localized: category.titleResource.resolved(in: locale))
+  }
+
+  private func localized(_ value: String.LocalizationValue) -> String {
+    String(localized: LocalizedStringResource(value, locale: locale, bundle: #bundle))
   }
 }
