@@ -99,18 +99,26 @@ struct LocalizationTests {
     #expect(decoded.effectiveAppLanguage == language)
   }
 
-  @Test(arguments: [
-    (AppLanguage.german, "de"),
-    (AppLanguage.english, "en"),
-  ])
-  func explicitLanguageResolvesLocale(language: AppLanguage, identifier: String) {
-    #expect(language.locale?.language.languageCode?.identifier == identifier)
+  @Test
+  func explicitLanguageKeepsRegionalFormattingPreferences() {
+    let locale = AppLanguage.english.resolvedLocale(
+      regionalBase: Locale(identifier: "de_DE"),
+      systemLanguageIdentifier: nil
+    )
+
+    #expect(locale.language.languageCode?.identifier == "en")
+    #expect(locale.region?.identifier == "DE")
   }
 
   @Test
-  func systemLanguageUsesCurrentLocale() {
-    #expect(AppLanguage.system.locale == nil)
-    #expect(AppLanguage.system.resolvedLocale.identifier == Locale.current.identifier)
+  func systemLanguageUsesPreferredAppLocalizationAndKeepsRegion() {
+    let locale = AppLanguage.system.resolvedLocale(
+      regionalBase: Locale(identifier: "de_DE"),
+      systemLanguageIdentifier: "en"
+    )
+
+    #expect(locale.language.languageCode?.identifier == "en")
+    #expect(locale.region?.identifier == "DE")
   }
 
   @MainActor

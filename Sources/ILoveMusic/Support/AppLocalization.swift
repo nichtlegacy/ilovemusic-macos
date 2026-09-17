@@ -1,16 +1,32 @@
 import Foundation
 
 extension AppLanguage {
-  /// `nil` means the app follows the effective macOS app language.
-  var locale: Locale? {
-    switch self {
-    case .system: nil
-    case .german: Locale(identifier: "de")
-    case .english: Locale(identifier: "en")
-    }
+  /// Uses the selected UI language while retaining the user's regional
+  /// calendar, number, and measurement preferences.
+  var resolvedLocale: Locale {
+    resolvedLocale(
+      regionalBase: .current,
+      systemLanguageIdentifier: Bundle.module.preferredLocalizations.first
+    )
   }
 
-  var resolvedLocale: Locale { locale ?? .current }
+  func resolvedLocale(
+    regionalBase: Locale,
+    systemLanguageIdentifier: String?
+  ) -> Locale {
+    let languageIdentifier: String?
+    switch self {
+    case .system:
+      languageIdentifier = systemLanguageIdentifier
+    case .german, .english:
+      languageIdentifier = rawValue
+    }
+
+    guard let languageIdentifier else { return regionalBase }
+    var components = Locale.Components(locale: regionalBase)
+    components.languageComponents.languageCode = Locale.LanguageCode(languageIdentifier)
+    return Locale(components: components)
+  }
 }
 
 enum AppLocalization {
