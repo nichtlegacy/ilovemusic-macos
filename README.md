@@ -95,7 +95,7 @@ cd ilovemusic_mac
 
 swift build      # bauen
 swift run ILoveMusic   # starten
-swift test       # 104 Tests
+swift test       # 133 Tests
 ```
 
 Nach dem Start erscheint **kein Fenster** – ILoveMusic setzt ein Symbol in die Menüleiste (`NSStatusItem`). Linksklick öffnet das Player-Panel, Rechtsklick zeigt ein natives Menü mit Wiedergabe-, Aktualisieren-, Verlauf-, Einstellungen- und Beenden-Aktionen. Das Dock-Symbol ist standardmäßig aus (`setActivationPolicy(.accessory)`).
@@ -146,7 +146,7 @@ Registriert über die Carbon-`RegisterEventHotKey`-API in [`GlobalShortcutManage
 
 ### Sprache
 
-ILoveMusic unterstützt Deutsch und Englisch. Standardmäßig folgt die Oberfläche der macOS-App-Sprache. Unter **Einstellungen → Allgemein → System → Sprache** kann Deutsch oder Englisch fest gewählt werden. Die Auswahl wird sofort gespeichert und nach dem nächsten Start von ILoveMusic aktiv; bis dahin zeigt die App einen Neustart-Hinweis.
+ILoveMusic unterstützt Deutsch und Englisch. Standardmäßig folgt die Oberfläche der macOS-App-Sprache. Unter **Einstellungen → Allgemein → System → Sprache** kann Deutsch oder Englisch fest gewählt werden. Die Auswahl wird sofort gespeichert. Mit **ILoveMusic neu starten** übernimmt die App die neue Sprache direkt.
 
 Übersetzungen werden in `Sources/ILoveMusic/Resources/Localizable.xcstrings` gepflegt. Nach Änderungen die eingecheckten Laufzeit-Ressourcen für `swift run` und `swift test` neu erzeugen:
 
@@ -400,13 +400,13 @@ ilovemusic_mac/
 │       ├── History/         # Verlauf & Statistik (+ Charts/)
 │       ├── MenuBar/         # Player-Panel
 │       └── Settings/        # Panes/ und Components/
-├── Tests/ILoveMusicTests/   # 91 Tests (swift-testing)
+├── Tests/ILoveMusicTests/   # 133 Tests (swift-testing)
 └── docs/screenshots/        # Bilder für dieses README
 ```
 
 ## Tests
 
-104 Tests über 22 Dateien unter [`Tests/ILoveMusicTests`](Tests/ILoveMusicTests), basierend auf dem `swift-testing`-Framework. Abdeckung u. a.: Live-DTO-Decoding, Katalog-Normalisierung & Sichtbarkeitsfilter, Recent-Tracks-XML-Parsing, Lautstärke-/Control-Server-Flows, Verlaufs-Recording und Stats-Aggregation, Discord-IPC/-Presence, App-Support-Pfade, Persistenz-Verträge sowie Menüleisten- und Einstellungs-Audits.
+133 Tests über 24 Dateien unter [`Tests/ILoveMusicTests`](Tests/ILoveMusicTests), basierend auf dem `swift-testing`-Framework. Abdeckung u. a.: Live-DTO-Decoding, Katalog-Normalisierung & Sichtbarkeitsfilter, Recent-Tracks-XML-Parsing, Lautstärke-/Control-Server-Flows, Verlaufs-Recording und Stats-Aggregation, Lokalisierung und App-Neustart, Discord-IPC/-Presence, App-Support-Pfade, Persistenz-Verträge sowie Menüleisten- und Einstellungs-Audits.
 
 ```bash
 swift test

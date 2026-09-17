@@ -93,4 +93,3 @@ The API client's `en_US_POSIX` wire-format locale is not UI and remains unchange
 Automated tests cover preference migration, all three persistence values, unknown-value fallback, restart detection, bundle resources, catalog completeness, representative plural forms, and release bundle metadata. Existing tests remain green.
 
 Manual QA runs the menu-bar popover, right-click menu, all Settings panes, and the History and Stats window in German and English. System mode is checked with both macOS app languages. QA also covers tooltips, accessibility labels, destructive confirmations, error states, locale-sensitive formatting, long German labels, and pseudolocalization. Discord Presence and diagnostic log messages are checked to confirm that they stay English.
-

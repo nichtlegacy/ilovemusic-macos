@@ -91,6 +91,34 @@ fi
 if [ -z "$NOTES_PATH" ] && [ -f ".github/release-notes/${VERSION}.md" ]; then
   NOTES_PATH=".github/release-notes/${VERSION}.md"
 fi
+if [ -n "$NOTES_PATH" ] && [ ! -f "$NOTES_PATH" ]; then
+  echo "error: release notes not found at ${NOTES_PATH}" >&2
+  exit 1
+fi
+
+if [ "$DRY_RUN" -eq 0 ]; then
+  echo "==> Checking GitHub release state"
+  git fetch --quiet "$RELEASE_REMOTE" "$RELEASE_BRANCH"
+  git merge-base --is-ancestor "${RELEASE_REMOTE}/${RELEASE_BRANCH}" HEAD || {
+    echo "error: local HEAD does not contain ${RELEASE_REMOTE}/${RELEASE_BRANCH}" >&2
+    exit 1
+  }
+  if git ls-remote --exit-code --tags "$RELEASE_REMOTE" "refs/tags/${TAG}" >/dev/null 2>&1; then
+    echo "error: remote tag ${TAG} already exists" >&2
+    exit 1
+  else
+    remote_tag_status=$?
+    if [ "$remote_tag_status" -ne 2 ]; then
+      echo "error: could not verify remote tag ${TAG}" >&2
+      exit 1
+    fi
+  fi
+  if gh release view "$TAG" --repo "$REPO" >/dev/null 2>&1; then
+    echo "error: GitHub release ${TAG} already exists" >&2
+    exit 1
+  fi
+  git push --dry-run "$RELEASE_REMOTE" "$RELEASE_BRANCH" >/dev/null
+fi
 
 echo
 echo "About to publish ${NAME} ${VERSION} to https://github.com/${REPO}"
@@ -111,6 +139,16 @@ fi
 
 run ./Scripts/build-app.sh
 run ./Scripts/package-dmg.sh
+
+# Prove that the private Sparkle key is available before creating or pushing a
+# tag. update-appcast.py signs again when it writes the final feed entry.
+SIGN_UPDATE=".build/artifacts/sparkle/Sparkle/bin/sign_update"
+if [ "$DRY_RUN" -eq 0 ] && [ ! -x "$SIGN_UPDATE" ]; then
+  echo "error: sign_update not found at ${SIGN_UPDATE}" >&2
+  exit 1
+fi
+echo "==> Verifying Sparkle signing"
+run "$SIGN_UPDATE" "$DMG_PATH"
 
 if [ "$DRY_RUN" -eq 0 ]; then
   BUILD_NUMBER="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' ".build/${NAME}.app/Contents/Info.plist")"
