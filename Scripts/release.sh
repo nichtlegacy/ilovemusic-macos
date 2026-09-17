@@ -44,7 +44,9 @@ run() {
 # --- Preflight -------------------------------------------------------------
 
 command -v gh >/dev/null || { echo "error: gh not installed" >&2; exit 1; }
-gh auth status >/dev/null 2>&1 || { echo "error: gh is not authenticated, run 'gh auth login'" >&2; exit 1; }
+if [ "$DRY_RUN" -eq 0 ]; then
+  gh auth status >/dev/null 2>&1 || { echo "error: gh is not authenticated, run 'gh auth login'" >&2; exit 1; }
+fi
 git remote get-url "$RELEASE_REMOTE" >/dev/null 2>&1 || {
   echo "error: no git remote named '${RELEASE_REMOTE}'" >&2
   echo "hint: git remote add ${RELEASE_REMOTE} https://github.com/${REPO}.git" >&2
