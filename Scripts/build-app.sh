@@ -51,7 +51,7 @@ fi
 
 BUILD_DIR=".build/release"
 APP_DIR=".build/${NAME}.app"
-RESOURCE_BUNDLE="${NAME}_${NAME}.bundle"
+SOURCE_RESOURCES="Sources/${NAME}/Resources"
 SPARKLE_FRAMEWORK=".build/artifacts/sparkle/Sparkle/Sparkle.xcframework/macos-arm64_x86_64/Sparkle.framework"
 
 echo "==> ${NAME} ${VERSION} (build ${BUILD_NUMBER})"
@@ -78,24 +78,47 @@ chmod +x "$APP_DIR/Contents/MacOS/${NAME}"
 cp "${BUILD_DIR}/${NAME}Relauncher" "$APP_DIR/Contents/Helpers/${NAME}Relauncher"
 chmod +x "$APP_DIR/Contents/Helpers/${NAME}Relauncher"
 
-if [ -d "${BUILD_DIR}/${RESOURCE_BUNDLE}" ]; then
-  cp -R "${BUILD_DIR}/${RESOURCE_BUNDLE}" "$APP_DIR/Contents/Resources/"
-fi
+# Resources ship loose in Contents/Resources rather than in a SwiftPM resource
+# bundle. SwiftPM's generated accessor only looks for that bundle next to
+# Bundle.main.bundleURL -- the .app root, where nothing may live without
+# breaking the code signature -- so a shipped build could never find it. The
+# app reads Contents/Resources through Bundle.module in ResourceBundle.swift.
+for resource in stations_seed.json visibility_policy.json AppLogo.jpg AppIcon.icns; do
+  if [ -f "${SOURCE_RESOURCES}/${resource}" ]; then
+    cp "${SOURCE_RESOURCES}/${resource}" "$APP_DIR/Contents/Resources/"
+  fi
+done
 
-# SwiftPM's command-line build currently copies String Catalog sources without
-# compiling them. Compile the shipping catalog into the copied resource bundle
-# so Foundation can discover the German `.lproj` at runtime.
-STRING_CATALOG="Sources/ILoveMusic/Resources/Localizable.xcstrings"
+for lproj in "${SOURCE_RESOURCES}"/*.lproj; do
+  [ -d "$lproj" ] && cp -R "$lproj" "$APP_DIR/Contents/Resources/"
+done
+
+# String Catalogs have to be compiled into `.lproj` directories before
+# Foundation can discover them at runtime.
+STRING_CATALOG="${SOURCE_RESOURCES}/Localizable.xcstrings"
 if [ -f "$STRING_CATALOG" ]; then
   xcrun xcstringstool compile "$STRING_CATALOG" \
-    --output-directory "$APP_DIR/Contents/Resources/${RESOURCE_BUNDLE}" \
+    --output-directory "$APP_DIR/Contents/Resources" \
     --language en \
     --language de
 fi
 
-if [ -f "Sources/ILoveMusic/Resources/AppIcon.icns" ]; then
-  cp "Sources/ILoveMusic/Resources/AppIcon.icns" "$APP_DIR/Contents/Resources/"
-fi
+# A download has no source tree and no .build directory to fall back on, so a
+# missing resource here is a crash or a silently empty catalog on every machine
+# except this one. Fail the build instead.
+for required in \
+  stations_seed.json \
+  visibility_policy.json \
+  AppLogo.jpg \
+  AppIcon.icns \
+  en.lproj/Localizable.stringsdict \
+  de.lproj/Localizable.strings
+do
+  if [ ! -e "$APP_DIR/Contents/Resources/${required}" ]; then
+    echo "error: bundled resource missing: Contents/Resources/${required}" >&2
+    exit 1
+  fi
+done
 
 # Sparkle ships as a dynamic framework; the executable resolves it through the
 # @executable_path/../Frameworks rpath set in Package.swift.

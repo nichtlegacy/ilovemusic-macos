@@ -21,8 +21,13 @@ let package = Package(
       dependencies: [
         .product(name: "Sparkle", package: "Sparkle")
       ],
-      resources: [
-        .process("Resources")
+      exclude: ["Resources"],
+      swiftSettings: [
+        // Resources ship loose in the .app's Contents/Resources and are reached
+        // through the Bundle.module accessor in ResourceBundle.swift, not
+        // through a SwiftPM resource bundle. `#bundle` only expands when a
+        // module advertises one, so set the flag SwiftPM would have set.
+        .define("SWIFT_MODULE_RESOURCE_BUNDLE_AVAILABLE")
       ],
       linkerSettings: [
         .unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"])
