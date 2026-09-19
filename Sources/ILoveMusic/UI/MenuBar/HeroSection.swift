@@ -170,14 +170,16 @@ struct HeroSection: View {
     .padding(.top, 14)
     .padding(.bottom, 18)
     .frame(maxWidth: .infinity, alignment: .leading)
-    .background(
+    // The closure form pins the gradient to its View interpretation; passed as
+    // an argument, `blendMode` is ambiguous between View and ShapeStyle.
+    .background {
       LinearGradient(
         colors: [accent.opacity(0.22), accent.opacity(0.05), .clear],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
       )
       .blendMode(.plusLighter)
-    )
+    }
   }
 
   private var isHoveringInteractiveArea: Bool {
