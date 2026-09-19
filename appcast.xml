@@ -5,6 +5,15 @@
     <description>Most recent changes for ILoveMusic.</description>
     <language>en</language>
     <item>
+      <title>Version 0.2.1</title>
+      <pubDate>Sat, 19 Sep 2026 19:05:52 +0000</pubDate>
+      <sparkle:version>36</sparkle:version>
+      <sparkle:shortVersionString>0.2.1</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description>&lt;ul&gt;&lt;li&gt;Heruntergeladene Versionen starten wieder. Bisher fanden sie ihre mitgelieferten Daten nicht und brachen sofort beim Start ab; Senderliste, Bilder und Übersetzungen liegen jetzt an der Stelle im Programmpaket, an der macOS sie erwartet.&lt;/li&gt;&lt;li&gt;Der Paketbau bricht ab, sobald eine dieser Dateien fehlt, damit eine unvollständige Version gar nicht erst veröffentlicht werden kann.&lt;/li&gt;&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/nichtlegacy/ilovemusic_mac/releases/download/v0.2.1/ILoveMusic-0.2.1.dmg" type="application/octet-stream" sparkle:edSignature="aDwIwY/GtgdsnUuyQ4IrXUwh5adZ71IoTcsQFy4HD0GwKMkWyd2OJz0u1/vGCMK1/y2aFyr8Kqgs6kSgELaICA==" length="2867142" />
+    </item>
+    <item>
       <title>Version 0.2.0</title>
       <pubDate>Thu, 17 Sep 2026 20:26:55 +0000</pubDate>
       <sparkle:version>31</sparkle:version>
