@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ILoveMusic für macOS – I Love Music Radio in der Menüleiste</title>
+<meta name="description" content="Native ILoveMusic App für macOS: alle I Love Music Radiosender aus der Menüleiste, mit Favoriten, Statistik, Discord und Stream Deck. Kostenlos, ohne Account.">
+<link rel="canonical" href="https://ilovemusic.nichtlegacy.com/">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#08080c">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ILoveMusic für macOS">
+<meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://ilovemusic.nichtlegacy.com/">
+<meta property="og:title" content="ILoveMusic für macOS – Radio aus der Menüleiste">
+<meta property="og:description" content="Alle I Love Music Radiosender direkt aus der macOS-Menüleiste. Favoriten, Verlauf und Statistik, Discord Rich Presence, Stream Deck. Ohne Account, ohne Cloud.">
+<meta property="og:image" content="https://ilovemusic.nichtlegacy.com/og.png">
+<meta property="og:image:secure_url" content="https://ilovemusic.nichtlegacy.com/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Das ILoveMusic-Player-Panel neben dem Schriftzug „Radio aus der Menüleiste“.">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ILoveMusic für macOS – Radio aus der Menüleiste">
+<meta name="twitter:description" content="Alle I Love Music Radiosender direkt aus der macOS-Menüleiste. Ohne Account, ohne Cloud.">
+<meta name="twitter:image" content="https://ilovemusic.nichtlegacy.com/og.png">
+<meta name="twitter:image:alt" content="Das ILoveMusic-Player-Panel neben dem Schriftzug „Radio aus der Menüleiste“.">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
+<link rel="apple-touch-icon" href="app-icon.png">
+<link rel="preload" as="image" href="screenshots/hero.webp" type="image/webp" fetchpriority="high">
+<link rel="stylesheet" href="app.css">
+<script src="app.js" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://ilovemusic.nichtlegacy.com/#website",
+      "url": "https://ilovemusic.nichtlegacy.com/",
+      "name": "ILoveMusic für macOS",
+      "inLanguage": "de-DE",
+      "publisher": { "@id": "https://ilovemusic.nichtlegacy.com/#author" },
+      "about": { "@id": "https://ilovemusic.nichtlegacy.com/#app" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://ilovemusic.nichtlegacy.com/#author",
+      "name": "nichtlegacy",
+      "url": "https://github.com/nichtlegacy"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ilovemusic.nichtlegacy.com/#app",
+      "name": "ILoveMusic",
+      "alternateName": ["ILoveMusic Menubar", "I Love Music für Mac"],
+      "url": "https://ilovemusic.nichtlegacy.com/",
+      "description": "Nativer macOS-Menüleisten-Player für die öffentlichen ILoveMusic-Radiostreams, mit Favoriten, Verlauf und Statistik, Discord Rich Presence und Stream-Deck-Plugin.",
+      "applicationCategory": "MultimediaApplication",
+      "applicationSubCategory": "Radio Player",
+      "operatingSystem": "macOS 14 or later",
+      "processorRequirements": "Apple Silicon (arm64)",
+      "softwareRequirements": "macOS 14+, Apple Silicon",
+      "softwareVersion": "__VERSION__",
+      "inLanguage": ["de", "en"],
+      "featureList": [
+        "Menüleisten-Player mit Cover, Titel und Live-Hörerzahl",
+        "Favoriten und vollständiger Senderkatalog",
+        "Verlauf, Statistik und Heatmaps",
+        "Globale Tastenkürzel",
+        "Discord Rich Presence",
+        "Stream-Deck-Plugin"
+      ],
+      "downloadUrl": "https://github.com/nichtlegacy/ilovemusic-macos/releases/latest",
+      "installUrl": "https://github.com/nichtlegacy/ilovemusic-macos/releases/latest",
+      "releaseNotes": "https://github.com/nichtlegacy/ilovemusic-macos/releases",
+      "codeRepository": "https://github.com/nichtlegacy/ilovemusic-macos",
+      "discussionUrl": "https://github.com/nichtlegacy/ilovemusic-macos/issues",
+      "license": "https://opensource.org/licenses/MIT",
+      "isAccessibleForFree": true,
+      "screenshot": [
+        "https://ilovemusic.nichtlegacy.com/screenshots/hero.webp",
+        "https://ilovemusic.nichtlegacy.com/screenshots/stats.webp"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "url": "https://github.com/nichtlegacy/ilovemusic-macos/releases/latest"
+      },
+      "author": { "@id": "https://ilovemusic.nichtlegacy.com/#author" },
+      "maintainer": { "@id": "https://ilovemusic.nichtlegacy.com/#author" }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Ist das die offizielle ILoveMusic App für Mac?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Nein. Unabhängiges Open-Source-Hobbyprojekt. Die App nutzt nur öffentlich erreichbare ILoveMusic-Daten und steht in keiner Verbindung zur I Love Music GmbH." }
+    },
+    {
+      "@type": "Question",
+      "name": "Welche macOS-Version brauche ich?",
+      "acceptedAnswer": { "@type": "Answer", "text": "macOS 14 oder neuer. Die fertigen Builds sind Apple Silicon only (arm64); auf Intel-Macs lässt sich das Projekt aus dem Quellcode bauen." }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie installiere ich ILoveMusic auf dem Mac?",
+      "acceptedAnswer": { "@type": "Answer", "text": "DMG aus den GitHub-Releases laden, ILoveMusic.app nach Programme ziehen und beim ersten Start die Quarantäne entfernen: xattr -dr com.apple.quarantine /Applications/ILoveMusic.app" }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum meldet macOS, die App sei beschädigt?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Das Projekt hat keinen Apple-Developer-Account, die App ist nur ad-hoc signiert und nicht notarisiert. Nur der erste Start ist betroffen." }
+    },
+    {
+      "@type": "Question",
+      "name": "Werden meine Daten irgendwohin geschickt?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Nein. Kein Backend, kein Account. Favoriten, Verlauf und Statistik liegen als Dateien auf dem eigenen Mac." }
+    },
+    {
+      "@type": "Question",
+      "name": "Brauche ich eine eigene Discord-Application-ID?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ja. Rich Presence läuft über eine selbst angelegte Discord-Application; die ID wird in den Einstellungen hinterlegt." }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-github" viewBox="0 0 16 16">
+    <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+  </symbol>
+  <symbol id="i-download" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" d="M12 3.5v11m0 0 4.2-4.2M12 14.5l-4.2-4.2M4 16.5v2.2A1.8 1.8 0 0 0 5.8 20.5h12.4a1.8 1.8 0 0 0 1.8-1.8v-2.2"/>
+  </symbol>
+  <symbol id="i-mark" viewBox="0 0 32 32">
+    <rect fill="currentColor" x="4" y="8" width="4" height="16" rx="1"/>
+    <path fill="currentColor" d="M19.2 24.1 12.6 17.7a4.6 4.6 0 0 1-.1-6.6 4.5 4.5 0 0 1 6.4 0l1.1 1.1 1.1-1.1a4.5 4.5 0 0 1 6.4 0 4.6 4.6 0 0 1-.1 6.6l-6.6 6.4a1.1 1.1 0 0 1-1.6 0Z"/>
+  </symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="mark" href="#top" aria-label="ILoveMusic, zum Seitenanfang">
+      <svg class="mark-glyph" width="19" height="19" aria-hidden="true"><use href="#i-mark"/></svg>
+      <span>ILoveMusic</span>
+    </a>
+    <nav class="top-nav" aria-label="Seitenbereiche">
+      <a href="#funktionen">Funktionen</a>
+      <a href="#statistiken">Statistiken</a>
+      <a href="#discord">Discord</a>
+      <a href="#streamdeck">Stream Deck</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="top-actions">
+      <a class="btn ghost" href="https://github.com/nichtlegacy/ilovemusic-macos" rel="noopener">
+        <svg class="ico" width="15" height="15" aria-hidden="true"><use href="#i-github"/></svg>
+        GitHub
+      </a>
+      <a class="btn solid" href="https://github.com/nichtlegacy/ilovemusic-macos/releases/latest" rel="noopener">
+        <svg class="ico" width="15" height="15" aria-hidden="true"><use href="#i-download"/></svg>
+        Download
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="inhalt">
+
+  <section class="hero" id="top">
+    <div class="wrap hero-inner">
+      <div class="hero-copy reveal">
+        <p class="tag">Menüleisten-Radio für den Mac</p>
+        <h1>ILoveMusic<br><span class="grad">für macOS</span></h1>
+        <p class="lede">
+          Alle öffentlichen I Love Music Sender direkt aus der Menüleiste – mit Cover,
+          Live-Hörerzahl, Favoriten und Statistik. Ohne Account, ohne Cloud.
+        </p>
+        <div class="actions">
+          <a class="btn solid lg" href="https://github.com/nichtlegacy/ilovemusic-macos/releases/latest" rel="noopener">
+            <svg class="ico" width="17" height="17" aria-hidden="true"><use href="#i-download"/></svg>
+            Download für macOS
+          </a>
+          <a class="btn ghost lg" href="https://github.com/nichtlegacy/ilovemusic-macos" rel="noopener">
+            <svg class="ico" width="16" height="16" aria-hidden="true"><use href="#i-github"/></svg>
+            Quellcode
+          </a>
+        </div>
+        <p class="specs">Version __VERSION__ · macOS 14+ · Apple Silicon · MIT</p>
+      </div>
+
+      <div class="hero-shot reveal">
+        <img src="screenshots/hero.webp" width="766" height="1316" alt="Das ILoveMusic Player-Panel in der macOS-Menüleiste mit Cover, Senderliste und Lautstärkeregler" fetchpriority="high">
+      </div>
+    </div>
+  </section>
+
+  <section id="funktionen" class="band">
+    <div class="wrap">
+      <header class="band-head reveal">
+        <p class="tag">Funktionen</p>
+        <h2>Was die App kann.</h2>
+      </header>
+
+      <div class="bento">
+        <article class="tile w4 reveal">
+          <h3>Menüleisten-Player</h3>
+          <p>Cover, Titel, Live-Hörerzahl, Transport, AirPlay-Ausgabe und Lautstärke –
+          ein Klick auf das Symbol, kein Hauptfenster, kein Dock-Eintrag.</p>
+        </article>
+
+        <article class="tile reveal">
+          <h3>Favoriten</h3>
+          <p>Farbcodiert nach Kategorie, immer ganz oben.</p>
+        </article>
+
+        <article class="tile reveal">
+          <h3>Alle Sender live</h3>
+          <p>Katalog direkt aus den öffentlichen ILoveMusic-Endpunkten.</p>
+        </article>
+
+        <article class="tile reveal">
+          <h3>Verlauf &amp; Statistik</h3>
+          <p>Hörzeit, Streak, Genres, Top-Sender.</p>
+        </article>
+
+        <article class="tile reveal">
+          <h3>Globale Tastenkürzel</h3>
+          <p>Systemweit, frei belegbar.</p>
+          <p class="keys"><kbd>⌥</kbd><kbd>⌘</kbd><kbd>P</kbd></p>
+        </article>
+
+        <article class="tile w3 reveal">
+          <h3>Lokal-first</h3>
+          <p>Kein Account, kein Sync, kein Backend. Alles bleibt auf diesem Mac.</p>
+        </article>
+
+        <article class="tile w3 reveal">
+          <h3>Deutsch &amp; English</h3>
+          <p>Folgt der Systemsprache oder fest wählbar. Start bei Anmeldung optional.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="statistiken" class="band alt">
+    <div class="wrap">
+      <header class="band-head reveal">
+        <p class="tag">Statistiken</p>
+        <h2>Hörzeit, Genres, Streak.</h2>
+      </header>
+      <div class="shots">
+        <figure class="reveal">
+          <img src="screenshots/stats.webp" width="1400" height="933" loading="lazy" alt="Statistik-Fenster mit Streak, Hörzeit-Verlauf und Genre-Verteilung">
+          <figcaption>Statistik – Streak, Genres, Top-Sender, Heatmaps.</figcaption>
+        </figure>
+        <figure class="reveal">
+          <img src="screenshots/history.webp" width="1400" height="933" loading="lazy" alt="Verlaufsfenster mit gehörten Songs und Sendern">
+          <figcaption>Verlauf – jeder gehörte Song, lokal aufgezeichnet.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="discord" class="band">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="tag">Discord</p>
+        <h2>Zeig, was gerade läuft.</h2>
+        <p class="lede">
+          Rich Presence setzt den laufenden Song als Aktivität – mit Cover, Sender,
+          Hörerzahl und mitlaufender Spielzeit.
+        </p>
+        <ul class="facts">
+          <li>Titel und Künstler direkt aus den Sender-Metadaten</li>
+          <li>Cover als großes Bild, Senderlogo als Badge</li>
+          <li>Optionaler Button, der auf den Sender bei ilovemusic.de führt</li>
+          <li>Jedes Feld einzeln abschaltbar</li>
+          <li>Eigene Discord-Application-ID, keine fremde App</li>
+        </ul>
+        <p class="note">
+          Die IPC-Verbindung ist von Hand auf <code>Network</code> gebaut – keine externe
+          Discord-Bibliothek, kein Token, kein Bot.
+          <a href="https://github.com/nichtlegacy/ilovemusic-macos#discord-rich-presence" rel="noopener">Application anlegen</a>
+        </p>
+      </div>
+
+      <div class="reveal">
+        <!-- The presence card the app actually produces: activity type 2, details =
+             title, state = artist, station line with listener count, elapsed timer. -->
+        <div class="rpc">
+          <p class="rpc-head">Hört ILoveMusic</p>
+          <div class="rpc-body">
+            <div class="rpc-art">
+              <img class="rpc-cover" src="rpc-cover.jpg" width="240" height="240" loading="lazy" alt="">
+              <img class="rpc-badge" src="favicon.svg" width="30" height="30" loading="lazy" alt="">
+            </div>
+            <div class="rpc-lines">
+              <p class="rpc-title">9 Bis 9</p>
+              <p>Sira &amp; Bausa &amp; Badchieff</p>
+              <p class="rpc-meta">I ♥ PARTY HARD • 28 listeners</p>
+              <p class="rpc-time">00:42 elapsed</p>
+            </div>
+          </div>
+          <span class="rpc-btn">Listen to I ♥ PARTY HARD</span>
+        </div>
+        <p class="rpc-note">So sieht die Aktivität im Discord-Profil aus.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="streamdeck" class="band alt">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="tag">Stream Deck</p>
+        <h2>Sender auf Tasten.</h2>
+        <p class="lede">
+          Jede Taste ein Sender, mit aktuellem Cover als Tastenbild. Dazu Transport,
+          Favoriten-Herz und Lautstärke.
+        </p>
+        <p class="note">Verbindung nur über <code>127.0.0.1</code>, token-gesichert.</p>
+        <a class="btn ghost lg" href="https://github.com/nichtlegacy/ilovemusic-streamdeck" rel="noopener">
+          <svg class="ico" width="16" height="16" aria-hidden="true"><use href="#i-github"/></svg>
+          Plugin-Repository
+        </a>
+      </div>
+      <div class="split-media reveal">
+        <img src="screenshots/streamdeck.webp" width="1100" height="660" loading="lazy" alt="ILoveMusic-Tasten mit Cover auf einem Stream Deck">
+      </div>
+    </div>
+  </section>
+
+  <section id="download" class="band">
+    <div class="wrap">
+      <header class="band-head reveal">
+        <p class="tag">Download</p>
+        <h2>In drei Schritten installiert.</h2>
+      </header>
+
+      <div class="dl">
+        <div class="dl-card reveal">
+          <p class="dl-version">ILoveMusic __VERSION__</p>
+          <p class="dl-req">macOS 14 oder neuer · Apple Silicon · ca. 3 MB</p>
+          <a class="btn solid lg" href="https://github.com/nichtlegacy/ilovemusic-macos/releases/latest" rel="noopener">
+            <svg class="ico" width="17" height="17" aria-hidden="true"><use href="#i-download"/></svg>
+            DMG herunterladen
+          </a>
+          <p class="dl-hint">Über GitHub Releases</p>
+        </div>
+
+        <ol class="dl-steps reveal">
+          <li><code>ILoveMusic-__VERSION__.dmg</code> öffnen, <code>ILoveMusic.app</code> nach <em>Programme</em> ziehen.</li>
+          <li>
+            Quarantäne einmalig entfernen:
+            <pre><code>xattr -dr com.apple.quarantine /Applications/ILoveMusic.app</code></pre>
+            Ohne Terminal: App starten, Warnung bestätigen, dann <em>Systemeinstellungen → Datenschutz &amp; Sicherheit → Trotzdem öffnen</em>.
+          </li>
+          <li>App starten. Es öffnet sich kein Fenster – das Symbol sitzt in der Menüleiste.</li>
+        </ol>
+      </div>
+
+      <p class="note full reveal">
+        Die App ist nur ad-hoc signiert und nicht notarisiert, weil das Projekt keinen
+        Apple-Developer-Account hat. Nur der erste Start ist betroffen; spätere Updates laufen
+        über <a href="https://sparkle-project.org/" rel="noopener">Sparkle</a> und werden per
+        EdDSA-Signatur geprüft.
+      </p>
+    </div>
+  </section>
+
+  <section id="faq" class="band alt">
+    <div class="wrap">
+      <header class="band-head reveal">
+        <p class="tag">FAQ</p>
+        <h2>Häufige Fragen</h2>
+      </header>
+
+      <div class="faq">
+        <details class="reveal">
+          <summary>Ist das die offizielle ILoveMusic App für Mac?</summary>
+          <p>Nein, ein unabhängiges Open-Source-Hobbyprojekt. Es nutzt ausschließlich öffentlich
+          erreichbare ILoveMusic-Daten und steht in keiner Verbindung zur I Love Music GmbH.</p>
+        </details>
+        <details class="reveal">
+          <summary>Welche macOS-Version brauche ich?</summary>
+          <p>macOS 14 oder neuer. Die fertigen Builds sind Apple Silicon only; auf Intel-Macs
+          lässt sich das Projekt aus dem Quellcode bauen.</p>
+        </details>
+        <details class="reveal">
+          <summary>Warum sagt macOS, die App sei beschädigt?</summary>
+          <p>Weil sie nicht notarisiert ist. Ein <code>xattr -dr com.apple.quarantine</code> auf
+          <code>/Applications/ILoveMusic.app</code> reicht. Der Download ist in Ordnung.</p>
+        </details>
+        <details class="reveal">
+          <summary>Werden meine Daten irgendwohin geschickt?</summary>
+          <p>Nein. Kein Backend, kein Account. Verbindungen gehen nur zu den öffentlichen
+          ILoveMusic-Endpunkten, zum Stream und – falls aktiviert – lokal zu Discord.</p>
+        </details>
+        <details class="reveal">
+          <summary>Brauche ich eine eigene Discord-Application-ID?</summary>
+          <p>Ja. Rich Presence läuft über eine selbst angelegte Discord-Application; die ID wird
+          in den Einstellungen hinterlegt. Die
+          <a href="https://github.com/nichtlegacy/ilovemusic-macos#discord-rich-presence" rel="noopener">Schritte stehen im README</a>.</p>
+        </details>
+        <details class="reveal">
+          <summary>Wie bekomme ich Updates?</summary>
+          <p>Über Sparkle, im Hintergrund und abschaltbar. Jedes Update wird per
+          EdDSA-Signatur verifiziert.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <p class="disclaim">
+      Inoffizielles Hobbyprojekt. Kein Angebot der I Love Music GmbH.
+      Marken- und Sendernamen gehören ihren jeweiligen Inhabern.
+    </p>
+    <div class="foot-meta">
+      <a class="foot-gh" href="https://github.com/nichtlegacy/ilovemusic-macos" rel="noopener">
+        <svg class="ico" width="15" height="15" aria-hidden="true"><use href="#i-github"/></svg>
+        nichtlegacy/ilovemusic-macos
+      </a>
+      <a class="foot-license" href="https://github.com/nichtlegacy/ilovemusic-macos/blob/main/LICENSE" rel="noopener">MIT-Lizenz</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

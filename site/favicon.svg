@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="ILoveMusic">
+  <!-- The menu bar mark: the literal "I♥" the app draws into the status item. -->
+  <style>
+    .mark { fill: #171614; }
+    @media (prefers-color-scheme: dark) { .mark { fill: #ffffff; } }
+  </style>
+  <g class="mark">
+    <rect x="4" y="8" width="4" height="16" rx="1"/>
+    <path d="M19.2 24.1 12.6 17.7a4.6 4.6 0 0 1-.1-6.6 4.5 4.5 0 0 1 6.4 0l1.1 1.1 1.1-1.1a4.5 4.5 0 0 1 6.4 0 4.6 4.6 0 0 1-.1 6.6l-6.6 6.4a1.1 1.1 0 0 1-1.6 0Z"/>
+  </g>
+</svg>
