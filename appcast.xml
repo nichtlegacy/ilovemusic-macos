@@ -11,7 +11,7 @@
       <sparkle:shortVersionString>0.2.1</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <description>&lt;ul&gt;&lt;li&gt;Heruntergeladene Versionen starten wieder. Bisher fanden sie ihre mitgelieferten Daten nicht und brachen sofort beim Start ab; Senderliste, Bilder und Übersetzungen liegen jetzt an der Stelle im Programmpaket, an der macOS sie erwartet.&lt;/li&gt;&lt;li&gt;Der Paketbau bricht ab, sobald eine dieser Dateien fehlt, damit eine unvollständige Version gar nicht erst veröffentlicht werden kann.&lt;/li&gt;&lt;/ul&gt;</description>
-      <enclosure url="https://github.com/nichtlegacy/ilovemusic_mac/releases/download/v0.2.1/ILoveMusic-0.2.1.dmg" type="application/octet-stream" sparkle:edSignature="aDwIwY/GtgdsnUuyQ4IrXUwh5adZ71IoTcsQFy4HD0GwKMkWyd2OJz0u1/vGCMK1/y2aFyr8Kqgs6kSgELaICA==" length="2867142" />
+      <enclosure url="https://github.com/nichtlegacy/ilovemusic-macos/releases/download/v0.2.1/ILoveMusic-0.2.1.dmg" type="application/octet-stream" sparkle:edSignature="aDwIwY/GtgdsnUuyQ4IrXUwh5adZ71IoTcsQFy4HD0GwKMkWyd2OJz0u1/vGCMK1/y2aFyr8Kqgs6kSgELaICA==" length="2867142" />
     </item>
     <item>
       <title>Version 0.2.0</title>
@@ -20,7 +20,7 @@
       <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <description>&lt;ul&gt;&lt;li&gt;Komplett überarbeitetes Einstellungsfenster mit nativer Seitenleiste, klar getrennten Bereichen und macOS-typischem Layout.&lt;/li&gt;&lt;li&gt;Neu aufgebautes Fenster für Verlauf und Statistik, das sich an die Fenstergröße anpasst und die wichtigsten Kennzahlen auf einen Blick zeigt.&lt;/li&gt;&lt;li&gt;Interaktive Diagramme für Hörtrend, Sender, Genres, Tageszeiten und Wochentage sowie Ranglisten für Künstler und Songs.&lt;/li&gt;&lt;li&gt;Durchsuchbarer Hörverlauf mit Senderfilter und nativer Darstellung nach Tagen.&lt;/li&gt;&lt;li&gt;Der gespeicherte Hörverlauf behält unbekannte Daten bei Bereinigung und Löschvorgängen. Bestehende Statistiken überstehen App-Updates.&lt;/li&gt;&lt;li&gt;Deutsche und englische Oberfläche mit den Optionen Systemstandard, Deutsch und Englisch. Ein Sprachwechsel kann ILoveMusic direkt neu starten.&lt;/li&gt;&lt;/ul&gt;</description>
-      <enclosure url="https://github.com/nichtlegacy/ilovemusic_mac/releases/download/v0.2.0/ILoveMusic-0.2.0.dmg" type="application/octet-stream" sparkle:edSignature="4XYHBQkJXcyrce0tYYJrRp8b1pdgCGBaQWRcQ7DSaQHniQzT8y/VU3XAbyVREELCy2942KwmUWvF4fBk208uDg==" length="3210200" />
+      <enclosure url="https://github.com/nichtlegacy/ilovemusic-macos/releases/download/v0.2.0/ILoveMusic-0.2.0.dmg" type="application/octet-stream" sparkle:edSignature="4XYHBQkJXcyrce0tYYJrRp8b1pdgCGBaQWRcQ7DSaQHniQzT8y/VU3XAbyVREELCy2942KwmUWvF4fBk208uDg==" length="3210200" />
     </item>
     <item>
       <title>Version 0.1.1</title>
@@ -29,7 +29,7 @@
       <sparkle:shortVersionString>0.1.1</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <description>&lt;ul&gt;&lt;li&gt;Das Buildskript verweigert jetzt einen Build, dessen Buildnummer unter der bereits veröffentlichten liegt. Ein solcher Build würde von Sparkle nie als Update angeboten und wäre eine Sackgasse.&lt;/li&gt;&lt;li&gt;Keine funktionalen Änderungen an der App selbst.&lt;/li&gt;&lt;/ul&gt;</description>
-      <enclosure url="https://github.com/nichtlegacy/ilovemusic_mac/releases/download/v0.1.1/ILoveMusic-0.1.1.dmg" type="application/octet-stream" sparkle:edSignature="dOUvdQ6SZpizscqjY5ChW3XiHqJT8oc1wyoInhPS48963ywVn5++MrLYUTmqe6URQkqxUjdcFRbWLbR/oOWAAA==" length="2926377" />
+      <enclosure url="https://github.com/nichtlegacy/ilovemusic-macos/releases/download/v0.1.1/ILoveMusic-0.1.1.dmg" type="application/octet-stream" sparkle:edSignature="dOUvdQ6SZpizscqjY5ChW3XiHqJT8oc1wyoInhPS48963ywVn5++MrLYUTmqe6URQkqxUjdcFRbWLbR/oOWAAA==" length="2926377" />
     </item>
     <item>
       <title>Version 0.1.0</title>
@@ -38,7 +38,7 @@
       <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <description>&lt;ul&gt;&lt;li&gt;Erster öffentlicher Build des ILoveMusic-Menüleisten-Players.&lt;/li&gt;&lt;li&gt;Senderliste, Wiedergabe, Live-Metadaten und Cover aus den öffentlichen ILOVEMUSIC-Feeds.&lt;/li&gt;&lt;li&gt;Verlauf und Statistik mit Charts, Streak und Heatmaps — alles bleibt lokal auf diesem Mac.&lt;/li&gt;&lt;li&gt;Optionale Discord Rich Presence und ein lokaler Control-Server für Stream Deck.&lt;/li&gt;&lt;li&gt;Globale Tastenkürzel, Start bei Anmeldung und In-App-Updates über Sparkle.&lt;/li&gt;&lt;li&gt;Benötigt macOS 14 oder neuer, Apple Silicon. Der erste Start braucht eine Gatekeeper-Freigabe, siehe README.&lt;/li&gt;&lt;/ul&gt;</description>
-      <enclosure url="https://github.com/nichtlegacy/ilovemusic_mac/releases/download/v0.1.0/ILoveMusic-0.1.0.dmg" type="application/octet-stream" sparkle:edSignature="7sBPbN55W2Xeo+6mBMIiLSNXZxcbT8CmHElhTBy6SDfYL88rD2d2O8UWGXP/9wD1Gnad9Z+4s5PWWRJxQL7UBQ==" length="2926368" />
+      <enclosure url="https://github.com/nichtlegacy/ilovemusic-macos/releases/download/v0.1.0/ILoveMusic-0.1.0.dmg" type="application/octet-stream" sparkle:edSignature="7sBPbN55W2Xeo+6mBMIiLSNXZxcbT8CmHElhTBy6SDfYL88rD2d2O8UWGXP/9wD1Gnad9Z+4s5PWWRJxQL7UBQ==" length="2926368" />
     </item>
   </channel>
 </rss>

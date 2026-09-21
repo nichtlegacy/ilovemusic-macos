@@ -14,7 +14,7 @@ NAME="ILoveMusic"
 DISPLAY_NAME="ILoveMusic"
 BUNDLE_ID="com.nichtlegacy.${NAME}"
 MIN_OS="14.0"
-FEED_URL="https://raw.githubusercontent.com/nichtlegacy/ilovemusic_mac/main/appcast.xml"
+FEED_URL="https://raw.githubusercontent.com/nichtlegacy/ilovemusic-macos/main/appcast.xml"
 SPARKLE_PUBLIC_KEY="AUirFpMVvlCOQcflFJ5exmSeZmJ/CwevT5+vkHvQs/8="
 
 VERSION="${VERSION:-$(tr -d '[:space:]' < VERSION)}"

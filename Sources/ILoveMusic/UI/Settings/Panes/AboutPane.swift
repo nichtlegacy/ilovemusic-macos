@@ -44,7 +44,7 @@ struct AboutPane: View {
       }
 
       Section {
-        Link(destination: URL(string: "https://github.com/nichtlegacy/ilovemusic_mac")!) {
+        Link(destination: URL(string: "https://github.com/nichtlegacy/ilovemusic-macos")!) {
           Label("GitHub", systemImage: "arrow.up.right.square")
         }
         Link(destination: URL(string: "https://ilovemusic.de/")!) {

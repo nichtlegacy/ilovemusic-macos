@@ -13,7 +13,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 NAME="ILoveMusic"
-REPO="nichtlegacy/ilovemusic_mac"
+REPO="nichtlegacy/ilovemusic-macos"
 RELEASE_BRANCH="main"
 # `origin` stays on the private Forgejo mirror; releases go to the public GitHub remote.
 RELEASE_REMOTE="github"

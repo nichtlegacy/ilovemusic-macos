@@ -56,7 +56,7 @@ Lokal verifiziert mit Xcode 26.3 / Apple Swift 6.2.4.
 
 ## Installation
 
-Fertige Builds liegen unter [Releases](https://github.com/nichtlegacy/ilovemusic_mac/releases). Die App ist **Apple Silicon only** (arm64) und braucht macOS 14 oder neuer.
+Fertige Builds liegen unter [Releases](https://github.com/nichtlegacy/ilovemusic-macos/releases). Die App ist **Apple Silicon only** (arm64) und braucht macOS 14 oder neuer.
 
 1. `ILoveMusic-<version>.dmg` herunterladen und öffnen.
 2. `ILoveMusic.app` in den Ordner `Programme` ziehen.
@@ -90,8 +90,8 @@ ILoveMusic aktualisiert sich über [Sparkle](https://sparkle-project.org/). Upda
 ## Schnellstart
 
 ```bash
-git clone https://github.com/nichtlegacy/ilovemusic_mac.git
-cd ilovemusic_mac
+git clone https://github.com/nichtlegacy/ilovemusic-macos.git
+cd ilovemusic-macos
 
 swift build      # bauen
 swift run ILoveMusic   # starten
@@ -185,7 +185,7 @@ Du hinterlegst eine **eigene** Discord-Application-ID (developer.discord.com →
 
 Ein eigenes Stream-Deck-Plugin steuert den Player direkt vom Deck: Wiedergabe, Sender, Favoriten und Lautstärke – mit Live-Cover und Hörerzahl auf den Tasten.
 
-Plugin-Repository: **[nichtlegacy/ilovemusic_streamdeck](https://github.com/nichtlegacy/ilovemusic_streamdeck)**
+Plugin-Repository: **[nichtlegacy/ilovemusic-streamdeck](https://github.com/nichtlegacy/ilovemusic-streamdeck)**
 
 <div align="center">
 <img src="docs/screenshots/streamdeck.png" alt="ILoveMusic auf einem Stream Deck" width="720">
@@ -218,7 +218,7 @@ Absicherung des Servers:
 ### Installation
 
 1. ILoveMusic starten – der Control-Server läuft automatisch, sobald die App aktiv ist.
-2. Das Plugin aus den [Releases des Plugin-Repositories](https://github.com/nichtlegacy/ilovemusic_streamdeck/releases) installieren (`.streamDeckPlugin` doppelklicken).
+2. Das Plugin aus den [Releases des Plugin-Repositories](https://github.com/nichtlegacy/ilovemusic-streamdeck/releases) installieren (`.streamDeckPlugin` doppelklicken).
 3. Aktionen aus der Kategorie **ILoveMusic** auf Tasten ziehen; Sender-Tasten bekommen ihren Sender in der Inspector-Ansicht zugewiesen.
 4. Im Tab **Einstellungen → Stream Deck** prüfen, ob Handshake und letzter Request erscheinen.
 
@@ -369,7 +369,7 @@ Der Ordner `~/Library/Application Support/ILoveMusic` trägt als einziger keine 
 ## Projektstruktur
 
 ```text
-ilovemusic_mac/
+ilovemusic-macos/
 ├── Package.swift            # SwiftPM-Manifest (einzige Abhängigkeit: Sparkle)
 ├── VERSION                  # Marketing-Version
 ├── appcast.xml              # Sparkle-Update-Feed
@@ -472,7 +472,7 @@ Veröffentlicht unter der [MIT-Lizenz](LICENSE) – © 2026 nichtlegacy.
 
 Inoffizielles, nicht-kommerzielles Hobbyprojekt. „ILoveMusic" / „I Love Music" sowie Sender, Logos und Marken gehören ihren jeweiligen Inhabern. Diese App nutzt ausschließlich öffentlich erreichbare Daten und steht in keiner Verbindung zu I Love Music GmbH.
 
-- Projekt: <https://github.com/nichtlegacy/ilovemusic_mac>
+- Projekt: <https://github.com/nichtlegacy/ilovemusic-macos>
 - ILoveMusic: <https://ilovemusic.de/>
 </content>
 </invoke>
