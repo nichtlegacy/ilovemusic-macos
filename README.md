@@ -13,6 +13,8 @@ Lokal-first, ohne Account, ohne Cloud, ohne eigenes Backend – gebaut nur auf d
 [![Tests](https://img.shields.io/badge/Tests-94%20grün-16A34A)](#tests)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+**[ilovemusic.nichtlegacy.com](https://ilovemusic.nichtlegacy.com)** · [Download](https://github.com/nichtlegacy/ilovemusic-macos/releases/latest)
+
 [Überblick](#überblick) • [Installation](#installation) • [Schnellstart](#schnellstart) • [Einstellungen](#einstellungen) • [Stream Deck](#stream-deck) • [Architektur](#architektur) • [Live-Daten](#live-daten) • [Tests](#tests)
 
 <img src="docs/screenshots/hero.png" alt="ILoveMusic Menüleisten-Player" width="380">
@@ -179,7 +181,25 @@ Enthalten: Heute/Woche/Monat/Streak-Karten, Top-Sender, Genre-Verteilung, Hör-T
 
 Optional und ausgeschaltet per Default. Aktiviert, zeigt es den aktuellen Sender, Song, optional das Cover und die Live-Hörerzahl im Discord-Profil; ein optionaler „Listen"-Button verlinkt direkt auf den Sender bei ilovemusic.de.
 
-Du hinterlegst eine **eigene** Discord-Application-ID (developer.discord.com → Applications → New Application). Die IPC-Verbindung ist von Hand auf das `Network`-Framework gebaut – keine externe Discord-Bibliothek.
+Du hinterlegst eine **eigene** Discord-Application-ID. Die IPC-Verbindung ist von Hand auf das `Network`-Framework gebaut – keine externe Discord-Bibliothek, kein Bot, kein Token.
+
+<details>
+<summary><b>Discord-Application anlegen und eintragen</b></summary>
+
+<br>
+
+1. [discord.com/developers/applications](https://discord.com/developers/applications) öffnen und **New Application** wählen.
+2. Als Namen z. B. `ILoveMusic` eintragen. **Dieser Name steht später im Profil**, Discord zeigt „Hört *Name*".
+3. Unter **General Information** die **Application ID** kopieren.
+4. Optional unter **Rich Presence → Art Assets** ein Bild mit dem Namen `ilovemusic_logo` hochladen. Es wird als großes Bild verwendet, wenn der Sender gerade kein Cover liefert.
+5. In ILoveMusic: *Einstellungen → Discord* → **Rich Presence** einschalten und die Application ID einfügen.
+6. Die Discord-Desktop-App muss laufen; die Anbindung spricht über deren lokalen IPC-Socket. In Discord unter *Einstellungen → Aktivitätsdatenschutz* muss „Aktivitätsstatus anzeigen" aktiv sein.
+
+Der Verbindungsstatus steht in *Einstellungen → Discord*, das Log unter *Einstellungen → Advanced → Discord-Log*. Ohne eingetragene ID meldet der Tab `Missing Discord application client ID`.
+
+Was die App sendet: Songtitel als `details`, Künstler als `state`, Sender und Hörerzahl in der Senderzeile, das Cover als großes Bild, das Senderlogo als kleines Abzeichen, dazu die laufende Spielzeit und – wenn aktiviert – einen Button auf den Sender bei ilovemusic.de. Jedes dieser Felder lässt sich einzeln abschalten.
+
+</details>
 
 ## Stream Deck
 
@@ -472,7 +492,7 @@ Veröffentlicht unter der [MIT-Lizenz](LICENSE) – © 2026 nichtlegacy.
 
 Inoffizielles, nicht-kommerzielles Hobbyprojekt. „ILoveMusic" / „I Love Music" sowie Sender, Logos und Marken gehören ihren jeweiligen Inhabern. Diese App nutzt ausschließlich öffentlich erreichbare Daten und steht in keiner Verbindung zu I Love Music GmbH.
 
+- Website: <https://ilovemusic.nichtlegacy.com>
 - Projekt: <https://github.com/nichtlegacy/ilovemusic-macos>
+- Stream-Deck-Plugin: <https://github.com/nichtlegacy/ilovemusic-streamdeck>
 - ILoveMusic: <https://ilovemusic.de/>
-</content>
-</invoke>
