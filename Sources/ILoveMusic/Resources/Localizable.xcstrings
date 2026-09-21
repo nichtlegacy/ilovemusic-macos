@@ -822,12 +822,12 @@
         }
       }
     },
-    "Create an application at developer.discord.com, then copy its Application ID here.": {
+    "Create an application at discord.com/developers, then copy its Application ID here.": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Erstelle eine Anwendung auf developer.discord.com und kopiere anschließend deren Anwendungs-ID hierher."
+            "value": "Erstelle eine Anwendung auf discord.com/developers und kopiere anschließend deren Anwendungs-ID hierher."
           }
         }
       }

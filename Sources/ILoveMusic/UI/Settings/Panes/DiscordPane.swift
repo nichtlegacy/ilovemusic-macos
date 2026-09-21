@@ -67,7 +67,7 @@ struct DiscordPane: View {
       } header: {
         Text("Rich Presence", bundle: #bundle)
       } footer: {
-        Text("Create an application at developer.discord.com, then copy its Application ID here.", bundle: #bundle)
+        Text("Create an application at discord.com/developers, then copy its Application ID here.", bundle: #bundle)
       }
       .disabled(!appModel.discordEnabled)
       .opacity(appModel.discordEnabled ? 1 : 0.5)

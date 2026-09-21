@@ -114,8 +114,8 @@
 	<string>Verbindung</string>
 	<key>Copy</key>
 	<string>Kopieren</string>
-	<key>Create an application at developer.discord.com, then copy its Application ID here.</key>
-	<string>Erstelle eine Anwendung auf developer.discord.com und kopiere anschließend deren Anwendungs-ID hierher.</string>
+	<key>Create an application at discord.com/developers, then copy its Application ID here.</key>
+	<string>Erstelle eine Anwendung auf discord.com/developers und kopiere anschließend deren Anwendungs-ID hierher.</string>
 	<key>Custom Range</key>
 	<string>Eigener Zeitraum</string>
 	<key>Dance &amp; DJ</key>
