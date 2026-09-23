@@ -8,7 +8,7 @@
 <meta name="description" content="Native ILoveMusic App für macOS: alle I Love Music Radiosender aus der Menüleiste, mit Favoriten, Statistik, Discord und Stream Deck. Kostenlos, ohne Account.">
 <link rel="canonical" href="https://ilovemusic.nichtlegacy.com/">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#08080c">
+<meta name="theme-color" content="#07070a">
 <meta name="robots" content="index, follow, max-image-preview:large">
 
 <meta property="og:type" content="website">
@@ -31,7 +31,8 @@
 <meta name="twitter:image:alt" content="Das ILoveMusic-Player-Panel neben dem Schriftzug „Radio aus der Menüleiste“.">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
-<link rel="apple-touch-icon" href="app-icon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" as="font" href="fonts/Geist-Variable.woff2" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="screenshots/hero.webp" type="image/webp" fetchpriority="high">
 <link rel="stylesheet" href="app.css">
 <script src="app.js" defer></script>
@@ -101,45 +102,6 @@
   ]
 }
 </script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Ist das die offizielle ILoveMusic App für Mac?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Nein. Unabhängiges Open-Source-Hobbyprojekt. Die App nutzt nur öffentlich erreichbare ILoveMusic-Daten und steht in keiner Verbindung zur I Love Music GmbH." }
-    },
-    {
-      "@type": "Question",
-      "name": "Welche macOS-Version brauche ich?",
-      "acceptedAnswer": { "@type": "Answer", "text": "macOS 14 oder neuer. Die fertigen Builds sind Apple Silicon only (arm64); auf Intel-Macs lässt sich das Projekt aus dem Quellcode bauen." }
-    },
-    {
-      "@type": "Question",
-      "name": "Wie installiere ich ILoveMusic auf dem Mac?",
-      "acceptedAnswer": { "@type": "Answer", "text": "DMG aus den GitHub-Releases laden, ILoveMusic.app nach Programme ziehen und beim ersten Start die Quarantäne entfernen: xattr -dr com.apple.quarantine /Applications/ILoveMusic.app" }
-    },
-    {
-      "@type": "Question",
-      "name": "Warum meldet macOS, die App sei beschädigt?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Das Projekt hat keinen Apple-Developer-Account, die App ist nur ad-hoc signiert und nicht notarisiert. Nur der erste Start ist betroffen." }
-    },
-    {
-      "@type": "Question",
-      "name": "Werden meine Daten irgendwohin geschickt?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Nein. Kein Backend, kein Account. Favoriten, Verlauf und Statistik liegen als Dateien auf dem eigenen Mac." }
-    },
-    {
-      "@type": "Question",
-      "name": "Brauche ich eine eigene Discord-Application-ID?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Ja. Rich Presence läuft über eine selbst angelegte Discord-Application; die ID wird in den Einstellungen hinterlegt." }
-    }
-  ]
-}
-</script>
 </head>
 <body>
 
@@ -156,155 +118,368 @@
     <rect fill="currentColor" x="4" y="8" width="4" height="16" rx="1"/>
     <path fill="currentColor" d="M19.2 24.1 12.6 17.7a4.6 4.6 0 0 1-.1-6.6 4.5 4.5 0 0 1 6.4 0l1.1 1.1 1.1-1.1a4.5 4.5 0 0 1 6.4 0 4.6 4.6 0 0 1-.1 6.6l-6.6 6.4a1.1 1.1 0 0 1-1.6 0Z"/>
   </symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12 20.6c-.3 0-.6-.1-.8-.3C7.4 17.1 2.5 13.1 2.5 8.6 2.5 5.7 4.7 3.5 7.5 3.5c1.8 0 3.4.9 4.5 2.4 1.1-1.5 2.7-2.4 4.5-2.4 2.8 0 5 2.2 5 5.1 0 4.5-4.9 8.5-8.7 11.7-.2.2-.5.3-.8.3Z"/>
+  </symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="8.5" y="8.5" width="11" height="11" rx="2.2"/><path d="M15.5 8.5V6.7a2.2 2.2 0 0 0-2.2-2.2H6.7a2.2 2.2 0 0 0-2.2 2.2v6.6a2.2 2.2 0 0 0 2.2 2.2h1.8"/></g>
+  </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/>
+  </symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.4"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></g>
+  </symbol>
+  <symbol id="i-radio" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M7.8 7.8a6 6 0 0 0 0 8.4M16.2 7.8a6 6 0 0 1 0 8.4M4.9 4.9a10 10 0 0 0 0 14.2M19.1 4.9a10 10 0 0 1 0 14.2"/></g>
+    <circle fill="currentColor" cx="12" cy="12" r="2.1"/>
+  </symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></g>
+  </symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M5 19.5V13M10 19.5V5M15 19.5v-9M20 19.5V8"/></g>
+  </symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M5.6 4.5h12.8a2.1 2.1 0 0 1 2.1 2.1v8.3a2.1 2.1 0 0 1-2.1 2.1H11l-4.3 3.3v-3.3H5.6a2.1 2.1 0 0 1-2.1-2.1V6.6a2.1 2.1 0 0 1 2.1-2.1Z"/>
+    <circle fill="currentColor" cx="8.8" cy="10.8" r="1.2"/><circle fill="currentColor" cx="15.2" cy="10.8" r="1.2"/>
+  </symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="4.6" height="4.6" rx="1.2"/><rect x="9.7" y="5" width="4.6" height="4.6" rx="1.2"/><rect x="15.9" y="5" width="4.6" height="4.6" rx="1.2"/><rect x="3.5" y="14.4" width="4.6" height="4.6" rx="1.2"/><rect x="9.7" y="14.4" width="4.6" height="4.6" rx="1.2"/><rect x="15.9" y="14.4" width="4.6" height="4.6" rx="1.2"/></g>
+  </symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m6.5 9.5 5.5 5.5 5.5-5.5"/>
+  </symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7.5 16.5 16.5 7.5M9 7.5h7.5V15"/>
+  </symbol>
+  <!-- Menu-bar extras, drawn to sit next to the app's own template icon. -->
+  <symbol id="i-wifi" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2.8 9.2a13.2 13.2 0 0 1 18.4 0"/><path d="M6.1 12.6a8.4 8.4 0 0 1 11.8 0"/><path d="M9.3 15.9a3.9 3.9 0 0 1 5.4 0"/></g>
+    <circle fill="currentColor" cx="12" cy="19" r="1.6"/>
+  </symbol>
+  <symbol id="i-battery" viewBox="0 0 30 16">
+    <rect x="1" y="2" width="24" height="12" rx="3.6" fill="none" stroke="currentColor" stroke-opacity=".55" stroke-width="1.3"/>
+    <rect x="3" y="4" width="16" height="8" rx="2" fill="currentColor"/>
+    <path d="M27 6.1v3.8c.9-.3 1.5-1.1 1.5-1.9s-.6-1.6-1.5-1.9Z" fill="currentColor" fill-opacity=".55"/>
+  </symbol>
+  <symbol id="i-search" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="m15.2 15.2 4.8 4.8"/></g>
+  </symbol>
+  <symbol id="i-control" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4.5" width="18" height="6" rx="3"/><rect x="3" y="13.5" width="18" height="6" rx="3"/></g>
+    <circle fill="currentColor" cx="17.9" cy="7.5" r="1.9"/><circle fill="currentColor" cx="6.1" cy="16.5" r="1.9"/>
+  </symbol>
 </svg>
 
-<header class="top">
-  <div class="wrap top-inner">
-    <a class="mark" href="#top" aria-label="ILoveMusic, zum Seitenanfang">
-      <svg class="mark-glyph" width="19" height="19" aria-hidden="true"><use href="#i-mark"/></svg>
-      <span>ILoveMusic</span>
+<header class="top" id="top-bar">
+  <a class="mark" href="#top" aria-label="ILoveMusic, zum Seitenanfang">
+    <span class="mark-tile"><svg width="18" height="18" aria-hidden="true"><use href="#i-mark"/></svg></span>
+    <span>ILoveMusic</span>
+    <span class="mark-version">v__VERSION__</span>
+  </a>
+  <nav class="top-nav" aria-label="Seitenbereiche">
+    <span class="nav-glow" aria-hidden="true"></span>
+    <a href="#sender"><svg width="15" height="15" aria-hidden="true"><use href="#i-radio"/></svg>Sender</a>
+    <a href="#funktionen"><svg width="15" height="15" aria-hidden="true"><use href="#i-sliders"/></svg>Funktionen</a>
+    <a href="#statistik"><svg width="15" height="15" aria-hidden="true"><use href="#i-chart"/></svg>Statistik</a>
+    <a href="#discord"><svg width="15" height="15" aria-hidden="true"><use href="#i-chat"/></svg>Discord</a>
+    <a href="#streamdeck"><svg width="15" height="15" aria-hidden="true"><use href="#i-grid"/></svg>Stream Deck</a>
+  </nav>
+  <div class="top-actions">
+    <a class="icon-btn" href="https://github.com/nichtlegacy/ilovemusic-macos" rel="noopener" aria-label="Quellcode auf GitHub">
+      <svg width="17" height="17" aria-hidden="true"><use href="#i-github"/></svg>
     </a>
-    <nav class="top-nav" aria-label="Seitenbereiche">
-      <a href="#funktionen">Funktionen</a>
-      <a href="#statistiken">Statistiken</a>
-      <a href="#discord">Discord</a>
-      <a href="#streamdeck">Stream Deck</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <div class="top-actions">
-      <a class="btn ghost" href="https://github.com/nichtlegacy/ilovemusic-macos" rel="noopener">
-        <svg class="ico" width="15" height="15" aria-hidden="true"><use href="#i-github"/></svg>
-        GitHub
-      </a>
-      <a class="btn solid" href="https://github.com/nichtlegacy/ilovemusic-macos/releases/latest" rel="noopener">
-        <svg class="ico" width="15" height="15" aria-hidden="true"><use href="#i-download"/></svg>
-        Download
-      </a>
-    </div>
+    <a class="pill solid" href="https://github.com/nichtlegacy/ilovemusic-macos/releases/latest" rel="noopener">
+      <svg width="15" height="15" aria-hidden="true"><use href="#i-download"/></svg>
+      Download
+    </a>
   </div>
 </header>
 
 <main id="inhalt">
 
+  <!-- The hero is a Mac screen: a bezel running off the left edge, a menu bar
+       along its top, and the real panel capture hanging from the app's icon. -->
   <section class="hero" id="top">
-    <div class="wrap hero-inner">
-      <div class="hero-copy reveal">
-        <p class="tag">Menüleisten-Radio für den Mac</p>
-        <h1>ILoveMusic<br><span class="grad">für macOS</span></h1>
-        <p class="lede">
-          Alle öffentlichen I Love Music Sender direkt aus der Menüleiste – mit Cover,
-          Live-Hörerzahl, Favoriten und Statistik. Ohne Account, ohne Cloud.
-        </p>
-        <div class="actions">
-          <a class="btn solid lg" href="https://github.com/nichtlegacy/ilovemusic-macos/releases/latest" rel="noopener">
-            <svg class="ico" width="17" height="17" aria-hidden="true"><use href="#i-download"/></svg>
-            Download für macOS
-          </a>
-          <a class="btn ghost lg" href="https://github.com/nichtlegacy/ilovemusic-macos" rel="noopener">
-            <svg class="ico" width="16" height="16" aria-hidden="true"><use href="#i-github"/></svg>
-            Quellcode
-          </a>
+    <div class="device" id="device">
+      <div class="screen">
+        <div class="menubar">
+          <div class="menubar-extras">
+            <span class="extra extra-app">
+              <button class="extra-hit" type="button" aria-controls="hero-panel" aria-expanded="true" aria-label="ILoveMusic-Panel schließen">
+                <svg width="17" height="17" aria-hidden="true"><use href="#i-mark"/></svg>
+              </button>
+              <img class="panel" id="hero-panel" src="screenshots/hero.webp" width="766" height="1316" fetchpriority="high"
+                   alt="Das ILoveMusic-Panel aus der Menüleiste: Cover, laufender Titel, Hörerzahl, Transport, Lautstärke und die Favoritenliste">
+            </span>
+            <span class="extra extra-sys" aria-hidden="true"><svg width="15" height="15"><use href="#i-wifi"/></svg></span>
+            <span class="extra extra-sys" aria-hidden="true"><svg width="25" height="13"><use href="#i-battery"/></svg></span>
+            <span class="extra extra-sys" aria-hidden="true"><svg width="14" height="14"><use href="#i-search"/></svg></span>
+            <span class="extra extra-sys" aria-hidden="true"><svg width="15" height="15"><use href="#i-control"/></svg></span>
+            <time class="extra extra-time" id="menu-time">Di. 23. Sept.&nbsp;&nbsp;9:41</time>
+          </div>
         </div>
-        <p class="specs">Version __VERSION__ · macOS 14+ · Apple Silicon · MIT</p>
       </div>
+    </div>
 
-      <div class="hero-shot reveal">
-        <img src="screenshots/hero.webp" width="766" height="1316" alt="Das ILoveMusic Player-Panel in der macOS-Menüleiste mit Cover, Senderliste und Lautstärkeregler" fetchpriority="high">
+    <div class="hero-copy">
+      <p class="eyebrow">
+        Radio-Player
+        <span class="mark-tile eyebrow-icon" aria-hidden="true"><svg width="17" height="17"><use href="#i-mark"/></svg></span>
+        für macOS
+      </p>
+      <h1>I&nbsp;Love&nbsp;Music Radio,<br>in deiner Menüleiste.</h1>
+      <p class="lede">Cover, Live-Hörerzahl, Favoriten und Statistik für alle öffentlichen Sender. Ein Klick aufs Symbol – kein Fenster, kein Account.</p>
+      <div class="actions">
+        <a class="pill solid lg" href="https://github.com/nichtlegacy/ilovemusic-macos/releases/latest" rel="noopener">
+          <svg width="17" height="17" aria-hidden="true"><use href="#i-download"/></svg>
+          Download für macOS
+        </a>
+        <a class="pill ghost lg" href="https://github.com/nichtlegacy/ilovemusic-macos" rel="noopener">
+          <svg width="16" height="16" aria-hidden="true"><use href="#i-github"/></svg>
+          Quellcode
+        </a>
       </div>
+      <p class="specs">Kostenlos &amp; Open Source · macOS 14+ · Apple Silicon · v__VERSION__</p>
     </div>
   </section>
 
-  <section id="funktionen" class="band">
+  <section class="section" id="sender">
     <div class="wrap">
-      <header class="band-head reveal">
-        <p class="tag">Funktionen</p>
-        <h2>Was die App kann.</h2>
+      <header class="section-head stack-head reveal">
+        <h2>39 Sender, eine Menüleiste</h2>
+        <p>Der Katalog kommt live von den öffentlichen ILoveMusic-Endpunkten. Neue Sender tauchen von selbst auf, ohne App-Update.</p>
       </header>
+      <ul class="stations reveal" id="stations">
+        <li><a class="station" href="https://ilovemusic.de/iloveradio" rel="noopener" style="--c: #ffffff">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ RADIO</b><small>Pop &amp; Hits</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilove2dance" rel="noopener" style="--c: #00d5ff">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ 2 DANCE</b><small>Dance &amp; DJ</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilove2000throwbacks" rel="noopener" style="--c: #b34f4f">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ 2000+ THROWBACKS</b><small>Throwbacks</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilove2010throwbacks" rel="noopener" style="--c: #db377e">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ 2010+ THROWBACKS</b><small>Throwbacks</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovebass" rel="noopener" style="--c: #c3c3c3">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ BASS BY HBZ</b><small>Dance &amp; DJ</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovebiggestpophits" rel="noopener" style="--c: #db377e">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ BIGGEST POP HITS</b><small>Pop &amp; Hits</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovechillhop" rel="noopener" style="--c: #8c6d9c">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ CHILLHOP</b><small>Chill</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovechilloutbeats" rel="noopener" style="--c: #8c6d9c">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ CHILLOUT BEATS</b><small>Chill</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/top100-dance-charts-2026" rel="noopener" style="--c: #ff0000">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ DANCE 2026</b><small>Dance &amp; DJ</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovedancehistory" rel="noopener" style="--c: #00aaff">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ DANCE HISTORY</b><small>Dance &amp; DJ</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovedeutschrapbeste" rel="noopener" style="--c: #6f9e00">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ DEUTSCHRAP BESTE</b><small>Hip-Hop</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovedeutschrapfirst" rel="noopener" style="--c: #6f9e00">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ DEUTSCHRAP FIRST!</b><small>Hip-Hop</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovegreatesthits" rel="noopener" style="--c: #d0d691">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ GREATEST HITS</b><small>Throwbacks</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovehardstyle" rel="noopener" style="--c: #ababaf">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ HARDSTYLE</b><small>Dance &amp; DJ</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovehiphop" rel="noopener" style="--c: #99a096">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ HIP HOP</b><small>Hip-Hop</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/top100-hiphop-charts-2026" rel="noopener" style="--c: #ff0000">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ HIP HOP 2026</b><small>Hip-Hop</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovehiphophistory" rel="noopener" style="--c: #d1b200">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ HIP HOP HISTORY</b><small>Hip-Hop</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovehitquiz" rel="noopener" style="--c: #b7e003">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ HIT-QUIZ</b><small>Specials</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/top100-hits-2026-jahrescharts" rel="noopener" style="--c: #ff0000">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ HITS 2026</b><small>Pop &amp; Hits</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovehitshistory" rel="noopener" style="--c: #b34f4f">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ HITS HISTORY</b><small>Throwbacks</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovemainstagemadness" rel="noopener" style="--c: #85edc0">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ MAINSTAGE</b><small>Dance &amp; DJ</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovemalle" rel="noopener" style="--c: #b5587f">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ MALLE</b><small>Party</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovemashup" rel="noopener" style="--c: #9900ff">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ MASHUP</b><small>Party</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovemusicandchill" rel="noopener" style="--c: #d086d1">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ MUSIC&amp;CHILL</b><small>Chill</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovepartyhard" rel="noopener" style="--c: #ff00cc">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ PARTY HARD</b><small>Party</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/iloverewind2006" rel="noopener" style="--c: #b34f4f">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ REWIND 2006</b><small>Throwbacks</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/iloverewind2016" rel="noopener" style="--c: #db377e">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ REWIND 2016</b><small>Throwbacks</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/iloverockradio" rel="noopener" style="--c: #adadad">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ ROCK RADIO</b><small>Throwbacks</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/iloveskihasenradio" rel="noopener" style="--c: #b5587f">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ SKI-HASEN RADIO</b><small>Party</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovesugarradio" rel="noopener" style="--c: #00f291">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ SUGAR RADIO</b><small>Party</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovethe90s" rel="noopener" style="--c: #ff00cc">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ THE 90S</b><small>Throwbacks</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovethebeach" rel="noopener" style="--c: #ffc400">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ THE BEACH</b><small>Chill</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovethesun" rel="noopener" style="--c: #edd839">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ THE SUN</b><small>Chill</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovetomorrowland" rel="noopener" style="--c: #9a5ad6">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ TOMORROWLAND</b><small>Dance &amp; DJ</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovetop100charts" rel="noopener" style="--c: #ff0000">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ TOP 100 CHARTS</b><small>Pop &amp; Hits</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovetrashpop" rel="noopener" style="--c: #ff00cc">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ TRASHPOP</b><small>Party</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/iloveusonlyrapradio" rel="noopener" style="--c: #8c8ea0">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ US ONLY RAP RADIO</b><small>Hip-Hop</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/iloveworkout" rel="noopener" style="--c: #aceb00">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ WORKOUT</b><small>Sport</small></span>
+        </a></li>
+        <li><a class="station" href="https://ilovemusic.de/ilovexmas" rel="noopener" style="--c: #9b3737">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>I ♥ X-MAS</b><small>Specials</small></span>
+        </a></li>
+        <li><span class="station station-more">
+          <svg class="station-heart" width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span><b>Neue Sender</b><small>kommen automatisch</small></span>
+        </span></li>
+      </ul>
+      <button class="pill ghost stations-toggle" type="button" aria-controls="stations" aria-expanded="false" hidden>
+        <span>Alle 39 Sender anzeigen</span>
+        <svg width="15" height="15" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+    </div>
+  </section>
 
-      <div class="bento">
-        <article class="tile w4 reveal">
-          <h3>Menüleisten-Player</h3>
-          <p>Cover, Titel, Live-Hörerzahl, Transport, AirPlay-Ausgabe und Lautstärke –
-          ein Klick auf das Symbol, kein Hauptfenster, kein Dock-Eintrag.</p>
+  <section class="section" id="funktionen">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <h2>Player, Favoriten, Tastenkürzel</h2>
+      </header>
+      <div class="features">
+        <article class="feature reveal">
+          <h3>Alles in einem Panel</h3>
+          <p>Cover, Titel, Live-Hörerzahl, Transport, AirPlay und Lautstärke. Kein Hauptfenster, kein Dock-Eintrag.</p>
+          <div class="feature-art art-magenta">
+            <img src="screenshots/panel-player.webp" width="746" height="390" loading="lazy" alt="Oberer Teil des Panels mit Cover, Titel, Hörerzahl und Transport">
+          </div>
         </article>
-
-        <article class="tile reveal">
-          <h3>Favoriten</h3>
-          <p>Farbcodiert nach Kategorie, immer ganz oben.</p>
+        <article class="feature reveal">
+          <h3>Favoriten in Senderfarbe</h3>
+          <p>Favoriten stehen oben, jede Zeile in der Farbe ihres Senders – mit laufendem Titel und Hörerzahl.</p>
+          <div class="feature-art art-cyan">
+            <img src="screenshots/panel-favorites.webp" width="746" height="628" loading="lazy" alt="Favoritenliste mit farbigen Zeilen je Sender">
+          </div>
         </article>
-
-        <article class="tile reveal">
-          <h3>Alle Sender live</h3>
-          <p>Katalog direkt aus den öffentlichen ILoveMusic-Endpunkten.</p>
-        </article>
-
-        <article class="tile reveal">
-          <h3>Verlauf &amp; Statistik</h3>
-          <p>Hörzeit, Streak, Genres, Top-Sender.</p>
-        </article>
-
-        <article class="tile reveal">
+        <article class="feature reveal">
           <h3>Globale Tastenkürzel</h3>
-          <p>Systemweit, frei belegbar.</p>
-          <p class="keys"><kbd>⌥</kbd><kbd>⌘</kbd><kbd>P</kbd></p>
-        </article>
-
-        <article class="tile w3 reveal">
-          <h3>Lokal-first</h3>
-          <p>Kein Account, kein Sync, kein Backend. Alles bleibt auf diesem Mac.</p>
-        </article>
-
-        <article class="tile w3 reveal">
-          <h3>Deutsch &amp; English</h3>
-          <p>Folgt der Systemsprache oder fest wählbar. Start bei Anmeldung optional.</p>
+          <p>Systemweit, auch wenn das Panel zu ist. In den Einstellungen frei belegbar.</p>
+          <div class="feature-art art-amber">
+            <ul class="hotkeys" aria-label="Standard-Tastenkürzel">
+              <li><span>Wiedergabe / Pause</span><kbd>⌥⌘P</kbd></li>
+              <li><span>Nächster Sender</span><kbd>⌥⌘N</kbd></li>
+              <li><span>Zufälliger Sender</span><kbd>⌥⌘R</kbd></li>
+              <li><span>Beenden</span><kbd>⌥⌘Q</kbd></li>
+            </ul>
+          </div>
         </article>
       </div>
     </div>
   </section>
 
-  <section id="statistiken" class="band alt">
-    <div class="wrap">
-      <header class="band-head reveal">
-        <p class="tag">Statistiken</p>
-        <h2>Hörzeit, Genres, Streak.</h2>
-      </header>
-      <div class="shots">
-        <figure class="reveal">
-          <img src="screenshots/stats.webp" width="1400" height="933" loading="lazy" alt="Statistik-Fenster mit Streak, Hörzeit-Verlauf und Genre-Verteilung">
-          <figcaption>Statistik – Streak, Genres, Top-Sender, Heatmaps.</figcaption>
-        </figure>
-        <figure class="reveal">
-          <img src="screenshots/history.webp" width="1400" height="933" loading="lazy" alt="Verlaufsfenster mit gehörten Songs und Sendern">
-          <figcaption>Verlauf – jeder gehörte Song, lokal aufgezeichnet.</figcaption>
-        </figure>
+  <section class="section" id="statistik">
+    <div class="wrap duo">
+      <div class="duo-media windows reveal">
+        <img class="window back" src="screenshots/history.webp" width="1400" height="1045" loading="lazy" alt="Verlaufsfenster mit gehörten Songs, nach Tagen gruppiert">
+        <img class="window front" src="screenshots/stats.webp" width="1400" height="1045" loading="lazy" alt="Statistik-Fenster mit Hörzeit, Streak, Verlauf und Genre-Verteilung">
+      </div>
+      <div class="duo-copy reveal">
+        <h2>Hörzeit, Genres,<br>Streak.</h2>
+        <p class="lede">Jeder gehörte Song landet im Verlauf. Daraus rechnet die App Hörzeit, Streak, Genres, Top-Sender und Heatmaps.</p>
+        <p class="assure">
+          <svg width="16" height="16" aria-hidden="true"><use href="#i-lock"/></svg>
+          Alles liegt als Datei auf deinem Mac – kein Backend, kein Account, kein Sync.
+        </p>
       </div>
     </div>
   </section>
 
-  <section id="discord" class="band">
-    <div class="wrap split">
-      <div class="reveal">
-        <p class="tag">Discord</p>
-        <h2>Zeig, was gerade läuft.</h2>
-        <p class="lede">
-          Rich Presence setzt den laufenden Song als Aktivität – mit Cover, Sender,
-          Hörerzahl und mitlaufender Spielzeit.
-        </p>
-        <ul class="facts">
-          <li>Titel und Künstler direkt aus den Sender-Metadaten</li>
-          <li>Cover als großes Bild, Senderlogo als Badge</li>
-          <li>Optionaler Button, der auf den Sender bei ilovemusic.de führt</li>
-          <li>Jedes Feld einzeln abschaltbar</li>
-          <li>Eigene Discord-Application-ID, keine fremde App</li>
-        </ul>
-        <p class="note">
-          Die IPC-Verbindung ist von Hand auf <code>Network</code> gebaut – keine externe
-          Discord-Bibliothek, kein Token, kein Bot.
-          <a href="https://github.com/nichtlegacy/ilovemusic-macos#discord-rich-presence" rel="noopener">Application anlegen</a>
-        </p>
+  <section class="section" id="discord">
+    <div class="wrap duo flip">
+      <div class="duo-copy align-end reveal">
+        <h2>Zeig auf Discord,<br>was läuft.</h2>
+        <p class="lede">Rich Presence setzt den laufenden Song als Aktivität – mit Cover, Sender, Hörerzahl und mitlaufender Spielzeit.</p>
       </div>
-
-      <div class="reveal">
+      <div class="duo-media reveal">
         <!-- The presence card the app actually produces: activity type 2, details =
              title, state = artist, station line with listener count, elapsed timer. -->
         <div class="rpc">
@@ -323,109 +498,59 @@
           </div>
           <span class="rpc-btn">Listen to I ♥ PARTY HARD</span>
         </div>
-        <p class="rpc-note">So sieht die Aktivität im Discord-Profil aus.</p>
       </div>
     </div>
   </section>
 
-  <section id="streamdeck" class="band alt">
-    <div class="wrap split">
-      <div class="reveal">
-        <p class="tag">Stream Deck</p>
-        <h2>Sender auf Tasten.</h2>
-        <p class="lede">
-          Jede Taste ein Sender, mit aktuellem Cover als Tastenbild. Dazu Transport,
-          Favoriten-Herz und Lautstärke.
-        </p>
-        <p class="note">Verbindung nur über <code>127.0.0.1</code>, token-gesichert.</p>
-        <a class="btn ghost lg" href="https://github.com/nichtlegacy/ilovemusic-streamdeck" rel="noopener">
-          <svg class="ico" width="16" height="16" aria-hidden="true"><use href="#i-github"/></svg>
+  <section class="section" id="streamdeck">
+    <div class="wrap duo">
+      <div class="duo-media reveal">
+        <img class="deck" src="screenshots/streamdeck.webp" width="896" height="538" loading="lazy" alt="ILoveMusic-Tasten mit Cover auf einem Stream Deck">
+      </div>
+      <div class="duo-copy reveal">
+        <h2>Sender auf<br>Tasten.</h2>
+        <p class="lede">Jede Taste ein Sender, mit aktuellem Cover als Tastenbild. Dazu Transport, Favoriten-Herz und Lautstärke.</p>
+        <a class="pill ghost" href="https://github.com/nichtlegacy/ilovemusic-streamdeck" rel="noopener">
+          <svg width="15" height="15" aria-hidden="true"><use href="#i-github"/></svg>
           Plugin-Repository
         </a>
       </div>
-      <div class="split-media reveal">
-        <img src="screenshots/streamdeck.webp" width="1100" height="660" loading="lazy" alt="ILoveMusic-Tasten mit Cover auf einem Stream Deck">
-      </div>
     </div>
   </section>
 
-  <section id="download" class="band">
+  <section class="section more" id="mehr">
     <div class="wrap">
-      <header class="band-head reveal">
-        <p class="tag">Download</p>
-        <h2>In drei Schritten installiert.</h2>
-      </header>
-
-      <div class="dl">
-        <div class="dl-card reveal">
-          <p class="dl-version">ILoveMusic __VERSION__</p>
-          <p class="dl-req">macOS 14 oder neuer · Apple Silicon · ca. 3 MB</p>
-          <a class="btn solid lg" href="https://github.com/nichtlegacy/ilovemusic-macos/releases/latest" rel="noopener">
-            <svg class="ico" width="17" height="17" aria-hidden="true"><use href="#i-download"/></svg>
-            DMG herunterladen
-          </a>
-          <p class="dl-hint">Über GitHub Releases</p>
-        </div>
-
-        <ol class="dl-steps reveal">
-          <li><code>ILoveMusic-__VERSION__.dmg</code> öffnen, <code>ILoveMusic.app</code> nach <em>Programme</em> ziehen.</li>
-          <li>
-            Quarantäne einmalig entfernen:
-            <pre><code>xattr -dr com.apple.quarantine /Applications/ILoveMusic.app</code></pre>
-            Ohne Terminal: App starten, Warnung bestätigen, dann <em>Systemeinstellungen → Datenschutz &amp; Sicherheit → Trotzdem öffnen</em>.
-          </li>
-          <li>App starten. Es öffnet sich kein Fenster – das Symbol sitzt in der Menüleiste.</li>
-        </ol>
-      </div>
-
-      <p class="note full reveal">
-        Die App ist nur ad-hoc signiert und nicht notarisiert, weil das Projekt keinen
-        Apple-Developer-Account hat. Nur der erste Start ist betroffen; spätere Updates laufen
-        über <a href="https://sparkle-project.org/" rel="noopener">Sparkle</a> und werden per
-        EdDSA-Signatur geprüft.
-      </p>
-    </div>
-  </section>
-
-  <section id="faq" class="band alt">
-    <div class="wrap">
-      <header class="band-head reveal">
-        <p class="tag">FAQ</p>
-        <h2>Häufige Fragen</h2>
-      </header>
-
-      <div class="faq">
-        <details class="reveal">
-          <summary>Ist das die offizielle ILoveMusic App für Mac?</summary>
-          <p>Nein, ein unabhängiges Open-Source-Hobbyprojekt. Es nutzt ausschließlich öffentlich
-          erreichbare ILoveMusic-Daten und steht in keiner Verbindung zur I Love Music GmbH.</p>
-        </details>
-        <details class="reveal">
-          <summary>Welche macOS-Version brauche ich?</summary>
-          <p>macOS 14 oder neuer. Die fertigen Builds sind Apple Silicon only; auf Intel-Macs
-          lässt sich das Projekt aus dem Quellcode bauen.</p>
-        </details>
-        <details class="reveal">
-          <summary>Warum sagt macOS, die App sei beschädigt?</summary>
-          <p>Weil sie nicht notarisiert ist. Ein <code>xattr -dr com.apple.quarantine</code> auf
-          <code>/Applications/ILoveMusic.app</code> reicht. Der Download ist in Ordnung.</p>
-        </details>
-        <details class="reveal">
-          <summary>Werden meine Daten irgendwohin geschickt?</summary>
-          <p>Nein. Kein Backend, kein Account. Verbindungen gehen nur zu den öffentlichen
-          ILoveMusic-Endpunkten, zum Stream und – falls aktiviert – lokal zu Discord.</p>
-        </details>
-        <details class="reveal">
-          <summary>Brauche ich eine eigene Discord-Application-ID?</summary>
-          <p>Ja. Rich Presence läuft über eine selbst angelegte Discord-Application; die ID wird
-          in den Einstellungen hinterlegt. Die
-          <a href="https://github.com/nichtlegacy/ilovemusic-macos#discord-rich-presence" rel="noopener">Schritte stehen im README</a>.</p>
-        </details>
-        <details class="reveal">
-          <summary>Wie bekomme ich Updates?</summary>
-          <p>Über Sparkle, im Hintergrund und abschaltbar. Jedes Update wird per
-          EdDSA-Signatur verifiziert.</p>
-        </details>
+      <div class="more-grid">
+        <article class="reveal" id="installieren">
+          <h3>Installieren</h3>
+          <p><code>ILoveMusic-__VERSION__.dmg</code> aus den <a href="https://github.com/nichtlegacy/ilovemusic-macos/releases/latest" rel="noopener">GitHub Releases</a> laden, die App nach <em>Programme</em> ziehen und einmal die Quarantäne entfernen:</p>
+          <button class="cmd" type="button" data-copy="xattr -dr com.apple.quarantine /Applications/ILoveMusic.app" aria-label="Befehl kopieren">
+            <span class="cmd-prompt" aria-hidden="true">$</span>
+            <code>xattr -dr com.apple.quarantine /Applications/ILoveMusic.app</code>
+            <svg class="cmd-icon" width="15" height="15" aria-hidden="true"><use href="#i-copy"/></svg>
+          </button>
+          <p class="fine">Ohne Terminal: App starten, Warnung bestätigen, dann <em>Systemeinstellungen → Datenschutz &amp; Sicherheit → Trotzdem öffnen</em>.</p>
+        </article>
+        <article class="reveal">
+          <h3>Warum warnt macOS?</h3>
+          <p>Das Projekt hat keinen Apple-Developer-Account, die App ist nur ad-hoc signiert und nicht notarisiert. Betroffen ist nur der erste Start, der Download selbst ist in Ordnung.</p>
+        </article>
+        <article class="reveal">
+          <h3>Updates</h3>
+          <p>Über <a href="https://sparkle-project.org/" rel="noopener">Sparkle</a>, im Hintergrund und abschaltbar. Jedes Update wird vor der Installation per EdDSA-Signatur geprüft.</p>
+        </article>
+        <article class="reveal">
+          <h3>Privatsphäre</h3>
+          <p>Kein Backend, kein Account. Verbindungen gehen nur zu den öffentlichen ILoveMusic-Endpunkten, zum Stream und – falls aktiviert – lokal zu Discord und zum Stream Deck.</p>
+        </article>
+        <article class="reveal">
+          <h3>Voraussetzungen</h3>
+          <p>macOS 14 oder neuer auf Apple Silicon, rund 3&nbsp;MB. Auf Intel-Macs lässt sich das Projekt aus dem Quellcode bauen. Oberfläche auf Deutsch und Englisch, Start bei Anmeldung optional.</p>
+        </article>
+        <article class="reveal">
+          <h3>Inoffiziell</h3>
+          <p>Ein unabhängiges Open-Source-Hobbyprojekt ohne Verbindung zur I Love Music GmbH. Marken- und Sendernamen gehören ihren jeweiligen Inhabern.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -433,19 +558,13 @@
 </main>
 
 <footer class="foot">
-  <div class="wrap foot-inner">
-    <p class="disclaim">
-      Inoffizielles Hobbyprojekt. Kein Angebot der I Love Music GmbH.
-      Marken- und Sendernamen gehören ihren jeweiligen Inhabern.
-    </p>
-    <div class="foot-meta">
-      <a class="foot-gh" href="https://github.com/nichtlegacy/ilovemusic-macos" rel="noopener">
-        <svg class="ico" width="15" height="15" aria-hidden="true"><use href="#i-github"/></svg>
-        nichtlegacy/ilovemusic-macos
-      </a>
-      <a class="foot-license" href="https://github.com/nichtlegacy/ilovemusic-macos/blob/main/LICENSE" rel="noopener">MIT-Lizenz</a>
-    </div>
-  </div>
+  <p>
+    Gebaut von <a href="https://github.com/nichtlegacy" rel="noopener">nichtlegacy</a> ·
+    <a href="https://github.com/nichtlegacy/ilovemusic-macos" rel="noopener">Quellcode</a> ·
+    <a href="https://github.com/nichtlegacy/ilovemusic-macos/releases" rel="noopener">Releases</a> ·
+    <a href="https://github.com/nichtlegacy/ilovemusic-macos/blob/main/LICENSE" rel="noopener">MIT</a> ·
+    Kein Angebot der I Love Music GmbH
+  </p>
 </footer>
 
 </body>

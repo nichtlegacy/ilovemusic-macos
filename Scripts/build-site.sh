@@ -22,6 +22,7 @@ mkdir -p "$OUT"
 cp "$ROOT"/site/*.css "$ROOT"/site/*.js "$ROOT"/site/*.svg "$ROOT"/site/*.png "$ROOT"/site/*.jpg "$OUT/"
 cp "$ROOT/site/CNAME" "$ROOT/site/robots.txt" "$OUT/"
 cp -R "$ROOT/site/screenshots" "$OUT/screenshots"
+cp -R "$ROOT/site/fonts" "$OUT/fonts"
 
 sed "s/__VERSION__/$VERSION/g" "$ROOT/site/index.html" > "$OUT/index.html"
 sed "s/__BUILD_DATE__/$BUILD_DATE/g" "$ROOT/site/sitemap.xml" > "$OUT/sitemap.xml"
