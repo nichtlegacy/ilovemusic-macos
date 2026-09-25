@@ -5,6 +5,15 @@
     <description>Most recent changes for ILoveMusic.</description>
     <language>en</language>
     <item>
+      <title>Version 0.2.2</title>
+      <pubDate>Fri, 25 Sep 2026 14:48:47 +0000</pubDate>
+      <sparkle:version>45</sparkle:version>
+      <sparkle:shortVersionString>0.2.2</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description>&lt;ul&gt;&lt;li&gt;Beim Start öffnet sich kein leeres Einstellungsfenster mehr. Bisher erschien bei jedem Start, auch beim automatischen Start nach der Anmeldung, ein kleines leeres Fenster „ILoveMusic-Einstellungen“. Die echten Einstellungen öffnen sich weiterhin über das Menüleisten-Symbol oder mit ⌘,.&lt;/li&gt;&lt;li&gt;Kopieren, Einsetzen und die übrigen Bearbeiten-Befehle funktionieren in den Eingabefeldern der Einstellungen weiterhin wie gewohnt, ebenso ⌘W und ⌘M in den Fenstern.&lt;/li&gt;&lt;li&gt;Der Link zum Discord-Entwicklerportal in den Discord-Einstellungen führt jetzt zur richtigen Adresse.&lt;/li&gt;&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/nichtlegacy/ilovemusic-macos/releases/download/v0.2.2/ILoveMusic-0.2.2.dmg" type="application/octet-stream" sparkle:edSignature="m5r3dRR/xQQOcQ6EY3nrhDbEH7YsjsW3J/+KS4kcPv8Ty/9ZyfDtgg1/ldoLwQtN0SCqaIog0WG1Nq4hUvPVCg==" length="2866143" />
+    </item>
+    <item>
       <title>Version 0.2.1</title>
       <pubDate>Sat, 19 Sep 2026 19:05:52 +0000</pubDate>
       <sparkle:version>36</sparkle:version>
