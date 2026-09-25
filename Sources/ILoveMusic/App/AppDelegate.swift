@@ -25,6 +25,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationWillFinishLaunching(_ notification: Notification) {
     NSApp.setActivationPolicy(.accessory)
+    NSApp.mainMenu = MainMenu.make(
+      language: appModel.activeLanguage,
+      settingsTarget: self,
+      settingsAction: #selector(menuOpenSettings)
+    )
   }
 
   func applicationDidFinishLaunching(_ notification: Notification) {

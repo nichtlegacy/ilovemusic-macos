@@ -108,6 +108,8 @@
 	<string>Cache leeren</string>
 	<key>Clear shortcut</key>
 	<string>Kurzbefehl löschen</string>
+	<key>Close</key>
+	<string>Schließen</string>
 	<key>Conflicts with %@</key>
 	<string>Konflikt mit %@</string>
 	<key>Connection</key>
@@ -118,6 +120,8 @@
 	<string>Erstelle eine Anwendung auf discord.com/developers und kopiere anschließend deren Anwendungs-ID hierher.</string>
 	<key>Custom Range</key>
 	<string>Eigener Zeitraum</string>
+	<key>Cut</key>
+	<string>Ausschneiden</string>
 	<key>Dance &amp; DJ</key>
 	<string>Dance &amp; DJ</string>
 	<key>Data</key>
@@ -138,6 +142,8 @@
 	<string>Zeigt das I-Love-Radio-Logo als kleines Cover-Abzeichen an.</string>
 	<key>Download updates in the background</key>
 	<string>Updates im Hintergrund laden</string>
+	<key>Edit</key>
+	<string>Bearbeiten</string>
 	<key>Enable Discord Rich Presence</key>
 	<string>Discord Rich Presence aktivieren</string>
 	<key>Enable global hotkeys</key>
@@ -170,6 +176,10 @@
 	<string>GitHub</string>
 	<key>Handshake</key>
 	<string>Handshake</string>
+	<key>Hide %@</key>
+	<string>%@ ausblenden</string>
+	<key>Hide Others</key>
+	<string>Andere ausblenden</string>
 	<key>Hide Panel</key>
 	<string>Panel ausblenden</string>
 	<key>Hip Hop</key>
@@ -190,10 +200,10 @@
 	<string>Stunde</string>
 	<key>ILOVEMUSIC.DE</key>
 	<string>ILOVEMUSIC.DE</string>
-	<key>ILoveMusic – History &amp; Stats</key>
-	<string>ILoveMusic – Verlauf &amp; Statistiken</string>
 	<key>ILoveMusic couldn’t restart.</key>
 	<string>ILoveMusic konnte nicht neu gestartet werden.</string>
+	<key>ILoveMusic – History &amp; Stats</key>
+	<string>ILoveMusic – Verlauf &amp; Statistiken</string>
 	<key>Idle</key>
 	<string>Inaktiv</string>
 	<key>Include Listen button</key>
@@ -248,6 +258,8 @@
 	<string>MP3</string>
 	<key>Maintenance</key>
 	<string>Wartung</string>
+	<key>Minimize</key>
+	<string>Im Dock ablegen</string>
 	<key>Misc</key>
 	<string>Sonstiges</string>
 	<key>More</key>
@@ -322,6 +334,8 @@
 	<string>Übersicht</string>
 	<key>Party</key>
 	<string>Party</string>
+	<key>Paste</key>
+	<string>Einsetzen</string>
 	<key>Pause</key>
 	<string>Pause</string>
 	<key>Pause (⌥⌘P)</key>
@@ -374,6 +388,8 @@
 	<string>Verbindung wird wiederhergestellt</string>
 	<key>Record listening history</key>
 	<string>Wiedergabeverlauf aufzeichnen</string>
+	<key>Redo</key>
+	<string>Wiederholen</string>
 	<key>Refresh</key>
 	<string>Aktualisieren</string>
 	<key>Refresh Now</key>
@@ -414,6 +430,8 @@
 	<string>Rich Presence</string>
 	<key>Seasonal</key>
 	<string>Saisonal</string>
+	<key>Select All</key>
+	<string>Alles auswählen</string>
 	<key>Selected Period</key>
 	<string>Ausgewählter Zeitraum</string>
 	<key>Selected day</key>
@@ -430,6 +448,8 @@
 	<string>Einstellungen…</string>
 	<key>Severity</key>
 	<string>Schweregrad</string>
+	<key>Show All</key>
+	<string>Alle einblenden</string>
 	<key>Show Panel</key>
 	<string>Panel anzeigen</string>
 	<key>Show station logo badge</key>
@@ -506,6 +526,8 @@
 	<string>Top-Titel</string>
 	<key>Top channels</key>
 	<string>Top-Sender</string>
+	<key>Undo</key>
+	<string>Widerrufen</string>
 	<key>Unfavorite</key>
 	<string>Aus Favoriten entfernen</string>
 	<key>Unknown Track</key>
@@ -538,6 +560,8 @@
 	<string>Website</string>
 	<key>Weekday and Hour</key>
 	<string>Wochentag und Stunde</string>
+	<key>Window</key>
+	<string>Fenster</string>
 	<key>Workout</key>
 	<string>Workout</string>
 	<key>Yesterday</key>
