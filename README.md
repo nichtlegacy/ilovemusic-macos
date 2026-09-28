@@ -10,7 +10,7 @@ Lokal-first, ohne Account, ohne Cloud, ohne eigenes Backend – gebaut nur auf d
 [![Swift 6.2](https://img.shields.io/badge/Swift-6.2-F05138?logo=swift&logoColor=white)](https://swift.org)
 [![SwiftUI + AppKit](https://img.shields.io/badge/UI-SwiftUI%20%2B%20AppKit-2563EB)](https://developer.apple.com/xcode/swiftui/)
 [![Abhängigkeiten: Sparkle](https://img.shields.io/badge/Dependencies-Sparkle-22C55E)](#architektur)
-[![Tests](https://img.shields.io/badge/Tests-94%20grün-16A34A)](#tests)
+[![Tests](https://img.shields.io/badge/Tests-134%20grün-16A34A)](#tests)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **[ilovemusic.nichtlegacy.com](https://ilovemusic.nichtlegacy.com)** · [Download](https://github.com/nichtlegacy/ilovemusic-macos/releases/latest)
@@ -23,7 +23,7 @@ Lokal-first, ohne Account, ohne Cloud, ohne eigenes Backend – gebaut nur auf d
 
 ## Überblick
 
-ILoveMusic ist ein nativer macOS-App, der in der **Menüleiste** lebt. Ein Klick auf das Symbol öffnet ein kompaktes Player-Panel mit aktivem Sender, Favoriten und der vollständigen Senderliste samt Live-Metadaten.
+ILoveMusic ist eine native macOS-App, die in der **Menüleiste** lebt. Ein Klick auf das Symbol öffnet ein kompaktes Player-Panel mit aktivem Sender, Favoriten und der vollständigen Senderliste samt Live-Metadaten.
 
 ILoveMusic.de stellt seine Sender-, Metadaten- und Hörerzahlen über **öffentliche Endpunkte** bereit. Diese App baut darauf einen nativen Player – **ohne** eigenen Server, ohne Benutzerkonten, ohne Cloud-Sync.
 
@@ -97,7 +97,7 @@ cd ilovemusic-macos
 
 swift build      # bauen
 swift run ILoveMusic   # starten
-swift test       # 133 Tests
+swift test       # 134 Tests
 ```
 
 Nach dem Start erscheint **kein Fenster** – ILoveMusic setzt ein Symbol in die Menüleiste (`NSStatusItem`). Linksklick öffnet das Player-Panel, Rechtsklick zeigt ein natives Menü mit Wiedergabe-, Aktualisieren-, Verlauf-, Einstellungen- und Beenden-Aktionen. Das Dock-Symbol ist standardmäßig aus (`setActivationPolicy(.accessory)`).
@@ -420,13 +420,13 @@ ilovemusic-macos/
 │       ├── History/         # Verlauf & Statistik (+ Charts/)
 │       ├── MenuBar/         # Player-Panel
 │       └── Settings/        # Panes/ und Components/
-├── Tests/ILoveMusicTests/   # 133 Tests (swift-testing)
+├── Tests/ILoveMusicTests/   # 134 Tests (swift-testing)
 └── docs/screenshots/        # Bilder für dieses README
 ```
 
 ## Tests
 
-133 Tests über 24 Dateien unter [`Tests/ILoveMusicTests`](Tests/ILoveMusicTests), basierend auf dem `swift-testing`-Framework. Abdeckung u. a.: Live-DTO-Decoding, Katalog-Normalisierung & Sichtbarkeitsfilter, Recent-Tracks-XML-Parsing, Lautstärke-/Control-Server-Flows, Verlaufs-Recording und Stats-Aggregation, Lokalisierung und App-Neustart, Discord-IPC/-Presence, App-Support-Pfade, Persistenz-Verträge sowie Menüleisten- und Einstellungs-Audits.
+134 Tests über 24 Dateien unter [`Tests/ILoveMusicTests`](Tests/ILoveMusicTests), basierend auf dem `swift-testing`-Framework. Abdeckung u. a.: Live-DTO-Decoding, Katalog-Normalisierung & Sichtbarkeitsfilter, Recent-Tracks-XML-Parsing, Lautstärke-/Control-Server-Flows, Verlaufs-Recording und Stats-Aggregation, Lokalisierung und App-Neustart, Discord-IPC/-Presence, App-Support-Pfade, Persistenz-Verträge sowie Menüleisten- und Einstellungs-Audits.
 
 ```bash
 swift test
